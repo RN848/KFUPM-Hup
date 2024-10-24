@@ -8,11 +8,11 @@ h1 {
 
 .sidNav {
   padding: 0;
-  background-color: #16191C;
+  background-color: #16191c;
 }
 
 .cont {
-  background-color: #1F2327;
+  background-color: #1f2327;
 }
 
 .navLinks {
@@ -20,6 +20,10 @@ h1 {
   position: relative;
   display: flex;
   flex-direction: column;
+}
+.navLinks .fucos {
+  background-color: #4173ee;
+  color: white;
 }
 .navLinks .link {
   display: flex;
@@ -30,7 +34,8 @@ h1 {
   transition: 0.3s;
   position: relative;
   border-bottom: solid #24282b 0.1px;
-  color: #545F69;
+  color: #545f69;
+  text-decoration: none;
 }
 .navLinks .link a {
   position: relative;
@@ -40,7 +45,7 @@ h1 {
   margin-right: 10px;
 }
 .navLinks .link:hover {
-  background-color: #4173EE;
+  background-color: #4173ee;
   color: white;
 }
 @media (max-width: 576px) {
@@ -49,7 +54,7 @@ h1 {
   }
   .navLinks .link a {
     display: none;
-    color: #4173EE;
+    color: #4173ee;
   }
   .navLinks .link svg {
     margin-right: 4px;

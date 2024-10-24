@@ -1,15 +1,14 @@
-import {FontAwesomeIcon  } from '@fortawesome/react-fontawesome'
-import {faArrowRight} from '@fortawesome/free-solid-svg-icons'
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Body from "../components/Body";
 
 const Contact = () => {
-    return (<>
+  return (
+    <Body>
+      <h1 style={{ color: "red" }}>ddddddddddfdf</h1>
+      <h1 style={{ color: "red" }}>dfdf</h1>
+    </Body>
+  );
+};
 
-<h1>Contact Me</h1>
-    
-    <FontAwesomeIcon icon={faArrowRight}  size='10x'/>
-    </>)
-  };
-  
-  export default Contact;
-  
+export default Contact;

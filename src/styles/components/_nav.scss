@@ -1,68 +1,65 @@
-
-.sidNav{
-    padding: 0;
-    background-color: #16191C;
+.sidNav {
+  padding: 0;
+  background-color: #16191c;
 }
 
 .cont {
-    background-color: #1F2327;
+  background-color: #1f2327;
 }
 
 .navLinks {
-    
-    
-    margin-top: 20px;
-    
-    position: relative;
+  margin-top: 20px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .fucos {
+    background-color: #4173ee;
+    color: white;
+  }
+
+
+  .link {
     display: flex;
-    flex-direction: column;
-    
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 0;
+    width: 100%;
+    transition: 0.3s;
+    position: relative;
+    border-bottom: solid #24282b 0.1px;
+    color: #545f69;
+    text-decoration: none;
 
     
-    .link {
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        padding: 10px 0;
-        width: 100%;
-        transition: 0.3s;
-        position: relative;
-        border-bottom: solid #24282b .1px;
-        color: #545F69;
-        
-        a {
-            position: relative;
-            padding-right: 4px;
-        
-        }
-
-        svg {
-            margin-right: 10px;
-        }
-
-        &:hover {
-            background-color: #4173EE;
-            color: white;
-        }
-
-        @media (max-width: 576px) {
-
-            & {
-                padding: 20px 0;
-            }
-
-            a {
-                display: none;
-                color: #4173EE;
-            }
-            svg {
-                margin-right: 4px;
-            }
-        }
-
-
+    a {
+      position: relative;
+      padding-right: 4px;
     }
-    
+
+    svg {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background-color: #4173ee;
+      color: white;
+    }
+
+    @media (max-width: 576px) {
+      & {
+        padding: 20px 0;
+      }
+
+      a {
+        display: none;
+        color: #4173ee;
+      }
+      svg {
+        margin-right: 4px;
+      }
+    }
+  }
 }
