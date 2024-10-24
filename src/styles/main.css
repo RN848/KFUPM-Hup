@@ -4,4 +4,59 @@ h3 {
 
 h1 {
   color: aliceblue;
+}
+
+.sidNav {
+  padding: 0;
+  background-color: #16191C;
+}
+
+.cont {
+  background-color: #1F2327;
+}
+
+.navLinks {
+  margin-top: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.navLinks .link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  width: 100%;
+  transition: 0.3s;
+  position: relative;
+  border-bottom: solid #24282b 0.1px;
+  color: #545F69;
+}
+.navLinks .link a {
+  position: relative;
+  padding-right: 4px;
+}
+.navLinks .link svg {
+  margin-right: 10px;
+}
+.navLinks .link:hover {
+  background-color: #4173EE;
+  color: white;
+}
+@media (max-width: 576px) {
+  .navLinks .link {
+    padding: 20px 0;
+  }
+  .navLinks .link a {
+    display: none;
+    color: #4173EE;
+  }
+  .navLinks .link svg {
+    margin-right: 4px;
+  }
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
 }/*# sourceMappingURL=main.css.map */
