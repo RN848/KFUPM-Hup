@@ -3,6 +3,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "./Nav.js";
 import "../styles/master.css";
+import "../styles/main.css";
+
 import React, { useState } from "react";
 
 export default function Body({ children }) {

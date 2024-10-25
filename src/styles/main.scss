@@ -6,8 +6,15 @@
 @import "./utils/mixins";
 @import "./components/nav";
 
+@import "./components/body";
 
-html, body , #root{
-    height: 100%;
-    margin: 0;
-  }
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+h1 {
+  color: red;
+}

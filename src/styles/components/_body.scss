@@ -1,0 +1,21 @@
+.body {
+  color: red;
+
+  & > h1 {
+    margin-bottom: 20px;
+  }
+
+  .wid-colum {
+    background-color: #292e33;
+    border-radius: 10px;
+    height: 100%;
+    color: red;
+    padding: 20px;
+  }
+
+  .form {
+    .label {
+      font-size: 20px;
+    }
+  }
+}
