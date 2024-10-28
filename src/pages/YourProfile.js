@@ -15,19 +15,21 @@ import { Link } from "../components/Inputs";
 
 const YourProfile = () => {
   const [inputs, setInputs] = useState({
-    title: "",
-    subtitle: "",
-    desc: "",
-    type: "activity",
-    appearance: "all",
-    joinLink: "dfdffdf",
-    image: "No file chosen",
+    name: "",
+    profilePicture: "No file chosen",
+    interests: "",
+    role: "",
+    email: "forexample@gmail.com",
+    changePassword: "dsdfsdfsdfsfsd",
+    contactNumber: "",
+    linkedIn: "",
+    id: "23234",
   });
 
   return (
     <Body>
       <div className="body">
-        <h1>Start Page</h1>
+        <h1>Your Profile</h1>
         <Row className={"g-4 wid-row"} md={2} sm={1} xs={1}>
           <Col>
             <div className="wid-colum">
@@ -35,27 +37,35 @@ const YourProfile = () => {
                 <NormInput
                   inputs={inputs}
                   setInputs={setInputs}
-                  input={"title"}
+                  input={"name"}
                   type={"text"}
-                  label={"Title"}
-                  placeholder={"A short, descriptive name for the activity"}
+                  label={"Name"}
+                  placeholder={"name"}
+                />
+
+                <Uplode
+                  setInputs={setInputs}
+                  inputs={inputs}
+                  input={"profilePicture"}
+                  label={"Profile Picture"}
                 />
 
                 <NormInput
                   inputs={inputs}
                   setInputs={setInputs}
-                  input={"subtitle"}
+                  input={"interests"}
                   type={"text"}
-                  label={"Subtitle"}
-                  placeholder={"Your Subtitle Here"}
+                  label={"Interests"}
+                  placeholder={"football , recearch"}
                 />
 
-                <Textarea
+                <NormInput
                   inputs={inputs}
                   setInputs={setInputs}
-                  input={"desc"}
-                  label={"Description"}
-                  placeholder={"A detailed explanation of the activity/news"}
+                  input={"role"}
+                  type={"text"}
+                  label={"Role"}
+                  placeholder={"Student, Club Leader (Green Society Club)"}
                 />
               </Form>
             </div>
@@ -63,38 +73,49 @@ const YourProfile = () => {
           <Col>
             <div className="wid-colum">
               <Form className="form">
-                <Radio
+                <NormInput
                   inputs={inputs}
                   setInputs={setInputs}
-                  input="type"
-                  label="Select Type"
-                  radio1="Activity"
-                  radio2="News"
+                  input={"email"}
+                  type={"email"}
+                  label={"Change Email"}
+                  placeholder={"email"}
                 />
 
-                <Radio
+                <NormInput
                   inputs={inputs}
                   setInputs={setInputs}
-                  input="appearance"
-                  label="Select Category"
-                  radio1="All"
-                  radio2="Members Only"
+                  input={"changePassword"}
+                  type={"password"}
+                  label={"Change Password"}
+                  placeholder={""}
+                />
+
+                <NormInput
+                  inputs={inputs}
+                  setInputs={setInputs}
+                  input={"contactNumber"}
+                  type={"text"}
+                  label={"Contact Number"}
+                  placeholder={"Enter the contact number"}
+                />
+
+                <NormInput
+                  inputs={inputs}
+                  setInputs={setInputs}
+                  input={"linkedIn"}
+                  type={"text"}
+                  label={"Linked In"}
+                  placeholder={"id"}
                 />
 
                 <Link
                   inputs={inputs}
                   setInputs={setInputs}
-                  input={"joinLink"}
+                  input={"id"}
                   type={"text"}
-                  label={"Join Link"}
-                />
-
-                <Uplode
-                  setInputs={setInputs}
-                  inputs={inputs}
-                  input={"image"}
-                  label={"Upload Image"}
-                  placeholder={"No file chosen"}
+                  label={"Id"}
+                  placeholder={""}
                 />
               </Form>
 
@@ -108,16 +129,16 @@ const YourProfile = () => {
                   }}
                 >
                   <Button
-                    className="inputs-btn"
+                    className={"inputs-btn back"}
                     as="input"
                     type="submit"
-                    value="Submit"
+                    value="Cancel"
                   />
                   <Button
                     className="inputs-btn"
                     as="input"
                     type="submit"
-                    value="Submit"
+                    value="Save"
                   />
                 </div>
               </div>

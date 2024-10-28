@@ -26,10 +26,10 @@ function App() {
           {/*{frame 13}*/}
 
           <Route path="Manage-Profile" element={<ManageProfile />} />
-          {/*{frame 13}*/}
+          {/*{frame 14}*/}
 
           <Route path="Your-Profile" element={<YourProfile />} />
-          {/*{frame 13}*/}
+          {/*{frame 20}*/}
         </Route>
       </Routes>
     </BrowserRouter>
