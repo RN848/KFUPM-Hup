@@ -5,8 +5,9 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 export default function Nav() {
   const linksList = [
     { key: 0, name: "Home", icon: faHouse, link: "/" },
-    { key: 1, name: "Contact", icon: faHouse, link: "/contact" },
-    { key: 2, name: "Home", icon: faHouse, link: "/" },
+    { key: 1, name: "frame13", icon: faHouse, link: "/Create-Activity-news" },
+    { key: 2, name: "frame14", icon: faHouse, link: "/Manage-Profile" },
+    { key: 3, name: "frame20", icon: faHouse, link: "/Your-Profile" },
   ];
 
   const linkMap = linksList.map((nav) => {

@@ -61,21 +61,77 @@ h1 {
   }
 }
 
-.body {
-  color: red;
-}
 .body > h1 {
   margin-bottom: 20px;
+  color: white;
+}
+.body .wid-row {
+  margin-bottom: 50px;
 }
 .body .wid-colum {
   background-color: #292e33;
   border-radius: 10px;
   height: 100%;
-  color: red;
   padding: 20px;
 }
-.body .form .label {
+
+.form .label {
   font-size: 20px;
+  color: #ffffff;
+}
+.form .uplode .file {
+  background-color: #1f2327;
+}
+.form .uplode > div {
+  display: flex;
+  justify-content: start;
+  margin-bottom: 16px;
+  gap: 20px;
+}
+.form .input {
+  background-color: #1f2327;
+  color: white;
+  border: none;
+}
+.form .input::-moz-placeholder {
+  color: #3b4447;
+}
+.form .input::placeholder {
+  color: #3b4447;
+}
+.form .input:focus {
+  box-shadow: none;
+  border: #565656 solid 1px;
+  background-color: #1f2327;
+  color: #ffffff;
+  transition: 0s;
+}
+.form input[type=radio] {
+  background-color: #1f2327;
+  border: none;
+}
+.form input[type=radio]:checked {
+  background-color: #4173ee;
+  --bs-form-check-bg-image: none;
+  border-radius: 30%;
+  box-shadow: none;
+}
+.form label {
+  color: white;
+}
+.form .inputs-btn {
+  background-color: #2a4d93;
+  border: none;
+}
+.form .inputs-btn:hover {
+  background-color: #4173ee;
+}
+.form .back {
+  background-color: #777777;
+}
+.form textarea {
+  resize: none;
+  height: 100px;
 }
 
 html,

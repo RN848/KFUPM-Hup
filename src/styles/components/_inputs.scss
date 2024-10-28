@@ -1,0 +1,64 @@
+.form {
+  .label {
+    font-size: 20px;
+    color: #ffffff;
+  }
+
+  .uplode {
+    .file {
+      background-color: #1f2327;
+    }
+    > div {
+      display: flex;
+      justify-content: start;
+      margin-bottom: 16px;
+      gap: 20px;
+    }
+  }
+  .input {
+    background-color: #1f2327;
+    color: white;
+    border: none;
+    &::placeholder {
+      color: #3b4447;
+    }
+    &:focus {
+      box-shadow: none;
+      border: #565656 solid 1px;
+      background-color: #1f2327;
+      color: #ffffff;
+      transition: 0s;
+    }
+  }
+
+  input[type="radio"] {
+    background-color: #1f2327;
+    border: none;
+    &:checked {
+      background-color: #4173ee;
+      --bs-form-check-bg-image: none;
+      border-radius: 30%;
+      box-shadow: none;
+    }
+  }
+
+  label {
+    color: white;
+  }
+
+  .inputs-btn {
+    background-color: #2a4d93;
+    border: none;
+    &:hover {
+      background-color: #4173ee;
+    }
+  }
+  .back {
+    background-color: #777777;
+  }
+
+  textarea {
+    resize: none;
+    height: 100px;
+  }
+}
