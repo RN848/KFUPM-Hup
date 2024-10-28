@@ -8,6 +8,9 @@ export default function Nav() {
     { key: 1, name: "frame13", icon: faHouse, link: "/Create-Activity-news" },
     { key: 2, name: "frame14", icon: faHouse, link: "/Manage-Profile" },
     { key: 3, name: "frame20", icon: faHouse, link: "/Your-Profile" },
+    { key: 4, name: "frame18", icon: faHouse, link: "/Log-In" },
+    { key: 5, name: "frame19", icon: faHouse, link: "/Sign-Up" },
+    { key: 6, name: "frame22", icon: faHouse, link: "/New-Clup" },
   ];
 
   const linkMap = linksList.map((nav) => {
