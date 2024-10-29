@@ -11,6 +11,7 @@ export default function Nav() {
     { key: 4, name: "frame18", icon: faHouse, link: "/Log-In" },
     { key: 5, name: "frame19", icon: faHouse, link: "/Sign-Up" },
     { key: 6, name: "frame22", icon: faHouse, link: "/New-Clup" },
+    { key: 7, name: "frame2", icon: faHouse, link: "/Sports-reservation" },
   ];
 
   const linkMap = linksList.map((nav) => {

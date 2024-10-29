@@ -6,6 +6,13 @@
 
   .wid-row {
     margin-bottom: 50px;
+
+    @media (max-width: 768px) {
+      &.reverse {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+    }
   }
 
   .wid-colum {
@@ -13,5 +20,9 @@
     border-radius: 10px;
     height: 100%;
     padding: 20px;
+  }
+
+  .reserv-card {
+    background-color: #545f66;
   }
 }

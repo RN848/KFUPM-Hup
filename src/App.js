@@ -14,6 +14,7 @@ import YourProfile from "./pages/YourProfile";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import NewClup from "./pages/NewClup";
+import SportsReserve from "./pages/SportsReserve";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -42,6 +43,9 @@ function App() {
           {/*{frame 19}*/}
 
           <Route path="New-Clup" element={<NewClup />} />
+          {/*{frame 22}*/}
+
+          <Route path="Sports-reservation" element={<SportsReserve />} />
           {/*{frame 22}*/}
         </Route>
       </Routes>

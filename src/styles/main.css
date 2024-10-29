@@ -68,11 +68,20 @@ h1 {
 .body .wid-row {
   margin-bottom: 50px;
 }
+@media (max-width: 768px) {
+  .body .wid-row.reverse {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
 .body .wid-colum {
   background-color: #292e33;
   border-radius: 10px;
   height: 100%;
   padding: 20px;
+}
+.body .reserv-card {
+  background-color: #545f66;
 }
 
 .form .label {
