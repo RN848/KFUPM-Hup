@@ -111,6 +111,43 @@ h1 {
   background-color: transparent;
   margin: 15px auto;
 }
+.body .news-box {
+  background-color: #292e33;
+  margin: 0;
+  border-radius: 10px;
+  padding-bottom: 25px;
+  margin-bottom: 50px;
+}
+.body .news-box .news-col > a {
+  text-decoration: none;
+}
+.body .news-box .news-col > a:hover > div {
+  background-color: #4173ee;
+}
+.body .news-box .news-col > a > div {
+  background-color: #545f66;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+}
+.body .news-box .news-col > a > div .deteils {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.body .news-box .news-col > a > div .deteils span {
+  background-color: #3a4449;
+  border-radius: 5px;
+  padding: 2px 7px;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+.body .news-box .news-col > a > div h3 {
+  background-color: transparent;
+  margin: 15px auto;
+}
 .body .wid-colum {
   background-color: #292e33;
   border-radius: 10px;
@@ -131,14 +168,18 @@ h1 {
   justify-content: space-between;
   align-items: center;
 }
-.body .sports div a img {
+.body .sports div.focus a .img {
+  border: 4px #ee4141 solid;
+  background-color: red;
+}
+.body .sports div a .img {
   max-width: 100%;
   width: 40px;
   border-radius: 50%;
   border: 3px black solid;
   transition: 0.3s;
 }
-.body .sports div a img:hover {
+.body .sports div a .img:hover {
   border: 4px #4173ee solid;
 }
 .body .sports div span {

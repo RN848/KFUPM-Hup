@@ -15,6 +15,7 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import NewClup from "./pages/NewClup";
 import SportsReserve from "./pages/SportsReserve";
+import LatestNews from "./pages/LatestNews";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -47,6 +48,9 @@ function App() {
 
           <Route path="Sports-reservation" element={<SportsReserve />} />
           {/*{frame 22}*/}
+
+          <Route path="Latest-News" element={<LatestNews />} />
+          {/*{frame 8}*/}
         </Route>
       </Routes>
     </BrowserRouter>

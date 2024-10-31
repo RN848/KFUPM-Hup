@@ -26,6 +26,10 @@ const SportsReserve = () => {
     filter: "",
   });
 
+  const [inputs, setInputs] = useState({
+    code: "",
+  });
+
   const sportsList = [
     { name: "Basketball", image: Basketball },
     { name: "Football", image: Football },
@@ -36,10 +40,18 @@ const SportsReserve = () => {
   ];
 
   const sportsMap = sportsList.map((s) => {
+    const isActive = sport === s.name;
+
     return (
-      <div>
-        <a href="">
-          <Image src={s.image}></Image>
+      <div className={isActive ? "focus" : ""}>
+        <a
+          href=""
+          onClick={(e) => {
+            e.preventDefault();
+            setsport(s.name);
+          }}
+        >
+          <Image className="img" src={s.image}></Image>
         </a>
         <span>{s.name}</span>
       </div>
@@ -64,7 +76,11 @@ const SportsReserve = () => {
     { sport: "Football", feild: "Feild 1", day: "Sunday", time: "1:00" },
   ];
 
-  const reserveMap = reservesList.map((box) => {
+  const filteredReserves = reservesList.filter(
+    (box) => sport.filter === "" || box.sport === sport
+  );
+
+  const reserveMap = filteredReserves.map((box) => {
     return (
       <Col lg={4} md={4} sm={6} xs={12} className="sport-col">
         <a href="">
@@ -93,7 +109,46 @@ const SportsReserve = () => {
             <div className={"wid-colum sports"}>{sportsMap}</div>
           </Col>
           <Col>
-            <div className="wid-colum"></div>
+            <div className="wid-colum">
+              <div
+                className="form"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "end",
+                }}
+              >
+                <div
+                  style={{
+                    margin: "0 10px  15px 0",
+                    display: "flex",
+                    gap: "10px",
+                  }}
+                >
+                  <Button
+                    style={{ margin: "0 10px 0 0" }}
+                    className="inputs-btn"
+                    as="input"
+                    type="submit"
+                    value="Save"
+                  />
+                  <Button
+                    className="inputs-btn"
+                    as="input"
+                    type="submit"
+                    value="Save"
+                  />
+                </div>
+                <NormInput
+                  inputs={inputs}
+                  setInputs={setInputs}
+                  input={"number"}
+                  type={"code"}
+                  label={"Code"}
+                  placeholder={"2335"}
+                />
+              </div>
+            </div>
           </Col>
         </Row>
         <Row className={"g-4 wid-row sports-box"}>{reserveMap}</Row>
