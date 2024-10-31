@@ -117,26 +117,29 @@ const LatestNews = () => {
       <div className="body">
         <div className={"filter"}>
           <h1>Manage Profile </h1>
-          <Button
-            className={`filterb ${filter === "following" ? "active" : ""}`}
-            onClick={() =>
-              setFilter(
-                filter === "" || filter === "enrolled" ? "following" : ""
-              )
-            }
-          >
-            following
-          </Button>
-          <Button
-            className={`filterb ${filter === "enrolled" ? "active" : ""}`}
-            onClick={() =>
-              setFilter(
-                filter === "" || filter === "following" ? "enrolled" : ""
-              )
-            }
-          >
-            enrolled
-          </Button>
+
+          <div>
+            <Button
+              className={`filterb ${filter === "following" ? "active" : ""}`}
+              onClick={() =>
+                setFilter(
+                  filter === "" || filter === "enrolled" ? "following" : ""
+                )
+              }
+            >
+              following
+            </Button>
+            <Button
+              className={`filterb ${filter === "enrolled" ? "active" : ""}`}
+              onClick={() =>
+                setFilter(
+                  filter === "" || filter === "following" ? "enrolled" : ""
+                )
+              }
+            >
+              enrolled
+            </Button>
+          </div>
         </div>
 
         <Row className={"g-4 wid-row news-box "}>{newsMap}</Row>
