@@ -22,52 +22,87 @@ import Squash from "../images/sports/sport-5.jpg";
 import Badminton from "../images/sports/sport-6.jpg";
 
 const LatestNews = () => {
-  //   const [sport, setsport] = useState({
-  //     filter: "",
-  //   });
-
-  //   const sportsMap = sportsList.map((s) => {
-  //     const isActive = sport === s.name;
-
-  //     return (
-  //       <div className={isActive ? "focus" : ""}>
-  //         <a
-  //           href=""
-  //           onClick={(e) => {
-  //             e.preventDefault();
-  //             setsport(s.name);
-  //           }}
-  //         >
-  //           <Image className="img" src={s.image}></Image>
-  //         </a>
-  //         <span>{s.name}</span>
-  //       </div>
-  //     );
-  //   });
-
-  const reservesList = [
+  const newsList = [
     {
       title: "news activity news activ",
       desc: "news activity news acactivity tiv",
-      img: "Sunday",
-      join: "link/link/...",
+      img: "../images/activities/activity-01.jpg",
+      join: "",
+      clup: "1",
+    },
+    {
+      title: "news activity news activ",
+      desc: "news activity news acactivity tiv",
+      img: "../images/activities/activity-02.jpg",
+      join: "",
+      clup: "2",
+    },
+    {
+      title: "news activity news activ",
+      desc: "news activity news acactivity tiv",
+      img: "../images/activities/activity-03.jpg",
+      join: "",
+      clup: "3",
+    },
+    {
+      title: "news activity news activ",
+      desc: "news activity news acactivity tiv",
+      img: "../images/activities/activity-04.jpg",
+      join: "",
+      clup: "1",
+    },
+    {
+      title: "news activity news activ",
+      desc: "news activity news acactivity tiv",
+      img: "../images/activities/activity-01.jpg",
+      join: "",
+      clup: "2",
+    },
+    {
+      title: "news activity news activ",
+      desc: "news activity news acactivity tiv",
+      img: "../images/activities/activity-03.jpg",
+      join: "",
+      clup: "1",
+    },
+    {
+      title: "news activity news activ",
+      desc: "news activity news acactivity tiv",
+      img: "../images/activities/activity-02.jpg",
+      join: "",
+      clup: "1",
     },
   ];
 
-  //   const filteredReserves = reservesList.filter(
-  //     (box) => sport.filter === "" || box.sport === sport
-  //   );
+  const [filter, setFilter] = useState("");
 
-  const reserveMap = reservesList.map((box) => {
+  const followClups = ["1", "2"];
+  const enrolledClups = ["3"];
+
+  const filteredNews = newsList.filter((news) => {
+    if (filter === "following") {
+      return followClups.includes(news.clup);
+    }
+    if (filter === "enrolled") {
+      return enrolledClups.includes(news.clup);
+    }
+    return true; // Show all news if no filter is applied
+  });
+
+  const newsMap = filteredNews.map((news) => {
     return (
-      <Col lg={4} md={4} sm={6} xs={12} className="news-col">
+      <Col lg={6} md={6} sm={12} xs={12} className="news-col">
         <a href="">
           <div>
-            <h3>{box.sport}</h3>
+            <Image className="img" src={news.img}></Image>
             <div className="deteils">
-              <span>{box.title}</span>
-              <span>{box.day}</span>
-              <span>{box.time}</span>
+              <div className="text">
+                <h3>{news.title}</h3>
+                <p>{news.desc}</p>
+              </div>
+              <div className="form">
+                <Button className="join">join</Button>
+              </div>
             </div>
           </div>
         </a>
@@ -75,12 +110,36 @@ const LatestNews = () => {
     );
   });
 
+  const newsfilter = newsMap.filter((news) => {});
+
   return (
     <Body>
       <div className="body">
-        <h1>Manage Profile </h1>
+        <div className={"filter"}>
+          <h1>Manage Profile </h1>
+          <Button
+            className={`filterb ${filter === "following" ? "active" : ""}`}
+            onClick={() =>
+              setFilter(
+                filter === "" || filter === "enrolled" ? "following" : ""
+              )
+            }
+          >
+            following
+          </Button>
+          <Button
+            className={`filterb ${filter === "enrolled" ? "active" : ""}`}
+            onClick={() =>
+              setFilter(
+                filter === "" || filter === "following" ? "enrolled" : ""
+              )
+            }
+          >
+            enrolled
+          </Button>
+        </div>
 
-        <Row className={"g-4 wid-row news-box "}>{reserveMap}</Row>
+        <Row className={"g-4 wid-row news-box "}>{newsMap}</Row>
       </div>
     </Body>
   );
