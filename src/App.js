@@ -16,6 +16,7 @@ import SignUp from "./pages/SignUp";
 import NewClup from "./pages/NewClup";
 import SportsReserve from "./pages/SportsReserve";
 import LatestNews from "./pages/LatestNews";
+import EditActivity from "./pages/EditActivity";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -51,6 +52,9 @@ function App() {
 
           <Route path="Latest-News" element={<LatestNews />} />
           {/*{frame 8}*/}
+
+          <Route path="edit-Activity" element={<EditActivity />} />
+          {/*{frame 15}*/}
         </Route>
       </Routes>
     </BrowserRouter>

@@ -65,6 +65,35 @@ h1 {
   margin-bottom: 20px;
   color: white;
 }
+.body .filter {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.body .filter div {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0 0 0;
+  gap: 10px;
+}
+.body .filter h1 {
+  margin: 0;
+  text-align: center;
+}
+.body .filter .filterb {
+  padding: 2px 8px;
+  margin: 0;
+  background-color: #545f66;
+  border: none;
+}
+.body .filter .filterb:hover {
+  background-color: #0a58ca;
+}
+.body .filter .active {
+  background-color: #0a58ca;
+}
 .body .wid-row {
   margin-bottom: 50px;
 }
@@ -178,49 +207,6 @@ h1 {
 .body .news-box .news-col > a > div .deteils .form .join:hover {
   background-color: #2a4d93;
 }
-.body .filter {
-  display: flex;
-  color: white;
-  align-items: center;
-  margin-bottom: 20px;
-}
-@media (max-width: 576px) {
-  .body .filter {
-    flex-direction: column;
-  }
-  .body .filter > div {
-    display: flex;
-    flex-direction: row;
-    margin: 15px 0 0 0;
-    gap: 10px;
-  }
-  .body .filter > div .filterb {
-    margin: 0;
-  }
-}
-.body .filter h1 {
-  margin-right: 20px;
-}
-@media (max-width: 576px) {
-  .body .filter h1 {
-    flex-direction: column;
-  }
-  .body .filter h1 {
-    margin: 0;
-  }
-}
-.body .filter .filterb {
-  padding: 2px 8px;
-  margin-right: 10px;
-  background-color: #545f66;
-  border: none;
-}
-.body .filter .filterb:hover {
-  background-color: #0a58ca;
-}
-.body .filter .active {
-  background-color: #0a58ca;
-}
 .body .wid-colum {
   background-color: #292e33;
   border-radius: 10px;
@@ -238,7 +224,6 @@ h1 {
 .body .sports div {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
 }
 .body .sports div.focus a .img {

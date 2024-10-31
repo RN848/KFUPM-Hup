@@ -4,6 +4,41 @@
     color: white;
   }
 
+  .filter {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    align-items: center;
+    margin-bottom: 20px;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      margin: 15px 0 0 0;
+      gap: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+    }
+
+    .filterb {
+      padding: 2px 8px;
+      margin: 0;
+      background-color: #545f66;
+      border: none;
+
+      &:hover {
+        background-color: #0a58ca;
+      }
+    }
+
+    .active {
+      background-color: #0a58ca;
+    }
+  }
+
   .wid-row {
     margin-bottom: 50px;
 
@@ -14,6 +49,7 @@
       }
     }
   }
+
   .sports-box {
     background-color: #292e33;
     margin: 0;
@@ -141,55 +177,6 @@
     }
   }
 
-  .filter {
-    display: flex;
-    color: white;
-    align-items: center;
-    margin-bottom: 20px;
-
-    @media (max-width: 576px) {
-      flex-direction: column;
-
-      > div {
-        display: flex;
-        flex-direction: row;
-        margin: 15px 0 0 0;
-        gap: 10px;
-
-        .filterb {
-          margin: 0;
-        }
-      }
-    }
-
-    h1 {
-      margin-right: 20px;
-
-      @media (max-width: 576px) {
-        flex-direction: column;
-
-        & {
-          margin: 0;
-        }
-      }
-    }
-
-    .filterb {
-      padding: 2px 8px;
-      margin-right: 10px;
-      background-color: #545f66;
-      border: none;
-
-      &:hover {
-        background-color: #0a58ca;
-      }
-    }
-
-    .active {
-      background-color: #0a58ca;
-    }
-  }
-
   .wid-colum {
     background-color: #292e33;
     border-radius: 10px;
@@ -209,7 +196,7 @@
     div {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      // justify-content: space-between;
       align-items: center;
 
       &.focus a {

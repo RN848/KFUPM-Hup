@@ -21,7 +21,7 @@ import Volleyball from "../images/sports/sport-4.jpg";
 import Squash from "../images/sports/sport-5.jpg";
 import Badminton from "../images/sports/sport-6.jpg";
 
-const LatestNews = () => {
+const EditActivity = () => {
   const newsList = [
     {
       title: "news activity news activ",
@@ -74,22 +74,7 @@ const LatestNews = () => {
     },
   ];
 
-  const [filter, setFilter] = useState("");
-
-  const followClups = ["1", "2"];
-  const enrolledClups = ["3"];
-
-  const filteredNews = newsList.filter((news) => {
-    if (filter === "following") {
-      return followClups.includes(news.clup);
-    }
-    if (filter === "enrolled") {
-      return enrolledClups.includes(news.clup);
-    }
-    return true; // Show all news if no filter is applied
-  });
-
-  const newsMap = filteredNews.map((news) => {
+  const newsMap = newsList.map((news) => {
     return (
       <Col lg={6} md={6} sm={12} xs={12} className="news-col">
         <a href="">
@@ -101,7 +86,7 @@ const LatestNews = () => {
                 <p>{news.desc}</p>
               </div>
               <div className="form">
-                <Button className="join">join</Button>
+                <Button className="join">edit</Button>
               </div>
             </div>
           </div>
@@ -116,30 +101,7 @@ const LatestNews = () => {
     <Body>
       <div className="body">
         <div className={"filter"}>
-          <h1>Latest News and Activity</h1>
-
-          <div>
-            <Button
-              className={`filterb ${filter === "following" ? "active" : ""}`}
-              onClick={() =>
-                setFilter(
-                  filter === "" || filter === "enrolled" ? "following" : ""
-                )
-              }
-            >
-              following
-            </Button>
-            <Button
-              className={`filterb ${filter === "enrolled" ? "active" : ""}`}
-              onClick={() =>
-                setFilter(
-                  filter === "" || filter === "following" ? "enrolled" : ""
-                )
-              }
-            >
-              enrolled
-            </Button>
-          </div>
+          <h1>Edit News and Activity</h1>
         </div>
 
         <Row className={"g-4 wid-row news-box "}>{newsMap}</Row>
@@ -148,4 +110,4 @@ const LatestNews = () => {
   );
 };
 
-export default LatestNews;
+export default EditActivity;
