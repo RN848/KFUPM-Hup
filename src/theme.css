@@ -1,0 +1,53 @@
+/* theme.css */
+
+/* Colors */
+:root {
+    --primary-color: #61dafb;
+    /* Primary accent color, e.g., links, buttons */
+    --secondary-color: #282c34;
+    /* Background color for headers, footers, main sections */
+    --text-color: #ffffff;
+    /* Main text color on dark backgrounds */
+    --background-color: #1b1b1b;
+    /* General background color */
+    --card-background: #333333;
+    /* Card or container background */
+    --input-border-color: #444444;
+    /* Border color for input fields */
+    --link-hover-color: #1c8adf;
+    /* Hover color for links */
+    --error-color: #d9534f;
+    /* Error or alert messages */
+    --success-color: #5cb85c;
+    /* Success messages */
+
+    /* Font Settings */
+    --font-family-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    --font-size-small: 0.875rem;
+    --font-size-medium: 1rem;
+    --font-size-large: 1.25rem;
+
+    /* Spacing */
+    --padding-xs: 4px;
+    --padding-sm: 8px;
+    --padding-md: 16px;
+    --padding-lg: 24px;
+    --padding-xl: 32px;
+
+    --margin-xs: 4px;
+    --margin-sm: 8px;
+    --margin-md: 16px;
+    --margin-lg: 24px;
+    --margin-xl: 32px;
+
+    /* Border */
+    --border-radius: 8px;
+    --border-color: #444444;
+
+    /* Shadows */
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    /* Transitions */
+    --transition-speed: 0.3s;
+}

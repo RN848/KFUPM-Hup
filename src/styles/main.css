@@ -227,12 +227,12 @@ h1 {
   align-items: center;
 }
 .body .sports div.focus a .img {
-  border: 4px #ee4141 solid;
+  border: 4px #003e51 solid;
   background-color: red;
 }
 .body .sports div a .img {
   max-width: 100%;
-  width: 40px;
+  width: 70px;
   border-radius: 50%;
   border: 3px black solid;
   transition: 0.3s;

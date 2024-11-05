@@ -33,11 +33,13 @@ const SportsReserve = () => {
   const sportsList = [
     { name: "Basketball", image: Basketball },
     { name: "Football", image: Football },
-    { name: "tennis", image: tennis },
+    { name: "ennis", image: tennis },
     { name: "Volleyball", image: Volleyball },
     { name: "Squash", image: Squash },
     { name: "Badminton", image: Badminton },
   ];
+  
+
 
   const sportsMap = sportsList.map((s) => {
     const isActive = sport === s.name;
@@ -125,20 +127,24 @@ const SportsReserve = () => {
                     gap: "10px",
                   }}
                 >
-                  <Button
-                    style={{ margin: "0 10px 0 0" }}
+                  <Col style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+                    <Button
                     className="inputs-btn"
                     as="input"
                     type="submit"
-                    value="Save"
+                    value="My Reservations"
                   />
                   <Button
                     className="inputs-btn"
                     as="input"
                     type="submit"
-                    value="Save"
+                    value="New Reservation"
                   />
+                </Col>
+
                 </div>
+            
+                <div style={{ padding: "0 0 15px 15px"  }}>
                 <NormInput
                   inputs={inputs}
                   setInputs={setInputs}
@@ -147,6 +153,8 @@ const SportsReserve = () => {
                   label={"Code"}
                   placeholder={"2335"}
                 />
+              </div>
+
               </div>
             </div>
           </Col>
