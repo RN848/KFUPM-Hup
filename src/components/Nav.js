@@ -15,6 +15,7 @@ export default function Nav() {
     { key: 8, name: "frame8", icon: faHouse, link: "/Latest-News" },
     { key: 9, name: "frame15", icon: faHouse, link: "/edit-Activity" },
     { key: 10, name: "frame3", icon: faHouse, link: "/new-reservation" },
+    { key: 11, name: "frame4", icon: faHouse, link: "/reservaion-success" },
   ];
 
   const linkMap = linksList.map((nav) => {

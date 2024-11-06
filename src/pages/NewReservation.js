@@ -112,7 +112,7 @@ const NewReservation = () => {
       setErrorMessage("Please complete all fields before reserving.");
     } else {
       setErrorMessage("");
-      alert("Reservation made!");
+      navigate("/reservaion-success");
     }
   };
 

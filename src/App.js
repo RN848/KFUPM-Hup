@@ -16,6 +16,7 @@ import SignUp from "./pages/SignUp";
 import NewClup from "./pages/NewClup";
 import SportsReserve from "./pages/SportsReserve";
 import NewReservation from "./pages/NewReservation";
+import ReservationSuccess from "./pages/ReservationSuccess";
 import LatestNews from "./pages/LatestNews";
 import EditActivity from "./pages/EditActivity";
 
@@ -60,6 +61,9 @@ function App() {
 
           <Route path="new-reservation" element={<NewReservation />} />
           {/*{frame 3}*/}
+
+          <Route path="reservaion-success" element={<ReservationSuccess />} />
+          {/*{frame 4}*/}
         </Route>
       </Routes>
     </BrowserRouter>
