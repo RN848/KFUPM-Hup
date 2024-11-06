@@ -7,7 +7,7 @@ import "../styles/main.css";
 import "../styles/pages/_reservationSuccess.scss";
 
 const ReservationSuccess = () => {
-  const [remainingTime, setRemainingTime] = useState(25200); // 7 hours in seconds
+  const [remainingTime, setRemainingTime] = useState(25200); 
   const navigate = useNavigate();
 
   useEffect(() => {

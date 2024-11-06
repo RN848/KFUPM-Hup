@@ -38,7 +38,6 @@ const NewReservation = () => {
     { name: "Badminton", image: Badminton },
   ];
 
-  // Define available fields for each sport
   const sportFields = {
     Basketball: ["Court 1", "Court 2", "Court 3"],
     Football: ["Field 1", "Field 2", "Field 3", "Field 4"],
@@ -53,7 +52,7 @@ const NewReservation = () => {
     ],
   };
 
-  // Get fields based on selected sport
+
   const fields = sport.filter ? sportFields[sport.filter] || [] : [];
 
   const days = [
@@ -69,7 +68,6 @@ const NewReservation = () => {
   const availableTimes = {
     "Basketball|Court 1|Sunday": ["08:00", "10:00", "14:00", "16:00"],
     "Football|Field 1|Monday": ["09:00", "11:00", "15:00", "17:00"],
-    // More entries for other sports, fields, and days
   };
 
   const allTimeSlots = [
@@ -135,7 +133,7 @@ const NewReservation = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         setSport({ filter: s.name });
-                        setSelectedField(null); // Reset field selection when sport changes
+                        setSelectedField(null); 
                       }}
                     >
                       <Image className="img" src={s.image} alt={s.name}></Image>
@@ -171,17 +169,7 @@ const NewReservation = () => {
                   alignItems: "flex-start",
                 }}
               >
-                <ToggleButtonGroup
-                  type="radio"
-                  name="type"
-                  vertical
-                  value={reservationType}
-                  onClick={(val) => {
-                    reservationType === "Public"
-                      ? setReservationType("Private")
-                      : setReservationType("Public");
-                  }}
-                >
+                <ToggleButtonGroup type="radio" name="type" vertical>
                   <ToggleButton
                     variant={
                       reservationType === "Public"
@@ -189,6 +177,7 @@ const NewReservation = () => {
                         : "outline-primary"
                     }
                     value="Public"
+                    onClick={() => setReservationType("Public")}
                     style={{
                       textAlign: "center",
                       width: "100%",
@@ -207,6 +196,7 @@ const NewReservation = () => {
                         : "outline-primary"
                     }
                     value="Private"
+                    onClick={() => setReservationType("Private")}
                     style={{
                       textAlign: "center",
                       width: "100%",
@@ -312,6 +302,7 @@ const NewReservation = () => {
           </Button>
         </div>
       </div>
+      a
     </Body>
   );
 };
