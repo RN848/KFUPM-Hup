@@ -230,3 +230,63 @@
     }
   }
 }
+
+
+
+
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$unavailable-color: #343a40;
+$font-color-light: #ffffff;
+$font-color-muted: #6c757d;
+
+// Common styles
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // Two columns
+  gap: 10px; // Space between buttons
+
+  .grid-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 80px; // Set a minimum width for uniformity
+  }
+}
+
+// Time slots grid styling
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); // Four columns
+  gap: 10px;
+
+  .time-slot-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-align: center;
+
+    // Modifier for selected state
+    &.time-slot-selected {
+      background-color: $primary-color;
+      color: $font-color-light;
+      border-color: $primary-color;
+    }
+
+    // Modifier for available state
+    &.time-slot-available {
+      background-color: $secondary-color;
+      color: $font-color-light;
+      border-color: $secondary-color;
+    }
+
+    // Modifier for unavailable state
+    &.time-slot-unavailable {
+      background-color: $unavailable-color;
+      color: $font-color-muted; // Lighter text color for contrast
+      border-color: $unavailable-color;
+      pointer-events: none; // Disable click for unavailable slots
+    }
+  }
+}

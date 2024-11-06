@@ -13,7 +13,8 @@ export default function Nav() {
     { key: 6, name: "frame22", icon: faHouse, link: "/New-Clup" },
     { key: 7, name: "frame2", icon: faHouse, link: "/Sports-reservation" },
     { key: 8, name: "frame8", icon: faHouse, link: "/Latest-News" },
-    { key: 8, name: "frame15", icon: faHouse, link: "/edit-Activity" },
+    { key: 9, name: "frame15", icon: faHouse, link: "/edit-Activity" },
+    { key: 10, name: "frame3", icon: faHouse, link: "/new-reservation" },
   ];
 
   const linkMap = linksList.map((nav) => {
