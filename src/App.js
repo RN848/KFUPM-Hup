@@ -15,8 +15,10 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import NewClup from "./pages/NewClup";
 import SportsReserve from "./pages/SportsReserve";
+import NewReservation from "./pages/NewReservation";
 import LatestNews from "./pages/LatestNews";
 import EditActivity from "./pages/EditActivity";
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -55,6 +57,9 @@ function App() {
 
           <Route path="edit-Activity" element={<EditActivity />} />
           {/*{frame 15}*/}
+
+          <Route path="new-reservation" element={<NewReservation />} />
+          {/*{frame 3}*/}
         </Route>
       </Routes>
     </BrowserRouter>

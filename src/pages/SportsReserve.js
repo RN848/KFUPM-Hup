@@ -7,6 +7,7 @@ import { Image } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 import { NormInput } from "../components/Inputs";
 import { Textarea } from "../components/Inputs";
@@ -30,6 +31,8 @@ const SportsReserve = () => {
     code: "",
   });
 
+  const navigate = useNavigate(); 
+
   const sportsList = [
     { name: "Basketball", image: Basketball },
     { name: "Football", image: Football },
@@ -39,8 +42,6 @@ const SportsReserve = () => {
     { name: "Badminton", image: Badminton },
   ];
   
-
-
   const sportsMap = sportsList.map((s) => {
     const isActive = sport === s.name;
 
@@ -53,7 +54,7 @@ const SportsReserve = () => {
             setsport(s.name);
           }}
         >
-          <Image className="img" src={s.image}></Image>
+          <Image className="img" src={s.image} alt={s.name}></Image>
         </a>
         <span>{s.name}</span>
       </div>
@@ -129,19 +130,19 @@ const SportsReserve = () => {
                 >
                   <Col style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
                     <Button
-                    className="inputs-btn"
-                    as="input"
-                    type="submit"
-                    value="My Reservations"
-                  />
-                  <Button
-                    className="inputs-btn"
-                    as="input"
-                    type="submit"
-                    value="New Reservation"
-                  />
-                </Col>
-
+                      className="inputs-btn"
+                      as="input"
+                      type="button"
+                      value="My Reservations"
+                    />
+                    <Button
+                      className="inputs-btn"
+                      as="input"
+                      type="button"
+                      value="New Reservation"
+                      onClick={() => navigate("/new-reservation")}
+                    />
+                  </Col>
                 </div>
             
                 <div style={{ padding: "0 0 15px 15px"  }}>
