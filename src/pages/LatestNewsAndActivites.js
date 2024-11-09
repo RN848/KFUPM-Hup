@@ -77,7 +77,7 @@ const LatestNewsAndActivites = () => {
            title: "Community Club",
            logo: "../images/activities/activity-01.jpg",
        }
-    ]
+    ];
 
   const [filter, setFilter] = useState("");
 
@@ -118,10 +118,8 @@ const LatestNewsAndActivites = () => {
           );
       }
   });
-
-  const newsfilter = newsMap.filter((news) => {});
-
-  return (
+    newsMap.filter((news) => {});
+    return (
       <Body className={""}>
           <div className="body">
               {/* Main Content Row */}
