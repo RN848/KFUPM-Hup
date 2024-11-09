@@ -19,7 +19,7 @@ import NewReservation from "./pages/NewReservation";
 import ReservationSuccess from "./pages/ReservationSuccess";
 import LatestNews from "./pages/LatestNews";
 import EditActivity from "./pages/EditActivity";
-
+import LatestNewsAndActivites from "./pages/LatestNewsAndActivites";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -64,6 +64,11 @@ function App() {
 
           <Route path="reservaion-success" element={<ReservationSuccess />} />
           {/*{frame 4}*/}
+
+
+          <Route path="latest-newsAndActivity" element={<LatestNewsAndActivites />} />
+          {/*{frame 7}*/}
+
         </Route>
       </Routes>
     </BrowserRouter>
