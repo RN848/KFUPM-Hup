@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const Clubs = () => {
 
-  const location = useLocation();
-  //const navigate = useNavigate();
 
   const isAdminView = false; //frame 10 is false 21 true
   const navigate = useNavigate();
