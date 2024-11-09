@@ -1,0 +1,56 @@
+.error-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #292e33;
+    color: white;
+    padding: 2rem;
+  
+    .error-message {
+      flex: 1;
+      margin-left: 5rem;
+      text-align: left;
+  
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+  
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+  
+      p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        color: #ccc;
+      }
+  
+      .back-home-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  
+    .error-image {
+      flex: 1;
+  
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+    }
+  }
+  

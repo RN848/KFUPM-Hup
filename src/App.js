@@ -29,6 +29,7 @@ import MemberProfile from "./pages/MemberProfile";
 import ClubsPage from "./pages/Clubs";
 import Clubs from "./pages/Clubs";
 import EditClub from "./pages/EditClub";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   return (
@@ -95,6 +96,10 @@ function App() {
 
           <Route path="/edit-club" element={<EditClub/>} />
           {/*{frame 23}*/}
+
+          <Route path="/error" element={<ErrorPage />} />
+          {/*{frame 24}*/}
+
         </Route>
       </Routes>
     </BrowserRouter>
