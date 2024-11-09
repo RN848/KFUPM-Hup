@@ -42,8 +42,6 @@ const SportsReserve = () => {
     { name: "Badminton", image: Badminton },
   ];
 
-  
-
   const sportsMap = sportsList.map((s) => {
     const isActive = sport === s.name;
 
@@ -152,7 +150,20 @@ const SportsReserve = () => {
                       value="My Reservation"
                       onClick={() =>
                         navigate("/reservation-details", {
-                          state: { isOwnerView: true },
+                          state: {
+                            isOwnerView: true,
+                            reservation: {
+                              sport: "Football",
+                              field: "Field 1",
+                              day: "Sunday",
+                              time: "10:00 - 11:00",
+                              studentsNeeded: 10,
+                              studentsJoined: 4,
+                              timeLeft: "02:30",
+                              isPublic: true,
+                              code: "32423",
+                            },
+                          },
                         })
                       }
                     />
@@ -187,7 +198,6 @@ const SportsReserve = () => {
 };
 
 export default SportsReserve;
-
 
 // // Inside SportsReserve.js
 // const handleCodeSubmit = () => {

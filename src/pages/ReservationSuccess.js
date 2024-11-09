@@ -39,13 +39,17 @@ const ReservationSuccess = () => {
       <div className="reservation-success">
         <h2>Reserved Successfully</h2>
         <p>
-          Need at least <strong>{reservationDetails.studentsNeeded}</strong> students to confirm
+          Need at least <strong>{reservationDetails.studentsNeeded}</strong>{" "}
+          students to confirm
         </p>
         <p style={{ color: "#6c757d", fontSize: "1rem" }}>
-          The reservation will cancel after<strong>{" "}
-          {`${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
-            seconds < 10 ? "0" : ""
-          }${seconds}`}</strong>
+          The reservation will cancel after
+          <strong>
+            {" "}
+            {`${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
+              seconds < 10 ? "0" : ""
+            }${seconds}`}
+          </strong>
         </p>
 
         <div className="reservation-details">
