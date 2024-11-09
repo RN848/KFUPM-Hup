@@ -30,6 +30,7 @@ import ClubsPage from "./pages/Clubs";
 import Clubs from "./pages/Clubs";
 import EditClub from "./pages/EditClub";
 import ErrorPage from "./pages/ErrorPage";
+import LoadingPage from "./pages/LoadingPage";
 
 function App() {
   return (
@@ -99,6 +100,9 @@ function App() {
 
           <Route path="/error" element={<ErrorPage />} />
           {/*{frame 24}*/}
+
+          <Route path="/loading" element={<LoadingPage />} />
+          {/*{frame 25}*/}
 
         </Route>
       </Routes>

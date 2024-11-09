@@ -1,0 +1,24 @@
+.loading-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #292e33;
+  
+    .loading-content {
+      text-align: center;
+      color: white;
+  
+      .loading-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #3e6685; 
+      }
+  
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+    }
+  }
+  
