@@ -35,6 +35,7 @@ import LoadingPage from "./pages/LoadingPage";
 function App() {
   return (
     <BrowserRouter>
+      <Suspense fallback={<LoadingPage />}>
       <Routes>
         <Route>
           <Route index element={<Home />} />
@@ -92,10 +93,10 @@ function App() {
           <Route path="/member-profile" element={<MemberProfile />} />
           {/*{frame 17}*/}
 
-          <Route path="/clubs" element={<Clubs/>} />
+          <Route path="/clubs" element={<Clubs />} />
           {/*{frame 21}*/}
 
-          <Route path="/edit-club" element={<EditClub/>} />
+          <Route path="/edit-club" element={<EditClub />} />
           {/*{frame 23}*/}
 
           <Route path="/error" element={<ErrorPage />} />
@@ -103,9 +104,9 @@ function App() {
 
           <Route path="/loading" element={<LoadingPage />} />
           {/*{frame 25}*/}
-
         </Route>
       </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
