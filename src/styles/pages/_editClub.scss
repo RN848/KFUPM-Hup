@@ -1,0 +1,141 @@
+.edit-club {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem;
+  
+    .club-details {
+      flex: 1.5;
+      background-color: #292e33;
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: center;
+  
+      .club-logo {
+        width: 100%;
+        max-width: 200px;
+        height: 200px;
+        border-radius: 20px;
+        margin-bottom: 1rem;
+        object-fit: contain;
+        background-color: #292e33;
+      }
+  
+      h2 {
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 1rem;
+      }
+  
+      p {
+        color: #ccc;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+  
+      .contact-info {
+        text-align: left;
+        margin-top: 1rem;
+  
+        div {
+          margin-bottom: 0.5rem;
+          color: #ccc;
+  
+          strong {
+            color: #fff;
+          }
+        }
+      }
+    }
+  
+    .edit-section {
+      flex: 2;
+      background-color: #292e33;
+      padding: 1.5rem;
+      border-radius: 10px;
+  
+      h3 {
+        background-color: transparent;
+        font-size: 1.2rem;
+        color: white;
+        margin-bottom: 1rem;
+      }
+  
+      .form-group {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+  
+        input {
+          flex: 1;
+          padding: 0.5rem;
+          font-size: 1rem;
+          border-radius: 5px;
+          border: 1px solid #444;
+          background-color: #292e33;
+          color: white;
+        }
+  
+        button {
+          font-size: 1rem;
+          padding: 0.5rem 1rem;
+        }
+      }
+  
+      .members-list {
+        .member-card {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          background-color: #232931;
+          padding: 1rem;
+          border-radius: 10px;
+          margin-bottom: 1rem;
+  
+          .profile-picture {
+            width: 70px; 
+            height: 70px; 
+            border-radius: 50%;
+            object-fit: cover;
+          }
+  
+          .member-info {
+            flex: 1;
+  
+            h4 {
+              font-size: 1rem;
+              color: white;
+            }
+  
+            p {
+              font-size: 0.9rem;
+              color: #ccc;
+            }
+  
+            .role {
+              font-weight: bold;
+              color: white;
+            }
+          }
+  
+          button {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  
+    .back-button {
+      margin-top: 2rem;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    .default-icon {
+      font-size: 4.5rem; 
+      color: #ccc;
+      margin-right: 1rem;
+    }
+  }
+  
