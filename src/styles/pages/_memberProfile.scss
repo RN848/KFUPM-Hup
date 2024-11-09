@@ -1,0 +1,92 @@
+.member-profile {
+    padding: 2rem;
+    color: #fff;
+    text-align: center;
+  
+    .profile-card {
+      background-color: #292e33;
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  
+      h2 {
+        margin-bottom: 1rem;
+      }
+  
+      .profile-picture {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+      }
+  
+      .default-icon {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #555;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px; 
+        color: #ccc;
+        margin: 0 auto 1rem auto; 
+      }
+    
+  
+      h3 {
+        background-color: transparent;
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+      }
+  
+      p {
+        margin: 0.5rem 0;
+        font-size: 1rem;
+        color: #aaa;
+      }
+  
+      .role {
+        font-weight: bold;
+        color: #ffffff;
+        margin: 1rem 0;
+      }
+  
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+  
+        button {
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+        }
+  
+        span {
+          color: #ccc;
+          font-size: 0.9rem;
+        }
+      }
+  
+      .details {
+        text-align: left;
+        margin-top: 1rem;
+  
+        p {
+          margin: 0.5rem 0;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  
+    .back-button {
+      margin-top: 2rem;
+    }
+  }
+  

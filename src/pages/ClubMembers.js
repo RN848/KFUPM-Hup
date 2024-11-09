@@ -4,8 +4,10 @@ import "../styles/pages/_clubMembers.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Body from "../components/Body";
+import { useNavigate } from "react-router-dom";
 
 const ClubMembers = () => {
+  const navigate = useNavigate();
   const [members, setMembers] = useState([
     {
       id: 1,
@@ -13,6 +15,10 @@ const ClubMembers = () => {
       interests: "football, tech",
       role: "vice president",
       profilePicture: "/images/clubMembers/omar.jpeg",
+      isMember: true,
+      email: "omar@kfump.hub",
+      number: "000",
+      social: "@kfupm_hub",
     },
     {
       id: 2,
@@ -117,7 +123,15 @@ const ClubMembers = () => {
 
         <div className="members-grid">
           {members.map((member) => (
-            <div className="member-card" key={member.id}>
+            <div
+              className="member-card"
+              key={member.id}
+              onClick={() =>
+                navigate("/member-profile", {
+                  state: { member },
+                })
+              }
+            >
               {member.profilePicture ? (
                 <img
                   src={member.profilePicture}
@@ -141,7 +155,10 @@ const ClubMembers = () => {
                 </Button>
                 <Button
                   variant="danger"
-                  onClick={() => handleRemove(member.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRemove(member.id);
+                  }}
                 >
                   Remove
                 </Button>

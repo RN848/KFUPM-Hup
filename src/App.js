@@ -25,6 +25,7 @@ import ActivityView from "./pages/ActivityView";
 import ClubMembers from "./pages/ClubMembers";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import MemberProfile from "./pages/MemberProfile";
 
 function App() {
   return (
@@ -82,6 +83,9 @@ function App() {
 
           <Route path="/club-members" element={<ClubMembers />} />
           {/*{frame 16}*/}
+
+          <Route path="/member-profile" element={<MemberProfile />} />
+          {/*{frame 17}*/}
         </Route>
       </Routes>
     </BrowserRouter>
