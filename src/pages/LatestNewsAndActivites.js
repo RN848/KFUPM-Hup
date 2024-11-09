@@ -99,7 +99,7 @@ const LatestNewsAndActivites = () => {
       if (move < maxOut) {
           move += 1;
           return (
-              <Col lg={6} md={6} sm={12} xs={12} className="news-col">
+              <Col lg={6} md={6} sm={12} xs={12} className="news-col col-lg-6 col-md-6 col-sm-12 col-12">
                   <a href="">
                       <div>
                           <Image className="img" src={news.img}></Image>
@@ -147,7 +147,9 @@ const LatestNewsAndActivites = () => {
                               enrolled
                           </Button>
                       </div>
+                      <div className={"g-4 wid-row news-box row"}>
                       {newsMap}
+                      </div>
                           <div className={"d-flex justify-content-center"}>
                       <Button onClick={() => {
                           navigate("/Latest-News")
