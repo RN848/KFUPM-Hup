@@ -21,6 +21,7 @@ export default function Nav() {
     { key: 12, name: "frame5&6", icon: faHouse, link: "/reservation-details" },
     { key: 16, name: "frame16", icon: faHouse, link: "/club-members" },
     { key: 17, name: "frame17", icon: faHouse, link: "/members-profile" },
+    { key: 18, name: "frame21", icon: faHouse, link: "/clubs" },
   ];
 
   const linkMap = linksList.map((nav) => {
