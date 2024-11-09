@@ -22,6 +22,7 @@ import LatestNews from "./pages/LatestNews";
 import EditActivity from "./pages/EditActivity";
 import LatestNewsAndActivites from "./pages/LatestNewsAndActivites";
 import ActivityView from "./pages/ActivityView";
+import ClubMembers from "./pages/ClubMembers";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -78,6 +79,9 @@ function App() {
 
           <Route path="/reservation-details" element={<ReservationDetails />} />
           {/*{frame 5&6}*/}
+
+          <Route path="/club-members" element={<ClubMembers />} />
+          {/*{frame 16}*/}
         </Route>
       </Routes>
     </BrowserRouter>
