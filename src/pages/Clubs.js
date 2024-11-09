@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Clubs = () => {
 
 
-  const isAdminView = false; //frame 10 is false 21 true
+  const isAdminView = true; //frame 10 is false 21 true
   const navigate = useNavigate();
   const [clubs, setClubs] = useState([
     {

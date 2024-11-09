@@ -24,7 +24,7 @@ import EditActivity from "./pages/EditActivity";
 import LatestNewsAndActivites from "./pages/LatestNewsAndActivites";
 import ActivityView from "./pages/ActivityView";
 import ClubMembers from "./pages/ClubMembers";
-
+import ClubProfile from "./pages/ClubProfile"
 import "bootstrap/dist/css/bootstrap.min.css";
 import MemberProfile from "./pages/MemberProfile";
 import ClubsPage from "./pages/Clubs";
@@ -105,6 +105,9 @@ function App() {
 
             <Route path="/error" element={<ErrorPage />} />
             {/*{frame 24}*/}
+
+            <Route path="/club-profile" element={<ClubProfile />} />
+            {/*{frame 11}*/}
 
             <Route path="/loading" element={<LoadingPage />} />
             {/*{frame 25}*/}
