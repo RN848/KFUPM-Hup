@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Body from "../components/Body";
 import "../styles/pages/_clubs.scss";
-import {useLocation, useNavigate} from "react-router-dom"; // Add the relevant styles here
+import { useNavigate } from "react-router-dom";
 
 const Clubs = () => {
 
@@ -10,35 +10,50 @@ const Clubs = () => {
   //const navigate = useNavigate();
 
   const isAdminView = false; //frame 10 is false 21 true
+  const navigate = useNavigate();
   const [clubs, setClubs] = useState([
     {
       id: 1,
-      name: "Coputer Clup",
+      name: "Coputer Club",
       logo: "/images/clubs/computer_club.png",
+      email: "cc@kfupm.hub",
+      number: "111",
+      social: "@CC_KFUPM",
+      leader: "Omar",
+      members: [
+        {
+          id: 1,
+          name: "Omar",
+          role: "Vice Precident",
+          profilePicture: "/images/clubMembers/omar.jpeg",
+        },
+        { id: 2, name: "Mohammed", role: "Member", profilePicture: "" },
+      ],
     },
+
     {
       id: 2,
-      name: "Coputer Clup",
+      name: "Coputer Club",
       logo: "/images/clubs/computer_club.png",
     },
     {
       id: 3,
-      name: "Coputer Clup",
+      name: "Coputer Club",
       logo: "/images/clubs/computer_club.png",
     },
     {
       id: 4,
-      name: "Coputer Clup",
+      name: "Coputer Club",
       logo: "/images/clubs/computer_club.png",
     },
     {
       id: 5,
-      name: "Coputer Clup",
+      name: "Coputer Club",
       logo: "/images/clubs/computer_club.png",
     },
     {
       id: 6,
-      name: "Coputer Clup",
+      name: "Coputer Club",
       logo: "/images/clubs/computer_club.png",
     },
   ]);
@@ -47,9 +62,9 @@ const Clubs = () => {
     setClubs(clubs.filter((club) => club.id !== id));
   };
 
-  const handleEditClub = (id) => {
-    alert(`Editing Club with ID: ${id}`);
-  };
+  //   const handleEditClub = (id) => {
+  //     alert(`Editing Club with ID: ${id}`);
+  //   };
 
   const handleAddNewClub = () => {
     alert("Navigate to Add New Club page.");
@@ -97,10 +112,11 @@ const Clubs = () => {
                     <>
                 <Button
                   variant="primary"
-                  onClick={() => handleEditClub(club.id)}
+                  onClick={() => navigate("/edit-club", { state: { club } })}
                 >
                   Edit
                 </Button>
+
                 <Button
                   variant="danger"
                   onClick={() => handleRemoveClub(club.id)}
