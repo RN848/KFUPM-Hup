@@ -5,6 +5,9 @@ import "../styles/pages/_clubs.scss";
 import { useNavigate } from "react-router-dom";
 
 const Clubs = () => {
+
+
+  const isAdminView = false; //frame 10 is false 21 true
   const navigate = useNavigate();
   const [clubs, setClubs] = useState([
     {
@@ -69,10 +72,28 @@ const Clubs = () => {
     <Body>
       <div className="clubs-page">
         <header>
-          <h1>Clubs</h1>
+          <div>
+            <h1 style={{display: "inline", marginRight: "15px"}}>Clubs</h1>
+            {!isAdminView&& (
+                <>
+            <Button variant={"primary"} style={{marginRight:"5px"}}>Following</Button>
+            <Button variant={"primary"}>Enrolled</Button>
+                </>
+          )};
+          </div>
+          {
+            isAdminView ? (
+                <>
           <Button variant="primary" onClick={handleAddNewClub}>
             Add New Club
           </Button>
+              </>
+            ) : (
+                <>
+                  <Button>Back</Button>
+                </>
+            )
+          }
         </header>
 
         <div className="clubs-grid">
@@ -85,6 +106,8 @@ const Clubs = () => {
               />
               <h3>{club.name}</h3>
               <div className="buttons">
+                {isAdminView ? (
+                    <>
                 <Button
                   variant="primary"
                   onClick={() => navigate("/edit-club", { state: { club } })}
@@ -98,6 +121,13 @@ const Clubs = () => {
                 >
                   Remove
                 </Button>
+                </>) : (
+                    <>
+                      <Button variant={"dark"}>follow</Button>
+                      <Button>Profile</Button>
+                    </>
+                )
+              }
               </div>
             </div>
           ))}

@@ -21,6 +21,7 @@ export default function Nav() {
     { key: 12, name: "frame5&6", icon: faHouse, link: "/reservation-details" },
     { key: 16, name: "frame16", icon: faHouse, link: "/club-members" },
     { key: 17, name: "frame17", icon: faHouse, link: "/members-profile" },
+    { key: 18, name: "frame21&10", icon: faHouse, link: "/clubs" },
     { key: 18, name: "frame21", icon: faHouse, link: "/clubs" },
     { key: 19, name: "frame23", icon: faHouse, link: "/edit-club" },
     { key: 20, name: "frame24", icon: faHouse, link: "/error" },
