@@ -7,7 +7,7 @@ import { Image } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 import { NormInput } from "../components/Inputs";
 import { Textarea } from "../components/Inputs";
@@ -31,7 +31,7 @@ const SportsReserve = () => {
     code: "",
   });
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const sportsList = [
     { name: "Basketball", image: Basketball },
@@ -41,7 +41,9 @@ const SportsReserve = () => {
     { name: "Squash", image: Squash },
     { name: "Badminton", image: Badminton },
   ];
+
   
+
   const sportsMap = sportsList.map((s) => {
     const isActive = sport === s.name;
 
@@ -85,8 +87,16 @@ const SportsReserve = () => {
 
   const reserveMap = filteredReserves.map((box) => {
     return (
-      <Col lg={4} md={4} sm={6} xs={12} className="sport-col">
-        <a href="">
+      <Col lg={4} md={4} sm={6} xs={12} className="sport-col" key={box.sport}>
+        <a
+          href=""
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/reservation-details", {
+              state: { isOwnerView: false, reservation: box },
+            });
+          }}
+        >
           <div>
             <h3>{box.sport}</h3>
             <div className="deteils">
@@ -128,12 +138,23 @@ const SportsReserve = () => {
                     gap: "10px",
                   }}
                 >
-                  <Col style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+                  <Col
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "15px",
+                    }}
+                  >
                     <Button
                       className="inputs-btn"
                       as="input"
                       type="button"
-                      value="My Reservations"
+                      value="My Reservation"
+                      onClick={() =>
+                        navigate("/reservation-details", {
+                          state: { isOwnerView: true },
+                        })
+                      }
                     />
                     <Button
                       className="inputs-btn"
@@ -144,18 +165,17 @@ const SportsReserve = () => {
                     />
                   </Col>
                 </div>
-            
-                <div style={{ padding: "0 0 15px 15px"  }}>
-                <NormInput
-                  inputs={inputs}
-                  setInputs={setInputs}
-                  input={"number"}
-                  type={"code"}
-                  label={"Code"}
-                  placeholder={"2335"}
-                />
-              </div>
 
+                <div style={{ padding: "0 0 15px 15px" }}>
+                  <NormInput
+                    inputs={inputs}
+                    setInputs={setInputs}
+                    input={"number"}
+                    type={"code"}
+                    label={"Code"}
+                    placeholder={"2335"}
+                  />
+                </div>
               </div>
             </div>
           </Col>
@@ -167,3 +187,17 @@ const SportsReserve = () => {
 };
 
 export default SportsReserve;
+
+
+// // Inside SportsReserve.js
+// const handleCodeSubmit = () => {
+//   const matchingReservation = reservesList.find(reserve => reserve.code === inputs.code);
+//   if (matchingReservation) {
+//     navigate("/reservation-details", { state: { isOwnerView: false, reservation: matchingReservation } });
+//   } else {
+//     alert("Invalid code.");
+//   }
+// };
+
+// // Call handleCodeSubmit when the code is submitted, e.g., on button click
+// <Button onClick={handleCodeSubmit}>Check Code</Button>

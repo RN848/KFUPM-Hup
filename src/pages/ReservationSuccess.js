@@ -7,7 +7,7 @@ import "../styles/main.css";
 import "../styles/pages/_reservationSuccess.scss";
 
 const ReservationSuccess = () => {
-  const [remainingTime, setRemainingTime] = useState(25200); 
+  const [remainingTime, setRemainingTime] = useState(25200); // Countdown timer (7 hours)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,24 +22,60 @@ const ReservationSuccess = () => {
   const minutes = Math.floor((remainingTime % 3600) / 60);
   const seconds = remainingTime % 60;
 
+  const reservationDetails = {
+    sport: "Football",
+    field: "Field 1",
+    day: "Sunday",
+    time: "1:00 - 1:59",
+    studentsJoined: 4,
+    studentsNeeded: 7,
+    timeLeft: "03:58",
+    isPublic: true,
+    code: "32423",
+  };
+
   return (
     <Body>
       <div className="reservation-success">
         <h2>Reserved Successfully</h2>
-        <p>Need at least 7 students to confirm</p>
+        <p>
+          Need at least <strong>{reservationDetails.studentsNeeded}</strong> students to confirm
+        </p>
         <p style={{ color: "#6c757d", fontSize: "1rem" }}>
-          the reservation will cancel after{" "}
+          The reservation will cancel after<strong>{" "}
           {`${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
             seconds < 10 ? "0" : ""
-          }${seconds}`}
+          }${seconds}`}</strong>
         </p>
 
         <div className="reservation-details">
           <div className="button-group">
             <Button variant="primary">Share</Button>
-            <div className="code-box">Code : 32423</div>
+            <div className="code-box">Code : {reservationDetails.code}</div>
           </div>
-          <Button className="details-button">Reservation Details</Button>
+          <Button
+            className="details-button"
+            onClick={() =>
+              navigate("/reservation-details", {
+                state: {
+                  isOwnerView: true,
+                  reservation: {
+                    sport: "Football",
+                    field: "Field 1",
+                    day: "Sunday",
+                    time: "1:00 - 1:59",
+                    studentsNeeded: 7,
+                    studentsJoined: 4,
+                    timeLeft: "03:58",
+                    isPublic: true,
+                    code: "32423",
+                  },
+                },
+              })
+            }
+          >
+            View Details
+          </Button>
         </div>
 
         <Button

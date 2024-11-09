@@ -17,9 +17,9 @@ import NewClup from "./pages/NewClup";
 import SportsReserve from "./pages/SportsReserve";
 import NewReservation from "./pages/NewReservation";
 import ReservationSuccess from "./pages/ReservationSuccess";
+import ReservationDetails from "./pages/ReservationDetails";
 import LatestNews from "./pages/LatestNews";
 import EditActivity from "./pages/EditActivity";
-
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -64,6 +64,9 @@ function App() {
 
           <Route path="reservaion-success" element={<ReservationSuccess />} />
           {/*{frame 4}*/}
+
+          <Route path="/reservaion-details" element={<ReservationDetails />} />
+          {/*{frame 5}*/}
         </Route>
       </Routes>
     </BrowserRouter>
