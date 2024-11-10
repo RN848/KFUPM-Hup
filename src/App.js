@@ -27,11 +27,11 @@ import ClubMembers from "./pages/ClubMembers";
 import ClubProfile from "./pages/ClubProfile"
 import "bootstrap/dist/css/bootstrap.min.css";
 import MemberProfile from "./pages/MemberProfile";
-import ClubsPage from "./pages/Clubs";
 import Clubs from "./pages/Clubs";
 import EditClub from "./pages/EditClub";
 import ErrorPage from "./pages/ErrorPage";
 import LoadingPage from "./pages/LoadingPage";
+import ClLeadHomePage from "./pages/ClLeadHomePage";
 
 function App() {
   return (
@@ -111,6 +111,8 @@ function App() {
 
             <Route path="/loading" element={<LoadingPage />} />
             {/*{frame 25}*/}
+
+            <Route path={"/clubleaderHomePage"} element={<ClLeadHomePage />}/>
           </Route>
         </Routes>
       </Suspense>
