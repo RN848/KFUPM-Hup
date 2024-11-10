@@ -1,17 +1,7 @@
 import Body from "../components/Body";
-import "../styles/main.css";
-import "../styles/master.css";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import "../styles/pages/_logIn.scss"; 
 import { useState } from "react";
-
-import { NormInput } from "../components/Inputs";
-import { Textarea } from "../components/Inputs";
-import { Radio } from "../components/Inputs";
-import { Uplode } from "../components/Inputs";
-import { Link } from "../components/Inputs";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -20,49 +10,41 @@ const SignUp = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   return (
     <Body>
-      <div className="body">
-        <h1>Sign Up</h1>
-        <div className={"g-4 wid-row"} md={2} sm={1} xs={1}>
-          <div className="wid-colum" style={{ margin: "50px 0 100px" }}>
-            <Form className="form">
-              <NormInput
-                inputs={inputs}
-                setInputs={setInputs}
-                input={"name"}
-                type={"text"}
-                label={"Name"}
-                placeholder={"name"}
-              />
+      <div className="login-container">
+        <h1 className="main-heading">Welcome to KFUPM HUB</h1>
+        <div className="login-form">
+          <h2 className="login-title">Sign Up</h2>
+          <form>
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" placeholder="Enter your name" />
 
-              <NormInput
-                inputs={inputs}
-                setInputs={setInputs}
-                input={"email"}
-                type={"email"}
-                label={"Email"}
-                placeholder={"email"}
-              />
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" />
 
-              <NormInput
-                inputs={inputs}
-                setInputs={setInputs}
-                input={"password"}
-                type={"password"}
-                label={"Password"}
-                placeholder={"Password"}
-              />
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+            />
 
-              <Button
-                style={{ width: "100%" }}
-                className="inputs-btn"
-                as="input"
-                type="submit"
-                value="Sign Up"
-              />
-            </Form>
-          </div>
+            <button type="submit" className="login-btn">
+              Sign Up
+            </button>
+          </form>
+          <p style={{ textAlign: "center", color: "#ccc", marginTop: "1rem" }}>
+            Already have an account? Log in below.
+          </p>
+          <button
+            className="signup-btn"
+            onClick={() => navigate("/Log-In")} 
+          >
+            Log In
+          </button>
         </div>
       </div>
     </Body>
