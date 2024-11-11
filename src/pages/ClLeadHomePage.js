@@ -6,8 +6,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { Image } from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 const ClLeadHomePage = () => {
+    const navigator = useNavigate();
     const clubMembers = ["Rayan Almalki", "Rayan Almalki", "Rayan Almalki"];
     const clubActivity = [
         {
@@ -66,7 +68,7 @@ const ClLeadHomePage = () => {
                             <Button variant="primary" className="all-btn">
                                 All
                             </Button>
-                            <Button variant="primary" className="add-btn">
+                            <Button variant="primary" className="add-btn" onClick={navigator("/Create-Activity-news")}>
                                 Add new
                             </Button>
                         </div>

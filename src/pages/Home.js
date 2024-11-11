@@ -16,6 +16,7 @@ import { Link } from "../components/Inputs";
 
 import reserve from "../images/home/reserve.jpg";
 import clups from "../images/home/clups.jpg";
+import {useNavigate} from "react-router-dom";
 
 const Home = () => {
   const [inputs, setInputs] = useState({
@@ -27,6 +28,8 @@ const Home = () => {
     joinLink: "dfdffdf",
     image: "No file chosen",
   });
+
+  const navigate = useNavigate();
 
   return (
     <Body>
@@ -40,7 +43,7 @@ const Home = () => {
                 backgroundColor: "transparent",
               }}
             >
-              <a href="">
+              <a href="" onClick={() => navigate("/Sports-reservation")}>
                 <Image
                   src={reserve}
                   style={{ maxWidth: "100%", borderRadius: "8%" }}
@@ -53,7 +56,7 @@ const Home = () => {
               className="wid-colum"
               style={{ backgroundColor: "transparent" }}
             >
-              <a href="">
+              <a href="" onClick={() => navigate("/news-clubs")}>
                 <Image
                   src={clups}
                   style={{ maxWidth: "100%", borderRadius: "8%" }}

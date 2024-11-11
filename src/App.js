@@ -39,7 +39,9 @@ function App() {
       <Suspense fallback={<LoadingPage />}>
         <Routes>
           <Route>
-            <Route index element={<Home />} />
+            <Route index element={<LogIn />} />
+            {/*{frame 18}*/}
+            <Route path="home" element={<Home />} />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NoPage />} />
 
@@ -52,8 +54,7 @@ function App() {
             <Route path="Your-Profile" element={<YourProfile />} />
             {/*{frame 20}*/}
 
-            <Route path="Log-In" element={<LogIn />} />
-            {/*{frame 18}*/}
+
 
             <Route path="Sign-Up" element={<SignUp />} />
             {/*{frame 19}*/}

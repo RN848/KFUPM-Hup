@@ -30,7 +30,7 @@ const LogIn = () => {
               placeholder="Enter your password"
             />
 
-            <button type="submit" className="login-btn">
+            <button type="submit" className="login-btn" onClick={() => navigate("/home")}>
               Log In
             </button>
           </form>
