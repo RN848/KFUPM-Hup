@@ -198,16 +198,3 @@ const SportsReserve = () => {
 };
 
 export default SportsReserve;
-
-// // Inside SportsReserve.js
-// const handleCodeSubmit = () => {
-//   const matchingReservation = reservesList.find(reserve => reserve.code === inputs.code);
-//   if (matchingReservation) {
-//     navigate("/reservation-details", { state: { isOwnerView: false, reservation: matchingReservation } });
-//   } else {
-//     alert("Invalid code.");
-//   }
-// };
-
-// // Call handleCodeSubmit when the code is submitted, e.g., on button click
-// <Button onClick={handleCodeSubmit}>Check Code</Button>

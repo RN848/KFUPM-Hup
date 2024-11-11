@@ -16,7 +16,7 @@ export default function Nav() {
     { key: 9, name: "frame15", icon: faHouse, link: "/edit-Activity" },
     { key: 10, name: "frame3", icon: faHouse, link: "/new-reservation" },
     { key: 11, name: "frame4", icon: faHouse, link: "/reservaion-success" },
-    { key: 12, name: "frame7", icon: faHouse, link: "/latest-newsAndActivity" },
+    { key: 12, name: "frame7", icon: faHouse, link: "/news-clubs" },
     { key: 13, name: "frame9", icon: faHouse, link: "/activity-view" },
     { key: 14, name: "frame5&6", icon: faHouse, link: "/reservation-details" },
     { key: 15, name: "frame16", icon: faHouse, link: "/club-members" },
@@ -28,7 +28,6 @@ export default function Nav() {
     { key: 21, name: "frame11", icon: faHouse, link: "/club-profile" },
     { key: 22, name: "frame25", icon: faHouse, link: "/loading" },
     { key: 23, name: "frame12", icon: faHouse, link: "/clubleaderHomePage" },
-
   ];
 
   const linkMap = linksList.map((nav) => {

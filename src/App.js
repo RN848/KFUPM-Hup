@@ -21,7 +21,7 @@ import ReservationSuccess from "./pages/ReservationSuccess";
 import ReservationDetails from "./pages/ReservationDetails";
 import LatestNews from "./pages/LatestNews";
 import EditActivity from "./pages/EditActivity";
-import LatestNewsAndActivites from "./pages/LatestNewsAndActivites";
+import NewsAndClubs from "./pages/NewsAndClubs";
 import ActivityView from "./pages/ActivityView";
 import ClubMembers from "./pages/ClubMembers";
 import ClubProfile from "./pages/ClubProfile"
@@ -77,8 +77,8 @@ function App() {
             {/*{frame 4}*/}
 
             <Route
-              path="latest-newsAndActivity"
-              element={<LatestNewsAndActivites />}
+              path="news-clubs"
+              element={<NewsAndClubs />}
             />
             {/*{frame 7}*/}
 
