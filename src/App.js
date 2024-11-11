@@ -24,7 +24,7 @@ import EditActivity from "./pages/EditActivity";
 import NewsAndClubs from "./pages/NewsAndClubs";
 import ActivityView from "./pages/ActivityView";
 import ClubMembers from "./pages/ClubMembers";
-import ClubProfile from "./pages/ClubProfile"
+import ClubProfile from "./pages/ClubProfile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MemberProfile from "./pages/MemberProfile";
 import Clubs from "./pages/Clubs";
@@ -39,9 +39,7 @@ function App() {
       <Suspense fallback={<LoadingPage />}>
         <Routes>
           <Route>
-            <Route index element={<LogIn />} />
-            {/*{frame 18}*/}
-            <Route path="home" element={<Home />} />
+            <Route index element={<Home />} />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NoPage />} />
 
@@ -54,7 +52,8 @@ function App() {
             <Route path="Your-Profile" element={<YourProfile />} />
             {/*{frame 20}*/}
 
-
+            <Route path="Log-In" element={<LogIn />} />
+            {/*{frame 18}*/}
 
             <Route path="Sign-Up" element={<SignUp />} />
             {/*{frame 19}*/}
@@ -77,10 +76,7 @@ function App() {
             <Route path="reservaion-success" element={<ReservationSuccess />} />
             {/*{frame 4}*/}
 
-            <Route
-              path="news-clubs"
-              element={<NewsAndClubs />}
-            />
+            <Route path="news-clubs" element={<NewsAndClubs />} />
             {/*{frame 7}*/}
 
             <Route path="activity-view" element={<ActivityView />} />
@@ -113,7 +109,7 @@ function App() {
             <Route path="/loading" element={<LoadingPage />} />
             {/*{frame 25}*/}
 
-            <Route path={"/clubleaderHomePage"} element={<ClLeadHomePage />}/>
+            <Route path={"/clubleaderHomePage"} element={<ClLeadHomePage />} />
           </Route>
         </Routes>
       </Suspense>

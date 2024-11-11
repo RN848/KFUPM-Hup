@@ -1,0 +1,113 @@
+@import "./_latestNews.scss"; 
+
+.activity-view-body {
+  .news-box {
+    padding: 20px;
+    background-color: #292e33;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    .activity-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .activity-description {
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin-bottom: 15px;
+    }
+
+    .activity-details-text {
+      font-size: 1rem;
+      color: #aaaaaa;
+      margin-top: 15px;
+    }
+
+    .activity-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .news-join-btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+
+      &.joined {
+        background-color: #28a745;
+        cursor: not-allowed;
+      }
+    }
+
+    .joined-message {
+      color: #28a745;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .club-section {
+      border-top: 1px solid #444;
+      padding-top: 20px;
+      margin-top: 20px;
+
+      .club-logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+
+      .club-info {
+        .club-name {
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #ffffff;
+        }
+
+        .club-action-btn {
+          margin-top: 10px;
+          padding: 6px 12px;
+          background-color: #007bff;
+          color: #ffffff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #0056b3;
+          }
+
+          &.following {
+            background-color: #28a745;
+          }
+        }
+      }
+    }
+  }
+
+  .back-btn {
+    background-color: #6c757d;
+    color: #ffffff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #5a6268;
+    }
+  }
+}
+
+  
