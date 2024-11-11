@@ -111,7 +111,7 @@ const SportsReserve = () => {
   return (
     <Body>
       <div className="body">
-        <h1>Manage Profile </h1>
+        <h1>Sport Reservation </h1>
         <Row
           className={"g-4 wid-row reverse"}
           style={{ marginBottom: "1.5em" }}

@@ -1,80 +1,47 @@
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
+import "../styles/pages/_latestNews.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Image } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
-
-import { NormInput } from "../components/Inputs";
-import { Textarea } from "../components/Inputs";
-import { Radio } from "../components/Inputs";
-import { Uplode } from "../components/Inputs";
-import { Link } from "../components/Inputs";
-
-import Basketball from "../images/sports/sport-1.jpg";
-import Football from "../images/sports/sport-2.jpg";
-import tennis from "../images/sports/sport-3.jpg";
-import Volleyball from "../images/sports/sport-4.jpg";
-import Squash from "../images/sports/sport-5.jpg";
-import Badminton from "../images/sports/sport-6.jpg";
 
 const LatestNews = () => {
   const newsList = [
     {
-      title: "news activity news activ",
-      desc: "news activity news acactivity tiv",
-      img: "../images/activities/activity-01.jpg",
+      title: "News Title 1",
+      desc: "Description of the news or activity goes here.",
+      img: "../images/activities/activity-01.png",
       join: "",
       clup: "1",
     },
     {
-      title: "news activity news activ",
-      desc: "news activity news acactivity tiv",
-      img: "../images/activities/activity-02.jpg",
+      title: "News Title 2",
+      desc: "Another news description goes here.",
+      img: "../images/activities/activity-02.jpeg",
       join: "",
       clup: "2",
     },
     {
-      title: "news activity news activ",
-      desc: "news activity news acactivity tiv",
+      title: "News Title 3",
+      desc: "Details about the third news or activity.",
       img: "../images/activities/activity-03.jpg",
       join: "",
       clup: "3",
     },
     {
-      title: "news activity news activ",
-      desc: "news activity news acactivity tiv",
+      title: "News Title 4",
+      desc: "Details about the third news or activity.",
       img: "../images/activities/activity-04.jpg",
       join: "",
-      clup: "1",
-    },
-    {
-      title: "news activity news activ",
-      desc: "news activity news acactivity tiv",
-      img: "../images/activities/activity-01.jpg",
-      join: "",
-      clup: "2",
-    },
-    {
-      title: "news activity news activ",
-      desc: "news activity news acactivity tiv",
-      img: "../images/activities/activity-03.jpg",
-      join: "",
-      clup: "1",
-    },
-    {
-      title: "news activity news activ",
-      desc: "news activity news acactivity tiv",
-      img: "../images/activities/activity-02.jpg",
-      join: "",
-      clup: "1",
+      clup: "4",
     },
   ];
 
   const [filter, setFilter] = useState("");
+  const [clickedNews, setClickedNews] = useState([]); // Track clicked buttons by index
 
   const followClups = ["1", "2"];
   const enrolledClups = ["3"];
@@ -89,60 +56,61 @@ const LatestNews = () => {
     return true; // Show all news if no filter is applied
   });
 
-  const newsMap = filteredNews.map((news) => {
-    return (
-      <Col lg={6} md={6} sm={12} xs={12} className="news-col">
-        <a href="">
-          <div>
-            <Image className="img" src={news.img}></Image>
-            <div className="deteils">
-              <div className="text">
-                <h3>{news.title}</h3>
-                <p>{news.desc}</p>
-              </div>
-              <div className="form">
-                <Button className="join">join</Button>
-              </div>
-            </div>
-          </div>
-        </a>
-      </Col>
-    );
-  });
+  const handleJoinClick = (index) => {
+    if (!clickedNews.includes(index)) {
+      setClickedNews([...clickedNews, index]); // Add index to clickedNews
+    }
+  };
 
-  const newsfilter = newsMap.filter((news) => {});
+  const newsMap = filteredNews.map((news, index) => (
+    <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
+      <div className="news-card">
+        <Image className="news-img" src={news.img} alt={news.title} />
+        <div className="news-details">
+          <h3 className="news-title">{news.title}</h3>
+          <p className="news-desc">{news.desc}</p>
+          {!clickedNews.includes(index) ? (
+            <Button
+              className="news-join-btn"
+              onClick={() => handleJoinClick(index)}
+            >
+              Join
+            </Button>
+          ) : (
+            <p className="joined-message">You have joined this activity!</p>
+          )}
+        </div>
+      </div>
+    </Col>
+  ));
 
   return (
     <Body>
-      <div className="body">
-        <div className={"filter"}>
-          <h1>Latest News and Activity</h1>
-
-          <div>
-            <Button
-              className={`filterb ${filter === "following" ? "active" : ""}`}
-              onClick={() =>
-                setFilter(
-                  filter === "" || filter === "enrolled" ? "following" : ""
-                )
-              }
-            >
-              following
-            </Button>
-            <Button
-              className={`filterb ${filter === "enrolled" ? "active" : ""}`}
-              onClick={() =>
-                setFilter(
-                  filter === "" || filter === "following" ? "enrolled" : ""
-                )
-              }
-            >
-              enrolled
-            </Button>
-          </div>
+      <div className="news-page">
+        <h1 className="page-title">Latest News and Activities</h1>
+        <div className="news-filter">
+          <Button
+            className={`filter-btn ${filter === "following" ? "active" : ""}`}
+            onClick={() =>
+              setFilter(
+                filter === "" || filter === "enrolled" ? "following" : ""
+              )
+            }
+          >
+            Following
+          </Button>
+          <Button
+            className={`filter-btn ${filter === "enrolled" ? "active" : ""}`}
+            onClick={() =>
+              setFilter(
+                filter === "" || filter === "following" ? "enrolled" : ""
+              )
+            }
+          >
+            Enrolled
+          </Button>
         </div>
-
-        <Row className={"g-4 wid-row news-box "}>{newsMap}</Row>
+        <Row className="news-container">{newsMap}</Row>
       </div>
     </Body>
   );

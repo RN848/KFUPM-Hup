@@ -14,6 +14,7 @@ h3 {
   object-fit: cover;
   border-radius: 50%;
 }
+
 .club-img {
   width: 500px;
   height: 400px;
@@ -23,6 +24,9 @@ h3 {
 
 h1 {
   color: aliceblue;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
 }
 
 .sidNav {
@@ -40,10 +44,12 @@ h1 {
   display: flex;
   flex-direction: column;
 }
+
 .navLinks .fucos {
   background-color: #4173ee;
   color: white;
 }
+
 .navLinks .link {
   display: flex;
   align-items: center;
@@ -56,34 +62,41 @@ h1 {
   color: #545f69;
   text-decoration: none;
 }
+
 .navLinks .link a {
   position: relative;
   padding-right: 4px;
 }
+
 .navLinks .link svg {
   margin-right: 10px;
 }
+
 .navLinks .link:hover {
   background-color: #4173ee;
   color: white;
 }
+
 @media (max-width: 576px) {
   .navLinks .link {
     padding: 20px 0;
   }
+
   .navLinks .link a {
     display: none;
     color: #4173ee;
   }
+
   .navLinks .link svg {
     margin-right: 4px;
   }
 }
 
-.body > h1 {
+.body>h1 {
   margin-bottom: 20px;
   color: white;
 }
+
 .body .filter {
   display: flex;
   flex-direction: column;
@@ -91,37 +104,45 @@ h1 {
   align-items: center;
   margin-bottom: 20px;
 }
+
 .body .filter div {
   display: flex;
   flex-direction: row;
   margin: 15px 0 0 0;
   gap: 10px;
 }
+
 .body .filter h1 {
   margin: 0;
   text-align: center;
 }
+
 .body .filter .filterb {
   padding: 2px 8px;
   margin: 0;
   background-color: #545f66;
   border: none;
 }
+
 .body .filter .filterb:hover {
   background-color: #0a58ca;
 }
+
 .body .filter .active {
   background-color: #0a58ca;
 }
+
 .body .wid-row {
   margin-bottom: 50px;
 }
+
 @media (max-width: 768px) {
   .body .wid-row.reverse {
     display: flex;
     flex-direction: column-reverse;
   }
 }
+
 .body .sports-box {
   background-color: #292e33;
   margin: 0;
@@ -129,13 +150,16 @@ h1 {
   padding-bottom: 25px;
   margin-bottom: 50px;
 }
-.body .sports-box .sport-col > a {
+
+.body .sports-box .sport-col>a {
   text-decoration: none;
 }
-.body .sports-box .sport-col > a:hover > div {
+
+.body .sports-box .sport-col>a:hover>div {
   background-color: #4173ee;
 }
-.body .sports-box .sport-col > a > div {
+
+.body .sports-box .sport-col>a>div {
   background-color: #545f66;
   border-radius: 10px;
   color: white;
@@ -143,22 +167,26 @@ h1 {
   flex-direction: column;
   transition: 0.3s;
 }
-.body .sports-box .sport-col > a > div .deteils {
+
+.body .sports-box .sport-col>a>div .deteils {
   display: flex;
   justify-content: center;
   gap: 10px;
 }
-.body .sports-box .sport-col > a > div .deteils span {
+
+.body .sports-box .sport-col>a>div .deteils span {
   background-color: #3a4449;
   border-radius: 5px;
   padding: 2px 7px;
   font-size: 13px;
   margin-bottom: 7px;
 }
-.body .sports-box .sport-col > a > div h3 {
+
+.body .sports-box .sport-col>a>div h3 {
   background-color: transparent;
   margin: 15px auto;
 }
+
 .body .news-box {
   background-color: #292e33;
   margin: 0;
@@ -166,13 +194,16 @@ h1 {
   padding-bottom: 25px;
   margin-bottom: 50px;
 }
-.body .news-box .news-col > a {
+
+.body .news-box .news-col>a {
   text-decoration: none;
 }
-.body .news-box .news-col > a:hover > div {
+
+.body .news-box .news-col>a:hover>div {
   background-color: #2a4d93;
 }
-.body .news-box .news-col > a > div {
+
+.body .news-box .news-col>a>div {
   background-color: #545f66;
   border-radius: 10px;
   color: white;
@@ -181,74 +212,90 @@ h1 {
   align-items: center;
   transition: 0.3s;
 }
+
 @media (max-width: 576px) {
-  .body .news-box .news-col > a > div {
+  .body .news-box .news-col>a>div {
     flex-direction: column;
   }
-  .body .news-box .news-col > a > div .img {
+
+  .body .news-box .news-col>a>div .img {
     margin-top: 10px;
   }
-  .body .news-box .news-col > a > div .deteils {
+
+  .body .news-box .news-col>a>div .deteils {
     text-align: center;
   }
-  .body .news-box .news-col > a > div .deteils .text p {
+
+  .body .news-box .news-col>a>div .deteils .text p {
     margin-bottom: 0;
   }
 }
-.body .news-box .news-col > a > div .img {
+
+.body .news-box .news-col>a>div .img {
   max-width: 100%;
   height: 100px;
   padding: 5px 5px 5px 10px;
   border-radius: 15px;
 }
-.body .news-box .news-col > a > div .deteils {
+
+.body .news-box .news-col>a>div .deteils {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 10px;
 }
-.body .news-box .news-col > a > div .deteils .text h3 {
+
+.body .news-box .news-col>a>div .deteils .text h3 {
   background-color: transparent;
   margin: 0;
   font-size: 15px;
 }
-.body .news-box .news-col > a > div .deteils .text p {
+
+.body .news-box .news-col>a>div .deteils .text p {
   font-size: 15px;
   color: #1f2327;
   word-break: break-word;
 }
-.body .news-box .news-col > a > div .deteils .form .join {
+
+.body .news-box .news-col>a>div .deteils .form .join {
   font-size: 10px;
   padding: 3px 8px;
   background-color: #1f2327;
   border: none;
 }
-.body .news-box .news-col > a > div .deteils .form .join:hover {
+
+.body .news-box .news-col>a>div .deteils .form .join:hover {
   background-color: #2a4d93;
 }
+
 .body .wid-colum {
   background-color: #292e33;
   border-radius: 10px;
   height: 100%;
   padding: 20px;
 }
+
 .body .reserv-card {
   background-color: #545f66;
 }
+
 .body .sports {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .body .sports div {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .body .sports div.focus a .img {
   border: 4px #029c2d solid;
   background-color: red;
 }
+
 .body .sports div a .img {
   max-width: 100%;
   width: 70px;
@@ -256,9 +303,11 @@ h1 {
   border: 3px black solid;
   transition: 0.3s;
 }
+
 .body .sports div a .img:hover {
   border: 4px #4173ee solid;
 }
+
 .body .sports div span {
   color: white;
   font-size: 10px;
@@ -272,6 +321,7 @@ h1 {
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
+
 .grid-layout .grid-button {
   padding: 10px 20px;
   font-size: 1rem;
@@ -285,22 +335,26 @@ h1 {
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
+
 .time-slots-grid .time-slot-button {
   padding: 10px 20px;
   font-size: 1rem;
   border-radius: 8px;
   text-align: center;
 }
+
 .time-slots-grid .time-slot-button.time-slot-selected {
   background-color: #007bff;
   color: #ffffff;
   border-color: #007bff;
 }
+
 .time-slots-grid .time-slot-button.time-slot-available {
   background-color: #6c757d;
   color: #ffffff;
   border-color: #6c757d;
 }
+
 .time-slots-grid .time-slot-button.time-slot-unavailable {
   background-color: #343a40;
   color: #6c757d;
@@ -312,26 +366,32 @@ h1 {
   font-size: 20px;
   color: #ffffff;
 }
+
 .form .uplode .file {
   background-color: #1f2327;
 }
-.form .uplode > div {
+
+.form .uplode>div {
   display: flex;
   justify-content: start;
   margin-bottom: 16px;
   gap: 20px;
 }
+
 .form .input {
   background-color: #1f2327;
   color: white;
   border: none;
 }
+
 .form .input::-moz-placeholder {
   color: #3b4447;
 }
+
 .form .input::placeholder {
   color: #3b4447;
 }
+
 .form .input:focus {
   box-shadow: none;
   border: #565656 solid 1px;
@@ -339,33 +399,58 @@ h1 {
   color: #ffffff;
   transition: 0s;
 }
+
 .form input[type=radio] {
   background-color: #1f2327;
   border: none;
 }
+
 .form input[type=radio]:checked {
   background-color: #4173ee;
   --bs-form-check-bg-image: none;
   border-radius: 30%;
   box-shadow: none;
 }
+
 .form label {
   color: white;
 }
+
 .form .inputs-btn {
-  background-color: #2a4d93;
+  background-color: #1a73e8;
+  color: white;
   border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 .form .inputs-btn:hover {
-  background-color: #4173ee;
+  background-color: #1558c1;
+  color: white;
+
 }
+
+
 .form .back {
-  background-color: #777777;
+  background-color: #565656;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
 }
+
+.form .back:hover {
+  background-color: #3b3b3b;
+}
+
 .form .white {
   background-color: white;
   color: #3b4447;
 }
+
 .form textarea {
   resize: none;
   height: 100px;
@@ -380,4 +465,7 @@ body,
 
 h1 {
   color: red;
-}/*# sourceMappingURL=main.css.map */
+}
+
+/*# sourceMappingURL=main.css.map */
+

@@ -25,9 +25,12 @@
     &:focus {
       box-shadow: none;
       border: #565656 solid 1px;
-      background-color: #1f2327;
+      background-color: #222;
       color: #ffffff;
       transition: 0s;
+      outline: none;
+
+      
     }
   }
 
