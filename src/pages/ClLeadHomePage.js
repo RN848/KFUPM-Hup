@@ -74,7 +74,7 @@ const ClLeadHomePage = () => {
                     <div className="activity-info">
                       <h3>{activity.AcName}</h3>
                       <p>{activity.AcDescription}</p>
-                      <Button variant="dark" className="edit-btn">
+                      <Button variant="dark" className="edit-btn" onClick={() => {navigate('/edit-activity')}}>
                         Edit
                       </Button>
                     </div>
@@ -82,14 +82,14 @@ const ClLeadHomePage = () => {
                 </div>
               ))}
             </div>
-            <div className="activity-buttons d-flex justify-content-between">
-              <Button
+            <div className="activity-buttons d-flex justify-content-center ">
+              {/*<Button
                 variant="primary"
                 className="all-btn"
                 onClick={() => navigate("/all-activities")}
               >
                 All
-              </Button>
+              </Button>*/}
               <Button
                 variant="primary"
                 className="add-btn"
@@ -141,13 +141,13 @@ const ClLeadHomePage = () => {
                 </div>
               ))}
             </div>
-            <div className="member-buttons d-flex justify-content-between">
-              <Button variant="primary" className="all-btn">
-                All
+            <div className="member-buttons d-flex justify-content-center">
+              <Button variant="primary" className="all-btn" onClick={() => {navigate("/club-members")}}>
+                More
               </Button>
-              <Button variant="primary" className="add-btn">
+              {/*<Button variant="primary" className="add-btn" onClick={() => {navigate("/club-members")}}>
                 Add
-              </Button>
+              </Button>*/}
             </div>
           </Col>
         </Row>
@@ -157,7 +157,7 @@ const ClLeadHomePage = () => {
           <Button
             variant="light"
             className="manage-profile-btn"
-            onClick={() => navigate("/manage-club-profile")}
+            onClick={() => navigate("/edit-club")}
           >
             Manage Club Profile
           </Button>
