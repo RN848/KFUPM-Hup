@@ -17,6 +17,7 @@ import { Link } from "../components/Inputs";
 import reserve from "../images/home/reserve.jpg";
 import clups from "../images/home/clups.jpg";
 import {useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 const Home = () => {
   const [inputs, setInputs] = useState({

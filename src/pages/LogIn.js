@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
   const navigate = useNavigate();
+
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -17,9 +18,9 @@ const LogIn = () => {
     isOwner: false,
   };
 
-  const reservationOwner = {
-    email: 'Owner@gmail.com',
-    password: 'passwordOwner',
+  const ClubAccount = {
+    email: 'club@gmail.com',
+    password: 'passwordClub',
     isAdmin: false,
     isOwner: true,
   };
@@ -29,25 +30,19 @@ const LogIn = () => {
   };
 
   const checkForm = (e) => {
-    e.preventDefault(); // Prevent the form from submitting the traditional way
+    e.preventDefault();
+    let userRole = 'normal'; // default role
 
-    if (
-        inputs.email === adminLogin.email &&
-        inputs.password === adminLogin.password
-    ) {
-      console.log("Logged in as Admin");
-      navigate("/home");
-    } else if (
-        inputs.email === reservationOwner.email &&
-        inputs.password === reservationOwner.password
-    ) {
-      console.log("Logged in as Reservation Owner");
-      navigate("/home");
-    } else {
-      console.log("Logged in as Normal User");
-      navigate("/home");
+    if (inputs.email === adminLogin.email && inputs.password === adminLogin.password) {
+      userRole = 'admin';
+    } else if (inputs.email === ClubAccount.email && inputs.password === ClubAccount.password) {
+      userRole = 'clubAccount';
     }
+
+    localStorage.setItem("userRole", userRole); // Store the user role in local storage
+    navigate("/home");
   };
+
 
   return (
       <Body>

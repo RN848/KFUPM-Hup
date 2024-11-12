@@ -83,13 +83,6 @@ const ClLeadHomePage = () => {
               ))}
             </div>
             <div className="activity-buttons d-flex justify-content-center ">
-              {/*<Button
-                variant="primary"
-                className="all-btn"
-                onClick={() => navigate("/all-activities")}
-              >
-                All
-              </Button>*/}
               <Button
                 variant="primary"
                 className="add-btn"
@@ -145,9 +138,6 @@ const ClLeadHomePage = () => {
               <Button variant="primary" className="all-btn" onClick={() => {navigate("/club-members")}}>
                 More
               </Button>
-              {/*<Button variant="primary" className="add-btn" onClick={() => {navigate("/club-members")}}>
-                Add
-              </Button>*/}
             </div>
           </Col>
         </Row>

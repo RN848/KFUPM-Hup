@@ -7,7 +7,7 @@ import "../styles/master.css";
 import "../styles/main.css";
 import "../styles/pages/_headbar.scss";
 import logo from "../images/KFUPM_HUB.png"
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {Image} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -16,9 +16,16 @@ export default function Body({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isIndexPage = location.pathname === "/";
-  const isSport= location.pathname === "/Sport-reservation";
+  const [userRole, setUserRole] = useState("normal"); // default to normal
+  useEffect(() => {
+    // Get userRole from local storage on component mount
+    const storedRole = localStorage.getItem("userRole");
+    if (storedRole) {
+      setUserRole(storedRole);
+    }
+  }, []);
   const [showNav, setShowNav] = useState(true);
-
+  console.log(userRole)
 
   return (
       <>
