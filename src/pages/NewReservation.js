@@ -296,6 +296,7 @@ const NewReservation = () => {
           </Button>
           <Button
             variant="secondary"
+            className="back-btn"
             onClick={() => navigate("/Sports-reservation")}
           >
             Cancel

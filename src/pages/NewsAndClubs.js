@@ -1,14 +1,13 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
-import "../styles/pages/_latestNews.scss"; // Reuse shared styles
-import "../styles/pages/_newsAndClubs.scss"; // Add specific styles for this page
+import "../styles/pages/_latestNews.scss";
+import "../styles/pages/_newsAndClubs.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import { Image } from "react-bootstrap";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Image, Button } from "react-bootstrap";
 
 const NewsAndClubs = () => {
   const clubList = [
@@ -18,19 +17,19 @@ const NewsAndClubs = () => {
       status: "follow",
     },
     {
-      title: "Computer Club",
+      title: "First Aid Club",
       logo: "../images/clubs/computer_club.png",
       status: "following",
     },
     {
-      title: "Computer Club",
+      title: "Community Club",
       logo: "../images/clubs/computer_club.png",
       status: "follow",
     },
   ];
 
   const [clickedNews, setClickedNews] = useState([]);
-  const [filterMessage, setFilterMessage] = useState("");
+  const [filter, setFilter] = useState("");
   const navigate = useNavigate();
   const [clubStatuses, setClubStatuses] = useState(
     clubList.map((club) => club.status)
@@ -63,17 +62,19 @@ const NewsAndClubs = () => {
     },
   ];
 
-  const [filter, setFilter] = useState("");
-
   const followClups = ["1", "2"];
   const enrolledClups = ["3"];
 
+  // Handle Join/Unjoin News
   const handleJoinClick = (index) => {
     if (!clickedNews.includes(index)) {
       setClickedNews([...clickedNews, index]);
+    } else {
+      setClickedNews(clickedNews.filter((i) => i !== index)); // Toggle join status
     }
   };
 
+  // Handle Follow/Unfollow Clubs
   const handleFollowClick = (index) => {
     const updatedStatuses = [...clubStatuses];
     updatedStatuses[index] =
@@ -81,6 +82,7 @@ const NewsAndClubs = () => {
     setClubStatuses(updatedStatuses);
   };
 
+  // Filter News Based on Selection
   const filteredNews = newsList.filter((news) => {
     if (filter === "following") return followClups.includes(news.clup);
     if (filter === "enrolled") return enrolledClups.includes(news.clup);
@@ -91,7 +93,7 @@ const NewsAndClubs = () => {
     <Body>
       <div className="news-and-clubs-page">
         <Row>
-          {/* Left Section */}
+          {/* News Section */}
           <Col lg={9} md={12}>
             <div className="news-box">
               <div className="news-header d-flex justify-content-between align-items-center">
@@ -101,18 +103,9 @@ const NewsAndClubs = () => {
                     className={`filter-btn ${
                       filter === "following" ? "active" : ""
                     }`}
-                    onClick={() => {
-                      const newFilter =
-                        filter === "" || filter === "enrolled"
-                          ? "following"
-                          : "";
-                      setFilter(newFilter);
-                      setFilterMessage(
-                        newFilter === "following"
-                          ? "Now viewing Following items."
-                          : ""
-                      );
-                    }}
+                    onClick={() =>
+                      setFilter(filter === "following" ? "" : "following")
+                    }
                   >
                     Following
                   </Button>
@@ -120,18 +113,9 @@ const NewsAndClubs = () => {
                     className={`filter-btn ${
                       filter === "enrolled" ? "active" : ""
                     }`}
-                    onClick={() => {
-                      const newFilter =
-                        filter === "" || filter === "following"
-                          ? "enrolled"
-                          : "";
-                      setFilter(newFilter);
-                      setFilterMessage(
-                        newFilter === "enrolled"
-                          ? "Now viewing Enrolled items."
-                          : ""
-                      );
-                    }}
+                    onClick={() =>
+                      setFilter(filter === "enrolled" ? "" : "enrolled")
+                    }
                   >
                     Enrolled
                   </Button>
@@ -150,32 +134,30 @@ const NewsAndClubs = () => {
                         <h3 className="news-title">{news.title}</h3>
                         <p className="news-desc">{news.desc}</p>
                         <Button
-                          className={`news-join-btn ${
+                          className={`join-btn ${
                             clickedNews.includes(index) ? "joined" : ""
                           }`}
                           onClick={() => handleJoinClick(index)}
                         >
                           {clickedNews.includes(index) ? "Joined" : "Join"}
                         </Button>
-                        {/* Success Message */}
                         {clickedNews.includes(index) && (
-                          <div className="joined-message">
+                          <p className="joined-message">
                             You have successfully joined this activity!
-                          </div>
+                          </p>
                         )}
                       </div>
                     </div>
                   </Col>
                 ))}
               </Row>
-
               <div className="view-all d-flex justify-content-center mt-4">
                 <Button onClick={() => navigate("/latest-news")}>All</Button>
               </div>
             </div>
           </Col>
 
-          {/* Right Section */}
+          {/* Clubs Section */}
           <Col lg={3} md={12}>
             <div className="clubs-box">
               <h1 className="page-title">Clubs</h1>
@@ -193,13 +175,14 @@ const NewsAndClubs = () => {
                         className={`club-action-btn ${clubStatuses[index]}`}
                         onClick={() => handleFollowClick(index)}
                       >
-                        {clubStatuses[index]}
+                        {clubStatuses[index] === "follow"
+                          ? "Follow"
+                          : "Following"}
                       </Button>
                     </div>
                   </div>
                 ))}
               </div>
-
               <div className="view-all d-flex justify-content-center mt-4">
                 <Button onClick={() => navigate("/clubs")}>All</Button>
               </div>

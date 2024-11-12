@@ -1,12 +1,11 @@
+import React, { useState } from "react";
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
 import "../styles/pages/_latestNews.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Image } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import { useState } from "react";
+import { Image, Button } from "react-bootstrap";
 
 const LatestNews = () => {
   const newsList = [
@@ -14,38 +13,36 @@ const LatestNews = () => {
       title: "News Title 1",
       desc: "Description of the news or activity goes here.",
       img: "../images/activities/activity-01.png",
-      join: "",
       clup: "1",
     },
     {
       title: "News Title 2",
       desc: "Another news description goes here.",
       img: "../images/activities/activity-02.jpeg",
-      join: "",
       clup: "2",
     },
     {
       title: "News Title 3",
       desc: "Details about the third news or activity.",
       img: "../images/activities/activity-03.jpg",
-      join: "",
       clup: "3",
     },
     {
       title: "News Title 4",
-      desc: "Details about the third news or activity.",
+      desc: "Details about the fourth news or activity.",
       img: "../images/activities/activity-04.jpg",
-      join: "",
       clup: "4",
     },
   ];
 
-  const [filter, setFilter] = useState("");
-  const [clickedNews, setClickedNews] = useState([]); // Track clicked buttons by index
+  const [filter, setFilter] = useState(""); // Filter state
+  const [clickedNews, setClickedNews] = useState([]); // Track joined activities
 
+  // Simulated lists for filtering
   const followClups = ["1", "2"];
   const enrolledClups = ["3"];
 
+  // Filter news based on the selected filter
   const filteredNews = newsList.filter((news) => {
     if (filter === "following") {
       return followClups.includes(news.clup);
@@ -56,9 +53,12 @@ const LatestNews = () => {
     return true; // Show all news if no filter is applied
   });
 
+  // Handle Join/Unjoin logic
   const handleJoinClick = (index) => {
     if (!clickedNews.includes(index)) {
-      setClickedNews([...clickedNews, index]); // Add index to clickedNews
+      setClickedNews([...clickedNews, index]);
+    } else {
+      setClickedNews(clickedNews.filter((i) => i !== index)); // Allow toggling
     }
   };
 
@@ -69,15 +69,14 @@ const LatestNews = () => {
         <div className="news-details">
           <h3 className="news-title">{news.title}</h3>
           <p className="news-desc">{news.desc}</p>
-          {!clickedNews.includes(index) ? (
-            <Button
-              className="news-join-btn"
-              onClick={() => handleJoinClick(index)}
-            >
-              Join
-            </Button>
-          ) : (
-            <p className="joined-message">You have joined this activity!</p>
+          <Button
+            className={`join-btn ${clickedNews.includes(index) ? "joined" : ""}`}
+            onClick={() => handleJoinClick(index)}
+          >
+            {clickedNews.includes(index) ? "Joined" : "Join"}
+          </Button>
+          {clickedNews.includes(index) && (
+            <p className="joined-message">You have successfully joined this activity!</p>
           )}
         </div>
       </div>
@@ -92,9 +91,7 @@ const LatestNews = () => {
           <Button
             className={`filter-btn ${filter === "following" ? "active" : ""}`}
             onClick={() =>
-              setFilter(
-                filter === "" || filter === "enrolled" ? "following" : ""
-              )
+              setFilter(filter === "" || filter === "enrolled" ? "following" : "")
             }
           >
             Following
@@ -102,9 +99,7 @@ const LatestNews = () => {
           <Button
             className={`filter-btn ${filter === "enrolled" ? "active" : ""}`}
             onClick={() =>
-              setFilter(
-                filter === "" || filter === "following" ? "enrolled" : ""
-              )
+              setFilter(filter === "" || filter === "following" ? "enrolled" : "")
             }
           >
             Enrolled

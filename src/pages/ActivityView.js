@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
-import "../styles/pages/_latestNews.scss"; 
-import "../styles/pages/_activityView.scss"; 
+import "../styles/pages/_latestNews.scss";
+import "../styles/pages/_activityView.scss";
 import { Row, Col, Button, Image } from "react-bootstrap";
 
 const ActivityView = () => {
