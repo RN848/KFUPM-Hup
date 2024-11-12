@@ -14,7 +14,7 @@ import YourProfile from "./pages/YourProfile";
 
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
-import NewClup from "./pages/NewClup";
+import NewClub from "./pages/NewClub";
 import SportsReserve from "./pages/SportsReserve";
 import NewReservation from "./pages/NewReservation";
 import ReservationSuccess from "./pages/ReservationSuccess";
@@ -60,7 +60,7 @@ function App() {
             <Route path="Sign-Up" element={<SignUp />} />
             {/*{frame 19}*/}
 
-            <Route path="New-Clup" element={<NewClup />} />
+            <Route path="New-Club" element={<NewClub />} />
             {/*{frame 22}*/}
 
             <Route path="Sports-reservation" element={<SportsReserve />} />

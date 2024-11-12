@@ -16,6 +16,7 @@ export default function Body({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isIndexPage = location.pathname === "/";
+  const isSport= location.pathname === "/Sport-reservation";
   const [showNav, setShowNav] = useState(true);
 
 
@@ -25,12 +26,13 @@ export default function Body({ children }) {
           <Row className={"headBar"}>
             <div className="d-flex align-items-center">
               {/* KFUPM HUB Logo */}
+              <a onClick={() => navigate("/home")}>
               <Image
                   src={logo}
                   alt={"KFUPM HUB Logo"}
                   className={"kfupm-logo"}
               />
-
+              </a>
               {/* Links */}
               <a href="/Sports-reservation" className="headbar-link">
                 Sport Reservation
@@ -43,7 +45,7 @@ export default function Body({ children }) {
               <div className="flex-grow-1"></div>
 
               {/* Profile Link */}
-              <a href="/profile" className="headbar-link profile-link">
+              <a className="headbar-link profile-link" onClick={() => {navigate("/Your-Profile")}}>
                 Profile
               </a>
               {!isIndexPage && (

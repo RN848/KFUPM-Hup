@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { NormInput } from "../components/Inputs";
 
-const NewClup = () => {
+const NewClub = () => {
   const [inputs, setInputs] = useState({
     clubName: "",
     leader: "",
@@ -49,4 +49,4 @@ const NewClup = () => {
   );
 };
 
-export default NewClup;
+export default NewClub;
