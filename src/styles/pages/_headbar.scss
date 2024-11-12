@@ -1,4 +1,5 @@
 // Variables
+$gradient-start-color: #2a2a2a;
 $headbar-bg-color: #1d1f23;
 $headbar-link-color: white;
 $headbar-link-hover-color: #ddd;
@@ -6,7 +7,7 @@ $profile-color: #fcfcfc; // For profile link highlighting (optional)
 
 // Headbar styling
 .headBar {
-    background-color: $headbar-bg-color;
+    background: radial-gradient( circle at 80% 20%,$headbar-bg-color, $gradient-start-color) ;
     padding: 10px 20px;
     color: $headbar-link-color;
     display: flex;

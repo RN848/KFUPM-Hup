@@ -7,14 +7,16 @@ import "../styles/master.css";
 import "../styles/main.css";
 import "../styles/pages/_headbar.scss";
 import logo from "../images/KFUPM_HUB.png"
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {Image} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 
 export default function Body({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isIndexPage = location.pathname === "/";
+  const [showNav, setShowNav] = useState(true);
 
 
   return (
@@ -44,6 +46,15 @@ export default function Body({ children }) {
               <a href="/profile" className="headbar-link profile-link">
                 Profile
               </a>
+              {!isIndexPage && (
+                  <Button
+                      variant="secondary"
+                      onClick={() => setShowNav(!showNav)}
+                      style={{ marginLeft: "10px" }}
+                  >
+                    {showNav ? "Hide Nav" : "Show Nav"}
+                  </Button>
+              )}
             </div>
           </Row>
 

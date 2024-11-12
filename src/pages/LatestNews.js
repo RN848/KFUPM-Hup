@@ -105,7 +105,7 @@ const LatestNews = () => {
             Enrolled
           </Button>
         </div>
-        <Row className="news-container">{newsMap}</Row>
+        <Row className="news-container ">{newsMap}</Row>
       </div>
     </Body>
   );
