@@ -490,6 +490,7 @@ h1 {
   padding: 6px 12px;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 .back-btn:hover {

@@ -44,7 +44,7 @@ function App() {
 
             <Route path="home" element={<Home />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="*" element={<NoPage />} />
+            <Route path="*" element={<ErrorPage />} />
 
             <Route path="Create-Activity-news" element={<CreateActivity />} />
             {/*{frame 13}*/}

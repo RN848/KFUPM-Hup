@@ -12,7 +12,7 @@ const EditClub = () => {
 
   const { club } = location.state || {};
 
-  // Default club data
+  // Default club dataa
   const [clubName, setClubName] = useState(club?.name || "Unknown Club");
   const [leader, setLeader] = useState(club?.leader || "");
   const [description, setDescription] = useState(
@@ -38,7 +38,8 @@ const EditClub = () => {
       <div className="edit-club">
         <div className="club-details">
           <img
-            src={club?.logo || "/images/default-club-logo.png"}
+            // Put the defult logo now the computer club and will change it later
+            src={club?.logo || "/images/clubs/computer_club.png"}
             alt={`${clubName} Logo`}
             className="club-logo"
           />
@@ -124,7 +125,7 @@ const EditClub = () => {
 
       <Button
         variant="secondary"
-        className="back-button"
+        className="back-btn"
         onClick={() => navigate(-1)}
       >
         Back

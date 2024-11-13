@@ -52,7 +52,6 @@ const NewReservation = () => {
     ],
   };
 
-
   const fields = sport.filter ? sportFields[sport.filter] || [] : [];
 
   const days = [
@@ -133,7 +132,7 @@ const NewReservation = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         setSport({ filter: s.name });
-                        setSelectedField(null); 
+                        setSelectedField(null);
                       }}
                     >
                       <Image className="img" src={s.image} alt={s.name}></Image>
@@ -291,7 +290,11 @@ const NewReservation = () => {
         )}
 
         <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-          <Button variant="primary" onClick={handleReserveClick}>
+          <Button
+            variant="primary"
+            style={{ marginTop: "20px" }}
+            onClick={handleReserveClick}
+          >
             Reserve
           </Button>
           <Button

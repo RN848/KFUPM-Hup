@@ -38,22 +38,6 @@ const LatestNews = () => {
   const [filter, setFilter] = useState(""); // Filter state
   const [clickedNews, setClickedNews] = useState([]); // Track joined activities
 
-  // Simulated lists for filtering
-  const followClups = ["1", "2"];
-  const enrolledClups = ["3"];
-
-  // Filter news based on the selected filter
-  const filteredNews = newsList.filter((news) => {
-    if (filter === "following") {
-      return followClups.includes(news.clup);
-    }
-    if (filter === "enrolled") {
-      return enrolledClups.includes(news.clup);
-    }
-    return true; // Show all news if no filter is applied
-  });
-
-  // Handle Join/Unjoin logic
   const handleJoinClick = (index) => {
     if (!clickedNews.includes(index)) {
       setClickedNews([...clickedNews, index]);
@@ -62,7 +46,7 @@ const LatestNews = () => {
     }
   };
 
-  const newsMap = filteredNews.map((news, index) => (
+  const newsMap = newsList.map((news, index) => (
     <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
       <div className="news-card">
         <Image className="news-img" src={news.img} alt={news.title} />
@@ -75,9 +59,6 @@ const LatestNews = () => {
           >
             {clickedNews.includes(index) ? "Joined" : "Join"}
           </Button>
-          {clickedNews.includes(index) && (
-            <p className="joined-message">You have successfully joined this activity!</p>
-          )}
         </div>
       </div>
     </Col>
@@ -106,6 +87,10 @@ const LatestNews = () => {
           </Button>
         </div>
         <Row className="news-container ">{newsMap}</Row>
+        {/* Back Button */}
+        <Button className="back-btn" onClick={() => window.history.back()}>
+          Back
+        </Button>
       </div>
     </Body>
   );

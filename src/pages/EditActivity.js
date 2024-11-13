@@ -1,7 +1,7 @@
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
-import "../styles/pages/_latestNews.scss"; // Reusing the LatestNews styles
+import "../styles/pages/_latestNews.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Image } from "react-bootstrap";
@@ -51,11 +51,23 @@ const EditActivity = () => {
             <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
               <div className="news-card">
                 <Image className="news-img" src={news.img} alt={news.title} />
-                <div className="news-details">
+                <div
+                  className="news-details"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
                   <h3 className="news-title">{news.title}</h3>
                   <p className="news-desc">{news.desc}</p>
                   <Button
                     className="news-join-btn"
+                    style={{
+                      width: "100%",
+                      maxWidth: "150px",
+                      padding: "0.5rem 1rem",
+                    }}
                     onClick={() => handleEditClick(news.title)}
                   >
                     Edit
@@ -65,6 +77,10 @@ const EditActivity = () => {
             </Col>
           ))}
         </Row>
+        {/* Back Button */}
+        <Button className="back-btn" onClick={() => window.history.back()}>
+          Back
+        </Button>
       </div>
     </Body>
   );

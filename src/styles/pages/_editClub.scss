@@ -87,7 +87,7 @@
           display: flex;
           align-items: center;
           gap: 1rem;
-          background-color: #232931;
+          background-color: #121A25;
           padding: 1rem;
           border-radius: 10px;
           margin-bottom: 1rem;
@@ -124,18 +124,50 @@
         }
       }
     }
-  
-    .back-button {
-      margin-top: 2rem;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  
+
     .default-icon {
       font-size: 4.5rem; 
       color: #ccc;
       margin-right: 1rem;
     }
+
+    @media (max-width: 768px) {
+      flex-direction: column; // Stack sections vertically on mobile
+      align-items: center; // Center align items
+  
+      .club-details,
+      .edit-section {
+        width: 100%; 
+        margin-bottom: 1rem; 
+      }
+  
+      .form-group {
+        flex-direction: column; 
+        align-items: stretch; 
+        gap: 0.5rem;
+  
+        input {
+          width: 100%; 
+        }
+  
+        button {
+          width: 100%; 
+        }
+      }
+  
+      .members-list {
+        .member-card {
+          flex-direction: column; 
+          align-items: center; 
+          text-align: center;
+        }
+      }
+    }
+
+    
   }
   
+  .back-btn {
+    display: block;
+    text-align: center;
+  }

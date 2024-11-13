@@ -223,3 +223,60 @@
     }
   }
 }
+@media (max-width: 768px) {
+  .ClLeadHomePage {
+    flex-direction: column; // Stack sections vertically on mobile
+    gap: 1rem;
+    padding: 1rem;
+
+    .news-box,
+    .members-box {
+      width: 100%; 
+      padding: 1rem; 
+      margin: 0 auto; 
+    }
+
+    .activity-container,
+    .member-container {
+      display: flex;
+      flex-direction: column; 
+      gap: 1rem;
+    }
+
+    .activity-card,
+    .member-item {
+      text-align: center;
+      width: 100%; 
+    }
+
+    .activity-img,
+    .member-img {
+      width: 100%;
+      max-width: 150px; 
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .activity-info,
+    .member-info {
+      margin-top: 1rem;
+    }
+
+    .member-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .profile-btn,
+      .remove-btn {
+        width: 100%; 
+      }
+    }
+
+    .manage-profile-btn {
+      width: 100%; 
+      max-width: 200px;
+      margin: 1rem auto;
+    }
+  }
+}

@@ -116,7 +116,11 @@ const ClubMembers = () => {
       <div className="club-members">
         <header>
           <h1>Club Members</h1>
-          <Button variant="primary" onClick={handleAddMember}>
+          <Button
+            variant="primary"
+            className="add-member-btn"
+            onClick={handleAddMember}
+          >
             Add New Member
           </Button>
         </header>
@@ -167,7 +171,7 @@ const ClubMembers = () => {
           ))}
         </div>
 
-        <Button variant="secondary" className="back-button">
+        <Button variant="secondary" className="back-btn">
           Back
         </Button>
       </div>

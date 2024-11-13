@@ -1,4 +1,4 @@
-@import "./_latestNews.scss"; // Reuse shared styles
+@import "./_latestNews.scss";
 
 .news-and-clubs-page {
   .news-box {
@@ -102,12 +102,12 @@
         padding: 15px; 
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 
-        transition: transform 0.3s;
+          transition: transform 0.3s;
 
   
-        &:hover {
-          transform: scale(1.05);
-        }
+  &:hover {
+    transform: scale(1.05);
+  }
   
         .club-logo {
           width: 75px; 
@@ -120,7 +120,7 @@
           flex: 1;
   
           .club-title {
-            font-size: 1.2rem; 
+            font-size: 1.2rem;
             color: white;
             margin-bottom: 5px;
           }
@@ -130,7 +130,6 @@
             font-size: 1rem; 
             border-radius: 5px;
             margin-top: 5px;
-
             
           }
         }
@@ -152,72 +151,91 @@
    
   }
 
-  @media (max-width: 768px) {
-    .news-box {
-      padding: 15px;
+@media (max-width: 768px) {
+  .news-box,
+  .clubs-box {
+    float: none; 
+    width: 100%; 
+    margin-bottom: 20px; 
+  }
 
-      .page-title {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-      }
+  .news-box {
+    margin-left: auto; 
+    margin-right: auto; 
+    padding-left: 10px; 
+    padding-right: 10px; 
 
-      .news-filter {
-        flex-direction: column;
-        gap: 5px;
 
-        .filter-btn {
-          width: 100%;
-        }
-      }
+    .view-all button {
+      width: 100%;
+      padding: 8px 16px;
+    }
+  
 
-      .news-card {
-        .news-img {
-          height: 120px;
-        }
+    .page-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;  
+    }
 
-        .news-details {
-          .news-title {
-            font-size: 0.9rem;
-          }
 
-          .news-desc {
-            font-size: 0.8rem;
-          }
-        }
+    .news-filter {
+      flex-direction: column; 
+      gap: 5px;
+
+      .filter-btn {
+        width: 100%;
       }
     }
 
-    .clubs-box {
-      padding: 15px;
-
-      .page-title {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
+    .news-card {
+      .news-img {
+        height: 120px;
       }
 
-      .club-item {
-        flex-direction: column;
-        align-items: flex-start;
-
-        .club-logo {
-          width: 40px;
-          height: 40px;
+      .news-details {
+        .news-title {
+          font-size: 0.9rem;
         }
 
-        .club-title {
-          font-size: 1rem;
-        }
-
-        .club-action-btn {
+        .news-desc {
           font-size: 0.8rem;
-          padding: 6px 12px;
         }
-      }
-
-      .view-all Button {
-        width: 100%;
-        padding: 8px 16px;
       }
     }
   }
+
+  .clubs-box {
+    h1 {
+      font-size: 1.2rem;
+    }
+
+    .club-item {
+      flex-direction: column; 
+      align-items: flex-start;
+      text-align: center;
+      
+
+      .club-logo {
+        width: 40px;
+        height: 40px;
+      }
+
+      .club-title {
+        font-size: 1rem;
+      }
+
+      .club-action-btn {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+      }
+    }
+
+    .view-all button {
+      width: 100%;
+      padding: 8px 16px;
+    }
+  }
+}
+
+
 }

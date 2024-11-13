@@ -12,7 +12,7 @@ const ErrorPage = () => {
         <h2>Page not found</h2>
         <p>This Page doesn't exist or was removed!</p>
         <p>We suggest you go back to home.</p>
-        <button className="back-home-button" onClick={() => navigate("/")}>
+        <button className="back-home-button" onClick={() => navigate("/home")}>
           ↩ Back to Home
         </button>
       </div>

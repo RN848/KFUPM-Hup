@@ -152,7 +152,9 @@ const NewsAndClubs = () => {
                 ))}
               </Row>
               <div className="view-all d-flex justify-content-center mt-4">
-                <Button onClick={() => navigate("/latest-news")}>All</Button>
+                <Button id="allNews" onClick={() => navigate("/latest-news")}>
+                  All
+                </Button>
               </div>
             </div>
           </Col>
