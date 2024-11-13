@@ -46,53 +46,56 @@ const LatestNews = () => {
     }
   };
 
-  const newsMap = newsList.map((news, index) => (
-    <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
-      <div className="news-card">
-        <Image className="news-img" src={news.img} alt={news.title} />
-        <div className="news-details">
-          <h3 className="news-title">{news.title}</h3>
-          <p className="news-desc">{news.desc}</p>
-          <Button
-            className={`join-btn ${clickedNews.includes(index) ? "joined" : ""}`}
-            onClick={() => handleJoinClick(index)}
-          >
-            {clickedNews.includes(index) ? "Joined" : "Join"}
-          </Button>
+  // Filtered news list
+  const filteredNewsList = newsList.filter((_, index) => {
+    if (filter === "following") return index % 2 === 0; // Example: Show every alternate news item
+    if (filter === "enrolled") return clickedNews.includes(index); // Show joined news
+    return true; // Show all if no filter
+  });
+
+  const newsMap = filteredNewsList.map((news, index) => (
+      <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
+        <div className="news-card">
+          <Image className="news-img" src={news.img} alt={news.title} />
+          <div className="news-details">
+            <h3 className="news-title">{news.title}</h3>
+            <p className="news-desc">{news.desc}</p>
+            <Button
+                className={`join-btn ${clickedNews.includes(index) ? "joined" : ""}`}
+                onClick={() => handleJoinClick(index)}
+            >
+              {clickedNews.includes(index) ? "Joined" : "Join"}
+            </Button>
+          </div>
         </div>
-      </div>
-    </Col>
+      </Col>
   ));
 
   return (
-    <Body>
-      <div className="news-page">
-        <h1 className="page-title">Latest News and Activities</h1>
-        <div className="news-filter">
-          <Button
-            className={`filter-btn ${filter === "following" ? "active" : ""}`}
-            onClick={() =>
-              setFilter(filter === "" || filter === "enrolled" ? "following" : "")
-            }
-          >
-            Following
-          </Button>
-          <Button
-            className={`filter-btn ${filter === "enrolled" ? "active" : ""}`}
-            onClick={() =>
-              setFilter(filter === "" || filter === "following" ? "enrolled" : "")
-            }
-          >
-            Enrolled
+      <Body>
+        <div className="news-page">
+          <h1 className="page-title">Latest News and Activities</h1>
+          <div className="news-filter">
+            <Button
+                className={`filter-btn ${filter === "following" ? "active" : ""}`}
+                onClick={() => setFilter(filter === "following" ? "" : "following")}
+            >
+              Following
+            </Button>
+            <Button
+                className={`filter-btn ${filter === "enrolled" ? "active" : ""}`}
+                onClick={() => setFilter(filter === "enrolled" ? "" : "enrolled")}
+            >
+              Enrolled
+            </Button>
+          </div>
+          <Row className="news-container">{newsMap}</Row>
+          {/* Back Button */}
+          <Button className="back-btn" onClick={() => window.history.back()}>
+            Back
           </Button>
         </div>
-        <Row className="news-container ">{newsMap}</Row>
-        {/* Back Button */}
-        <Button className="back-btn" onClick={() => window.history.back()}>
-          Back
-        </Button>
-      </div>
-    </Body>
+      </Body>
   );
 };
 
