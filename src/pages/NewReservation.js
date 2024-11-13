@@ -292,21 +292,19 @@ const NewReservation = () => {
         <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
           <Button
             variant="primary"
-            style={{ marginTop: "20px" }}
+            style={{ marginTop: "" }}
             onClick={handleReserveClick}
           >
             Reserve
           </Button>
           <Button
             variant="secondary"
-            className="back-btn"
             onClick={() => navigate("/Sports-reservation")}
           >
             Cancel
           </Button>
         </div>
       </div>
-      a
     </Body>
   );
 };

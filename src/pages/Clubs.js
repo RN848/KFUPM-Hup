@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import Body from "../components/Body";
 import "../styles/pages/_clubs.scss";
 import { useNavigate } from "react-router-dom";
 
 const Clubs = () => {
-  const isAdminView = false; //frame 10 is false 21 true
+  const [isAdminView,setAdminView] = useState(false);
+  useEffect(() => {
+    const storedRole = localStorage.getItem("userRole");
+    if (storedRole && (storedRole.trim() === 'admin')) {
+      setAdminView(true);
+    }
+  }, []);//frame 10 is false 21 true
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [clubs, setClubs] = useState([
@@ -85,7 +91,7 @@ const Clubs = () => {
           <div>
             <h1 style={{ display: "inline", marginRight: "15px" }}>Clubs</h1>
             {!isAdminView && (
-              <div className="news-filter">
+              <div className={"news-filter "}>
                 <Button
                   className={`filter-btn ${
                     filter === "following" ? "active" : ""
@@ -127,7 +133,7 @@ const Clubs = () => {
         <div className="clubs-grid">
           {filteredClubs.map((club, index) => (
             <div
-              className="club-card"
+              className={"club-card p-2"}
               key={club.id}
               onClick={() =>
                 navigate("/club-profile", { state: { clubId: club.id } })

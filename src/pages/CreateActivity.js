@@ -12,6 +12,7 @@ import { Textarea } from "../components/Inputs";
 import { Radio } from "../components/Inputs";
 import { Uplode } from "../components/Inputs";
 import { Link } from "../components/Inputs";
+import {useNavigate} from "react-router-dom";
 
 const CreateActivity = () => {
   const [inputs, setInputs] = useState({
@@ -23,7 +24,7 @@ const CreateActivity = () => {
     joinLink: "link//link//link",
     image: "No file chosen",
   });
-
+  const navigate = useNavigate();
   return (
     <Body>
       <div className="body">
@@ -112,6 +113,7 @@ const CreateActivity = () => {
                     as="input"
                     type="submit"
                     value="Cancel"
+                    onClick={() => {navigate('/clubleaderHomePage')}}
                   />
                   <Button
                     className="inputs-btn"

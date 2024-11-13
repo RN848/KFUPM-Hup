@@ -171,7 +171,7 @@ const ClubMembers = () => {
           ))}
         </div>
 
-        <Button variant="secondary" className="back-btn">
+        <Button variant="secondary" className="back-btn" onClick={() => {navigate("/clubleaderHomePage")}}>
           Back
         </Button>
       </div>
