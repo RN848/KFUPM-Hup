@@ -22,6 +22,10 @@ $profile-color: #fcfcfc; // For profile link highlighting (optional)
     .kfupm-logo {
         height: 60px; // Adjust size as needed
         margin-right: 20px;
+        &:hover{
+            cursor: pointer;
+        }
+
     }
 
     .headbar-link {
