@@ -1,8 +1,8 @@
-
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "./Nav.js";
+import Navbar from "react-bootstrap/Navbar";
 import "../styles/master.css";
 import "../styles/main.css";
 import "../styles/pages/_headbar.scss";
@@ -25,31 +25,30 @@ export default function Body({ children }) {
     }
   }, []);
   const [showNav, setShowNav] = useState(true);
-  console.log(userRole)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
       <>
-        <Container fluid style={{ height: "100%" }}>
-          <Row className={"headBar"}>
-            <div className="d-flex align-items-center">
-              {/* KFUPM HUB Logo */}
-              <a onClick={() => navigate("/home")}>
-              <Image
-                  src={logo}
-                  alt={"KFUPM HUB Logo"}
-                  className={"kfupm-logo"}
-              />
-              </a>
-              {/* Links */}
-              <a href="/Sports-reservation" className="headbar-link">
-                Sport Reservation
-              </a>
-              <a href="/news-clubs" className="headbar-link">
-                Clubs
-              </a>
-
-              {/* Spacer */}
-              <div className="flex-grow-1"></div>
+        <Navbar expand="md" className="headBar" bg="light" variant="dark">
+          <Container fluid>
+            <Navbar.Brand onClick={() => navigate("/home")} className="logo">
+              <Image src={logo} alt={"KFUPM HUB Logo"} className={"kfupm-logo"} />
+            </Navbar.Brand>
+            <Navbar.Toggle
+                aria-controls="basic-navbar-nav"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+            />
+            <Navbar.Collapse
+                id="basic-navbar-nav"
+                className={isMenuOpen ? "show" : ""}
+            >
+              <div className="d-flex flex-column flex-md-row align-items-md-center w-100">
+                <a href="/Sports-reservation" className="headbar-link">
+                  Sport Reservation
+                </a>
+                <a href="/news-clubs" className="headbar-link">
+                  Clubs
+                </a>
 
               {/*
               CODE
@@ -89,7 +88,9 @@ export default function Body({ children }) {
                   </Button>
               )}*/}
             </div>
-          </Row>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
 
           <Row style={{ height: "100%" }}>
             {/* This is the nav only enable when debug */}
@@ -103,7 +104,6 @@ export default function Body({ children }) {
               <Container style={{ paddingTop: "20px" }}>{children}</Container>
             </Col>
           </Row>
-        </Container>
       </>
   );
 }
