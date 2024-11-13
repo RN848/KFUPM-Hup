@@ -75,8 +75,12 @@ const Home = () => {
   return (
     <Body>
       <div className="home-page">
+        <a href={"/Sports-reservation"}>
       <GlassyCard title="Sports Reservation" />
+        </a>
+        <a href={"/news-clubs"}>
       <GlassyCard title="Student Clubs" />
+        </a>
     </div>
     </Body>
   );

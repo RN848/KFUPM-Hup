@@ -51,11 +51,35 @@ export default function Body({ children }) {
               {/* Spacer */}
               <div className="flex-grow-1"></div>
 
+              {/*
+              CODE
+              */}
+
+              {/*admin*/}
+              {userRole == "admin" && (
+                  <>
+                    <a href="/New-Club" className="headbar-link">
+                      Create Club
+                    </a>
+                  </>
+              )}
+
+              {/*club Account*/}
+                  {userRole.trim(" ") == "clubAccount" && (
+                      <>
+                        <a href="/clubleaderHomePage" className="headbar-link">
+                          Club Page
+                        </a>
+                      </>
+                  )}
+
+              {/*Club Page*/}
+
               {/* Profile Link */}
               <a className="headbar-link profile-link" onClick={() => {navigate("/Your-Profile")}}>
                 Profile
               </a>
-              {!isIndexPage && (
+              {/*{!isIndexPage && (
                   <Button
                       variant="secondary"
                       onClick={() => setShowNav(!showNav)}
@@ -63,12 +87,13 @@ export default function Body({ children }) {
                   >
                     {showNav ? "Hide Nav" : "Show Nav"}
                   </Button>
-              )}
+              )}*/}
             </div>
           </Row>
 
           <Row style={{ height: "100%" }}>
-            {!isIndexPage && (
+            {/* This is the nav only enable when debug */}
+            {!isIndexPage && false  &&showNav && (
                 <Col xs="2" className="sidNav" style={{ padding: "0" }}>
                   <Nav />
                 </Col>
