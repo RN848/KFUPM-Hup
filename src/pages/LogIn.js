@@ -4,31 +4,27 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
+  localStorage.clear()
   const navigate = useNavigate();
-
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
-
   const adminLogin = {
     email: 'admin@gmail.com',
     password: 'passwordAdmin',
     isAdmin: true,
     isOwner: false,
   };
-
   const ClubAccount = {
     email: 'club@gmail.com',
     password: 'passwordClub',
     isAdmin: false,
     isOwner: true,
   };
-
   const handleInputChange = (e) => {
     setInputs({ ...inputs, [e.target.id]: e.target.value });
   };
-
   const checkForm = (e) => {
     e.preventDefault();
     let userRole = 'normal'; // default role
