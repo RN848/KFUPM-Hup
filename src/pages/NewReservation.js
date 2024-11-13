@@ -290,15 +290,12 @@ const NewReservation = () => {
         )}
 
         <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-          <Button
-            variant="primary"
-            style={{ marginTop: "" }}
-            onClick={handleReserveClick}
-          >
+          <Button variant="primary" onClick={handleReserveClick}>
             Reserve
           </Button>
           <Button
             variant="secondary"
+            // className="back-btn"
             onClick={() => navigate("/Sports-reservation")}
           >
             Cancel
