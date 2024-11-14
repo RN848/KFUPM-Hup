@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }from "react";
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
@@ -9,12 +9,12 @@ import Button from "react-bootstrap/Button";
 import { Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, state } from "react-router-dom";
 
 const ClLeadHomePage = () => {
   const navigate = useNavigate();
 
-  const clubMembers = [
+  const [clubMembers,setMembers] = useState([
     {
       id: 1,
       name: "Omar Alkhulaif",
@@ -30,7 +30,7 @@ const ClLeadHomePage = () => {
       name: "Ahmed Alsalem",
       profilePicture: "",
     },
-  ];
+  ]);
 
   const clubActivity = [
     {
@@ -54,6 +54,10 @@ const ClLeadHomePage = () => {
       AcImg: "../images/activities/activity-01.png",
     },
   ];
+
+  const handleRemove = (id) => {
+    setMembers(clubMembers.filter((member) => member.id !== id));
+  };
 
   return (
     <Body>
@@ -86,7 +90,10 @@ const ClLeadHomePage = () => {
               <Button
                 variant="primary"
                 className="add-btn"
-                onClick={() => navigate("/Create-Activity-news")}
+                onClick={() =>{
+                    localStorage.removeItem("fromEdit")
+                    navigate("/Create-Activity-news")}
+                }
               >
                 Add New
               </Button>
@@ -125,7 +132,7 @@ const ClLeadHomePage = () => {
                       <Button
                         variant="danger"
                         className="remove-btn"
-                        onClick={() => console.log("Remove", member.name)}
+                        onClick={() => handleRemove(member.id)}
                       >
                         Remove
                       </Button>

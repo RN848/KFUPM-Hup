@@ -55,21 +55,28 @@ const LatestNews = () => {
 
   const newsMap = filteredNewsList.map((news, index) => (
       <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
-        <div className="news-card">
-          <Image className="news-img" src={news.img} alt={news.title} />
-          <div className="news-details">
-            <h3 className="news-title">{news.title}</h3>
-            <p className="news-desc">{news.desc}</p>
-            <Button
-                className={`join-btn ${clickedNews.includes(index) ? "joined" : ""}`}
-                onClick={() => handleJoinClick(index)}
-            >
-              {clickedNews.includes(index) ? "Joined" : "Join"}
-            </Button>
+        <a href={"/activity-view"} className="news-link">
+          <div className="news-card">
+            <Image className="news-img" src={news.img} alt={news.title} />
+            <div className="news-details">
+              <h3 className="news-title">{news.title}</h3>
+              <p className="news-desc">{news.desc}</p>
+              <Button
+                  className={`join-btn ${clickedNews.includes(index) ? "joined" : ""}`}
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent link navigation
+                    e.stopPropagation(); // Stop the event from propagating to the parent <a>
+                    handleJoinClick(index);
+                  }}
+              >
+                {clickedNews.includes(index) ? "Joined" : "Join"}
+              </Button>
+            </div>
           </div>
-        </div>
+        </a>
       </Col>
   ));
+
 
   return (
       <Body>

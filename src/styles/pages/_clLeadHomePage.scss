@@ -1,4 +1,7 @@
 /* Club News and Activity Section */
+.news-box {
+  margin-right: 41414px;
+}
 .news-box,
 .members-box {
   background-color: #292e33;
@@ -110,6 +113,10 @@
   }
 }
 
+.ClLeadHomePage {
+  margin-left: auto;
+
+}
 
 /* Members Section */
 .member-container {
@@ -223,6 +230,8 @@
     }
   }
 }
+
+
 @media (max-width: 768px) {
   .ClLeadHomePage {
     flex-direction: column; // Stack sections vertically on mobile
@@ -233,7 +242,7 @@
     .members-box {
       width: 100%; 
       padding: 1rem; 
-      margin: 0 auto; 
+      margin: 0 auto;
     }
 
     .activity-container,

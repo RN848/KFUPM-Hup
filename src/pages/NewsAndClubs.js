@@ -124,6 +124,7 @@ const NewsAndClubs = () => {
               <Row className="g-4">
                 {filteredNews.map((news, index) => (
                   <Col key={index} lg={6} md={6} sm={12} xs={12}>
+                    <a href={"/activity-view"}>
                     <div className="news-card">
                       <Image
                         src={news.img}
@@ -137,7 +138,10 @@ const NewsAndClubs = () => {
                           className={`join-btn ${
                             clickedNews.includes(index) ? "joined" : ""
                           }`}
-                          onClick={() => handleJoinClick(index)}
+                          onClick={(e) =>{
+                              e.preventDefault(); // Prevent link navigation
+                                e.stopPropagation();
+                              handleJoinClick(index)}}
                         >
                           {clickedNews.includes(index) ? "Joined" : "Join"}
                         </Button>
@@ -148,6 +152,7 @@ const NewsAndClubs = () => {
                         )}
                       </div>
                     </div>
+                    </a>
                   </Col>
                 ))}
               </Row>
@@ -165,6 +170,7 @@ const NewsAndClubs = () => {
               <h1 className="page-title">Clubs</h1>
               <div className="clubs-list">
                 {clubList.map((club, index) => (
+                    <a href={'/club-profile'}>
                   <div key={index} className="club-item">
                     <Image
                       src={club.logo}
@@ -175,7 +181,10 @@ const NewsAndClubs = () => {
                       <h4 className="club-title">{club.title}</h4>
                       <Button
                         className={`club-action-btn ${clubStatuses[index]}`}
-                        onClick={() => handleFollowClick(index)}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          handleFollowClick(index)}}
                       >
                         {clubStatuses[index] === "follow"
                           ? "Follow"
@@ -183,6 +192,7 @@ const NewsAndClubs = () => {
                       </Button>
                     </div>
                   </div>
+                    </a>
                 ))}
               </div>
               <div className="view-all d-flex justify-content-center mt-4">

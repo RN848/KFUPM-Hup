@@ -42,7 +42,7 @@ export default function Body({ children }) {
                 Sport Reservation
               </a>
               <a href="/news-clubs" className="headbar-link">
-                Clubs
+                Student Clubs
               </a>
 
               {userRole === "admin" && (
@@ -59,7 +59,14 @@ export default function Body({ children }) {
 
               <a
                   className="headbar-link profile-link"
-                  onClick={() => navigate("/Your-Profile")}
+                  onClick={() => {
+                    if (userRole != "clubAccount") {
+                      navigate("/Your-Profile")
+                    } else {
+                      navigate("/manage-profile")
+                    }
+                  }
+                  }
               >
                 Profile
               </a>

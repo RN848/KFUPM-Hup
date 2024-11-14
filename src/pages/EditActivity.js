@@ -7,8 +7,11 @@ import Col from "react-bootstrap/Col";
 import { Image } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
 
 const EditActivity = () => {
+
+  const navigate = useNavigate();
   const [newsList, setNewsList] = useState([
     {
       title: "News Activity 1",
@@ -68,7 +71,12 @@ const EditActivity = () => {
                       maxWidth: "150px",
                       padding: "0.5rem 1rem",
                     }}
-                    onClick={() => handleEditClick(news.title)}
+                    onClick={() => {
+                      localStorage.setItem("fromEdit", "true");
+                      navigate("/Create-activity-news")
+                    }
+                  }
+
                   >
                     Edit
                   </Button>

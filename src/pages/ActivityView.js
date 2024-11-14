@@ -34,7 +34,7 @@ const ActivityView = () => {
         <div className="news-box p-4">
           {/* Back Button */}
           <div className="d-flex justify-content-end mb-3">
-            <Button className="back-btn" onClick={() => navigate(-1)}>
+            <Button style={{backgroundColor: "#6c757d", border: "none"}} onClick={() => navigate(-1)} >
               Back
             </Button>
           </div>
