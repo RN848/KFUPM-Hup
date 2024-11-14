@@ -85,7 +85,7 @@ const ReservationSuccess = () => {
         <Button
           variant="light"
           className="home-button"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         >
           Home
         </Button>
