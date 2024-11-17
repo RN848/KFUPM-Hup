@@ -43,7 +43,7 @@ const LogIn = () => {
 
     localStorage.setItem("userRole", userRole); // Store the user role in local storage
     navigate("/home");
-  };t 
+  };
 
   return (
     <Body>
