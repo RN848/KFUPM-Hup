@@ -153,7 +153,9 @@ const ClubMembers = () => {
               <div className="buttons">
                 <Button
                   variant="primary"
-                  onClick={() => handleRoleChange(member.id)}
+                  onClick={() => {
+                    e.stopPropagation();
+                    handleRoleChange(member.id)}}
                 >
                   Role
                 </Button>
