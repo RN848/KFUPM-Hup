@@ -12,6 +12,7 @@ import ManageProfile from "./pages/ManageProfile";
 import YourProfile from "./pages/YourProfile";
 
 import LogIn from "./pages/LogIn";
+import LogOut from "./pages/LogOut.js"
 import SignUp from "./pages/SignUp";
 import NewClub from "./pages/NewClub";
 import SportsReserve from "./pages/SportsReserve";
@@ -54,10 +55,14 @@ function App() {
             <Route path="Your-Profile" element={<YourProfile />} />
             {/*{frame 20}*/}
 
-
-
             <Route path="Sign-Up" element={<SignUp />} />
             {/*{frame 19}*/}
+
+            <Route path="Log-In" element={<LogIn />} />
+            {/*{frame 19}*/}
+
+            <Route path="/LogOut" element={<LogOut />} />
+
 
             <Route path="New-Club" element={<NewClub />} />
             {/*{frame 22}*/}

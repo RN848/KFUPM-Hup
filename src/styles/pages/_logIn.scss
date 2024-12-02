@@ -1,183 +1,182 @@
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    color: white;
-  
-    .main-heading {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      color: #1a73e8;
-      font-weight: bold;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: white;
+
+  .main-heading {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #1a73e8;
+    font-weight: bold;
+  }
 
 .login-title {
-  font-size: 2rem; 
-  margin-bottom: 1.5rem; 
-  text-align: center; 
-  color: white; 
+font-size: 2rem; 
+margin-bottom: 1.5rem; 
+text-align: center; 
+color: white; 
 }
 
-  
-    .login-form {
-      background-color: #292e33;
-      padding: 2rem;
-      border-radius: 10px;
+
+  .login-form {
+    background-color: #292e33;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    label {
+      color: white;
+      font-size: 1rem;
+    }
+
+    input {
       width: 100%;
-      max-width: 400px;
-  
+      padding: 0.75rem;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #1e1e1e;
+      color: white;
+      font-size: 1rem;
+    
+      &::placeholder {
+        color: #565656;
+      }
+    
+      &:focus {
+        box-shadow: none;
+        border: #565656 solid 1px;
+        background-color: #222;
+        color: #ffffff;
+        transition: 0s;
+        outline: none;
+      }
+    }
+    
+    input:-webkit-autofill {
+      background-color: #1e1e1e !important; 
+      color: white !important; 
+      box-shadow: 0 0 0px 1000px #1e1e1e inset !important; 
+      -webkit-text-fill-color: white !important; 
+      border: none !important; 
+      transition: background-color 5000s ease-in-out 0s; 
+    }
+    
+    input:-webkit-autofill:focus {
+      background-color: #222 !important; 
+      -webkit-text-fill-color: white !important; 
+    }
+    
+    
+    .login-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+
+      &:hover {
+        background-color: #1558c1;
+      }
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #555;
+      }
+    }
+
+    p {
+      text-align: center;
+      color: #ccc;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .main-heading {
+      font-size: 2rem;
+    }
+
+    .login-form {
+      padding: 1.5rem;
+
       form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.7rem;
+        gap: 1rem;
       }
-  
-      label {
-        color: white;
-        font-size: 1rem;
-      }
-  
+
       input {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #444;
-        border-radius: 5px;
-        background-color: #1e1e1e;
-        color: white;
-        font-size: 1rem;
-      
-        &::placeholder {
-          color: #565656;
-        }
-      
-        &:focus {
-          box-shadow: none;
-          border: #565656 solid 1px;
-          background-color: #222;
-          color: #ffffff;
-          transition: 0s;
-          outline: none;
-        }
-      }
-      
-      input:-webkit-autofill {
-        background-color: #1e1e1e !important; 
-        color: white !important; 
-        box-shadow: 0 0 0px 1000px #1e1e1e inset !important; 
-        -webkit-text-fill-color: white !important; 
-        border: none !important; 
-        transition: background-color 5000s ease-in-out 0s; 
-      }
-      
-      input:-webkit-autofill:focus {
-        background-color: #222 !important; 
-        -webkit-text-fill-color: white !important; 
-      }
-      
-      
-      .login-btn {
-        width: 100%;
-        padding: 0.75rem;
-        background-color: #1a73e8;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 1rem;
-        cursor: pointer;
-        margin-top: 10px;
-  
-        &:hover {
-          background-color: #1558c1;
-        }
-      }
-  
-      .signup-btn {
-        width: 100%;
-        padding: 0.75rem;
-        background-color: #444;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 1rem;
-        cursor: pointer;
-  
-        &:hover {
-          background-color: #555;
-        }
-      }
-  
-      p {
-        text-align: center;
-        color: #ccc;
-        margin-top: 1rem;
+        padding: 0.5rem;
         font-size: 0.9rem;
       }
-    }
-  
-    @media (max-width: 768px) {
-      padding: 1rem;
-  
-      .main-heading {
-        font-size: 2rem;
-      }
-  
-      .login-form {
-        padding: 1.5rem;
-  
-        form {
-          gap: 1rem;
-        }
-  
-        input {
-          padding: 0.5rem;
-          font-size: 0.9rem;
-        }
-  
-        .login-btn,
-        .signup-btn {
-          padding: 0.5rem;
-          font-size: 0.9rem;
-        }
-  
-        p {
-          font-size: 0.8rem;
-        }
-      }
-    }
-  
-    @media (max-width: 480px) {
-      .main-heading {
-        font-size: 1.8rem;
-      }
-  
-      .login-form {
-        padding: 1rem;
-  
-        form {
-          gap: 0.8rem;
-        }
-  
-        input {
-          padding: 0.4rem;
-          font-size: 0.8rem;
 
-          
-        }
-        
-  
-        .login-btn,
-        .signup-btn {
-          padding: 0.4rem;
-          font-size: 0.8rem;
-        }
-  
-        p {
-          font-size: 0.75rem;
-        }
+      .login-btn,
+      .signup-btn {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      p {
+        font-size: 0.8rem;
       }
     }
   }
-  
+
+  @media (max-width: 480px) {
+    .main-heading {
+      font-size: 1.8rem;
+    }
+
+    .login-form {
+      padding: 1rem;
+
+      form {
+        gap: 0.8rem;
+      }
+
+      input {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+
+        
+      }
+      
+
+      .login-btn,
+      .signup-btn {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+      }
+
+      p {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
