@@ -10,7 +10,7 @@ import axios from "axios";
 
 
 const LogIn = () => {
-  localStorage.clear();
+  // localStorage.clear();
   const [data, setData] = useState({
     email: "",
     password: "",

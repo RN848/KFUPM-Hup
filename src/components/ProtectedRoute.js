@@ -1,20 +1,22 @@
-//D:\projects\KFUPM-Hup\src\components\ProtectedRoute.js
-import React, { useContext } from "react";
-import { Navigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+// rout
 
-const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { auth } = useContext(AuthContext);
+// components/ProtectedRoute.js
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-  if (!auth.token) {
-    return <Navigate to="/Log-In" replace />;
-  }
-
-  if (allowedRoles && !allowedRoles.includes(auth.role)) {
-    return <Navigate to="/home" replace />;
-  }
-
-  return children;
+const ProtectedRoute = ({ element }) => {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    
+    // If token doesn't exist, redirect to the login page
+    if (!token) {
+      navigate("/Log-In");
+    }
+  }, [navigate]);
+  
+  return element;  // Render the protected component
 };
 
 export default ProtectedRoute;
