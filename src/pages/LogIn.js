@@ -5,7 +5,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
+
+
+
 const LogIn = () => {
+  localStorage.clear();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -17,12 +22,34 @@ const LogIn = () => {
     setData({ ...data, [input.name]: input.value });
   };
 
+
+/////////////////////////////////////////////////////////////
+  // const handleInputChange = (e) => {
+  //   setData({ ...data, [e.target.id]: e.target.value });
+  // };
+/////////////////////////////////////////////////////////////
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let userRole = "normal"; // default role
     try {
       const url = "http://localhost:5000/api/authRoutes/Log-In"; // Correct login API endpoint
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data); // Store token in localStorage
+
+///////////////////////////////////////////////////////
+      if (res.data.role==="admin"){
+        userRole="admin"
+      }else if(res.data.role==="clubAccount"){
+        userRole="clubAccount"
+      }
+      localStorage.setItem("userRole", userRole); // Store the user role in local storage
+
+
+//////////////////////////////////////////////////////
       navigate("/home"); // Redirect to home page on successful login
     } catch (err) {
       // Check if error response exists from backend
