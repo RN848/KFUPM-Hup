@@ -10,7 +10,7 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
-    role: "Student", // Default role is "Student"
+    role: "normal", // Default role is "Student"
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();

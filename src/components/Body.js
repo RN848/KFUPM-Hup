@@ -94,7 +94,7 @@ export default function Body({ children }) {
                 {/* Dropdown Menu */}
                 {isLoggedIn && (
                   <div className="dropdown-menu">
-                    <a className="dropdown-item" onClick={handleLogout}>Logout</a>
+                    <a className="dropdown-item"  onClick={handleLogout}>Logout</a>
                     {/* You can add more options here (e.g., Settings) */}
                   </div>
                 )}
