@@ -38,7 +38,7 @@ const LogIn = () => {
       inputs.email === ClubAccount.email &&
       inputs.password === ClubAccount.password
     ) {
-      userRole = "  clubAccount";
+      userRole = "clubAccount";
     }
 
     localStorage.setItem("userRole", userRole); // Store the user role in local storage
