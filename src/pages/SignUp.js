@@ -15,12 +15,23 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Regular expression to validate the email format (e.g., yxxxxxxxxx@kfupm.edu.sa)
+  // const emailRegex = /^[a-zA-Z]\d{9}@kfupm\.edu\.sa$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@kfupm\.edu\.sa$/;
+
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if the email matches the required pattern
+    if (!emailRegex.test(data.email)) {
+      setError("Please enter a valid email in the format Name/ID@kfupm.edu.sa.");
+      return;
+    }
+
     try {
       const url = "http://localhost:5000/api/userRoutes/Sign-Up"; // Correct backend URL for sign-up
       const { data: res } = await axios.post(url, data);

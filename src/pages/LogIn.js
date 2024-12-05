@@ -5,12 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
-
-
 const LogIn = () => {
-  // localStorage.clear();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -18,47 +13,55 @@ const LogIn = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Regular expression to validate the email format (e.g., yxxxxxxxxx@kfupm.edu.sa)
+  // const emailRegex = /^[a-zA-Z]\d{9}@kfupm\.edu\.sa$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@kfupm\.edu\.sa$/;
+
   const handleInputChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
-
-/////////////////////////////////////////////////////////////
-  // const handleInputChange = (e) => {
-  //   setData({ ...data, [e.target.id]: e.target.value });
-  // };
-/////////////////////////////////////////////////////////////
-
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let userRole = "normal"; // default role
+    // Check if the email matches the required pattern
+    if (!emailRegex.test(data.email)) {
+      setError("Please enter a valid email in the format Name/ID@kfupm.edu.sa.");
+      return; // Stop further submission if email is invalid
+    }
+
+    let userRole = "normal"; // Default role is "normal"
     try {
       const url = "http://localhost:5000/api/authRoutes/Log-In"; // Correct login API endpoint
       const { data: res } = await axios.post(url, data);
-      localStorage.setItem("token", res.data); // Store token in localStorage
 
-///////////////////////////////////////////////////////
-      if (res.data.role==="admin"){
-        userRole="admin"
-      }else if(res.data.role==="clubAccount"){
-        userRole="clubAccount"
+      // Store token in localStorage
+      localStorage.setItem("token", res.data.token);
+
+      // Check the role from the response and store it in localStorage
+      if (res.data.role === "admin") {
+        userRole = "admin";
+      } else if (res.data.role === "clubAccount") {
+        userRole = "clubAccount";
       }
-      localStorage.setItem("userRole", userRole); // Store the user role in local storage
+      localStorage.setItem("userRole", userRole);
 
-
-//////////////////////////////////////////////////////
-      navigate("/home"); // Redirect to home page on successful login
+      // Redirect to home page upon successful login
+      navigate("/home");
     } catch (err) {
-      // Check if error response exists from backend
-      if (err.response && err.response.status >= 400 && err.response.status <= 500) {
-        setError(err.response.data.message); // Show error message from backend
-        console.error("Login failed:", err.response.data.message); // Log detailed error for debugging
+      if (err.response) {
+        // Customize error handling based on status code
+        if (err.response.status === 401) {
+          setError("Invalid credentials, please try again.");
+        } else if (err.response.status === 500) {
+          setError("Server error, please try again later.");
+        } else {
+          setError(err.response.data.message || "An error occurred.");
+        }
+        console.error("Login failed:", err.response.data.message);
       } else {
-        setError("An unexpected error occurred. Please try again."); // Fallback error message
-        console.error("Unexpected error:", err); // Log unexpected errors
+        setError("An unexpected error occurred. Please try again.");
+        console.error("Unexpected error:", err);
       }
     }
   };
