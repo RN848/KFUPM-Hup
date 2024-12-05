@@ -13,57 +13,49 @@ const LogIn = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Regular expression to validate the email format (e.g., yxxxxxxxxx@kfupm.edu.sa)
-  // const emailRegex = /^[a-zA-Z]\d{9}@kfupm\.edu\.sa$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@kfupm\.edu\.sa$/;
 
   const handleInputChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if the email matches the required pattern
     if (!emailRegex.test(data.email)) {
-      setError("Please enter a valid email in the format Name/ID@kfupm.edu.sa.");
-      return; // Stop further submission if email is invalid
+      setError("Please enter a valid KFUPM email (e.g., yxxxxxxxxx@kfupm.edu.sa).");
+      return;
     }
-
-    let userRole = "normal"; // Default role is "normal"
     try {
-      const url = "http://localhost:5000/api/authRoutes/Log-In"; // Correct login API endpoint
+      const url = "http://localhost:5000/api/authRoutes/Log-In";
       const { data: res } = await axios.post(url, data);
-
-      // Store token in localStorage
+      
+      // Assuming OTP verified is included in the response or just trust the backend not returning if not verified
       localStorage.setItem("token", res.data.token);
-
-      // Check the role from the response and store it in localStorage
-      if (res.data.role === "admin") {
-        userRole = "admin";
-      } else if (res.data.role === "clubAccount") {
-        userRole = "clubAccount";
-      }
+      const userRole = res.data.role || "normal";
       localStorage.setItem("userRole", userRole);
-
-      // Redirect to home page upon successful login
+    
       navigate("/home");
     } catch (err) {
       if (err.response) {
-        // Customize error handling based on status code
-        if (err.response.status === 401) {
+        if (err.response.status === 403 && err.response.data.message === "Your account is not verified. Please verify your OTP.") {
+          // If the user's account is not verified, redirect them to the verify-otp page
+          navigate("/verify-otp", { state: { email: data.email, notVerified: true } });
+        } else if (err.response.status === 404 && err.response.data.message === "User not found") {
+          setError("You do not have an account. Please sign up.");
+        } else if (err.response.status === 401 && err.response.data.message === "Invalid credentials") {
           setError("Invalid credentials, please try again.");
         } else if (err.response.status === 500) {
           setError("Server error, please try again later.");
         } else {
           setError(err.response.data.message || "An error occurred.");
         }
-        console.error("Login failed:", err.response.data.message);
       } else {
         setError("An unexpected error occurred. Please try again.");
-        console.error("Unexpected error:", err);
       }
     }
+    
   };
 
   return (
@@ -93,12 +85,10 @@ const LogIn = () => {
               required
             />
 
-            <button type="submit" className="login-btn">
-              Log In
-            </button>
+            <button type="submit" className="login-btn">Log In</button>
           </form>
 
-          {error && <div>{error}</div>} {/* Display error message */}
+          {error && <div style={{ color: "red" }}>{error}</div>}
 
           <p style={{ textAlign: "center", color: "#ccc", marginTop: "1rem" }}>
             Don't have an account yet? Sign up below.
