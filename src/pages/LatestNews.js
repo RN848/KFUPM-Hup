@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
@@ -6,37 +6,31 @@ import "../styles/pages/_latestNews.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Image, Button } from "react-bootstrap";
+import { getAllEvents } from "../api/apiEventService"; // Importing the event service
 
 const LatestNews = () => {
-  const newsList = [
-    {
-      title: "News Title 1",
-      desc: "Description of the news or activity goes here.",
-      img: "../images/activities/activity-01.png",
-      clup: "1",
-    },
-    {
-      title: "News Title 2",
-      desc: "Another news description goes here.",
-      img: "../images/activities/activity-02.jpeg",
-      clup: "2",
-    },
-    {
-      title: "News Title 3",
-      desc: "Details about the third news or activity.",
-      img: "../images/activities/activity-03.jpg",
-      clup: "3",
-    },
-    {
-      title: "News Title 4",
-      desc: "Details about the fourth news or activity.",
-      img: "../images/activities/activity-04.jpg",
-      clup: "4",
-    },
-  ];
-
   const [filter, setFilter] = useState(""); // Filter state
   const [clickedNews, setClickedNews] = useState([]); // Track joined activities
+  const [events, setEvents] = useState([]); // Events list
+  const [loading, setLoading] = useState(true); // Loading state for fetching data
+  const [error, setError] = useState(null); // Error state
+
+  // Fetch events on component mount
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const data = await getAllEvents(); // Fetch events using the service
+        setEvents(data); // Set fetched events to state
+      } catch (err) {
+        setError("Error fetching events. Please try again.");
+        console.error("Error fetching events:", err);
+      } finally {
+        setLoading(false); // Set loading to false after data fetching
+      }
+    };
+
+    fetchEvents();
+  }, []); // Empty dependency array means this effect runs only once, after the component mounts
 
   const handleJoinClick = (index) => {
     if (!clickedNews.includes(index)) {
@@ -46,21 +40,21 @@ const LatestNews = () => {
     }
   };
 
-  // Filtered news list
-  const filteredNewsList = newsList.filter((_, index) => {
-    if (filter === "following") return index % 2 === 0; // Example: Show every alternate news item
-    if (filter === "enrolled") return clickedNews.includes(index); // Show joined news
+  // Filtered events list
+  const filteredNewsList = events.filter((_, index) => {
+    if (filter === "following") return index % 2 === 0; // Example: Show every alternate event
+    if (filter === "enrolled") return clickedNews.includes(index); // Show joined events
     return true; // Show all if no filter
   });
 
-  const newsMap = filteredNewsList.map((news, index) => (
+  const newsMap = filteredNewsList.map((event, index) => (
       <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
-        <a href={"/activity-view"} className="news-link">
+        <a href={`/activity-view`} className="news-link">
           <div className="news-card">
-            <Image className="news-img" src={news.img} alt={news.title} />
+            <Image className="news-img" src={event.img} alt={event.title} />
             <div className="news-details">
-              <h3 className="news-title">{news.title}</h3>
-              <p className="news-desc">{news.desc}</p>
+              <h3 className="news-title">{event.title}</h3>
+              <p className="news-desc">{event.desc}</p>
               <Button
                   className={`join-btn ${clickedNews.includes(index) ? "joined" : ""}`}
                   onClick={(e) => {
@@ -77,6 +71,13 @@ const LatestNews = () => {
       </Col>
   ));
 
+  if (loading) {
+    return <div>Loading...</div>; // Display loading message while fetching data
+  }
+
+  if (error) {
+    return <div>{error}</div>; // Display error message if there is an issue
+  }
 
   return (
       <Body>
