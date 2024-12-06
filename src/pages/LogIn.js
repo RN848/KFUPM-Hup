@@ -5,12 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
-
-
 const LogIn = () => {
-  // localStorage.clear();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -18,49 +13,49 @@ const LogIn = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@kfupm\.edu\.sa$/;
+
   const handleInputChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
+    setError("");
   };
-
-
-/////////////////////////////////////////////////////////////
-  // const handleInputChange = (e) => {
-  //   setData({ ...data, [e.target.id]: e.target.value });
-  // };
-/////////////////////////////////////////////////////////////
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let userRole = "normal"; // default role
+    if (!emailRegex.test(data.email)) {
+      setError("Please enter a valid KFUPM email (e.g., yxxxxxxxxx@kfupm.edu.sa).");
+      return;
+    }
     try {
-      const url = "http://localhost:5000/api/authRoutes/Log-In"; // Correct login API endpoint
+      const url = "http://localhost:5000/api/authRoutes/Log-In";
       const { data: res } = await axios.post(url, data);
-      localStorage.setItem("token", res.data); // Store token in localStorage
-
-///////////////////////////////////////////////////////
-      if (res.data.role==="admin"){
-        userRole="admin"
-      }else if(res.data.role==="clubAccount"){
-        userRole="clubAccount"
-      }
-      localStorage.setItem("userRole", userRole); // Store the user role in local storage
-
-
-//////////////////////////////////////////////////////
-      navigate("/home"); // Redirect to home page on successful login
+      
+      // Assuming OTP verified is included in the response or just trust the backend not returning if not verified
+      localStorage.setItem("token", res.data.token);
+      const userRole = res.data.role || "normal";
+      localStorage.setItem("userRole", userRole);
+    
+      navigate("/home");
     } catch (err) {
-      // Check if error response exists from backend
-      if (err.response && err.response.status >= 400 && err.response.status <= 500) {
-        setError(err.response.data.message); // Show error message from backend
-        console.error("Login failed:", err.response.data.message); // Log detailed error for debugging
+      if (err.response) {
+        if (err.response.status === 403 && err.response.data.message === "Your account is not verified. Please verify your OTP.") {
+          // If the user's account is not verified, redirect them to the verify-otp page
+          navigate("/verify-otp", { state: { email: data.email, notVerified: true } });
+        } else if (err.response.status === 404 && err.response.data.message === "User not found") {
+          setError("You do not have an account. Please sign up.");
+        } else if (err.response.status === 401 && err.response.data.message === "Invalid credentials") {
+          setError("Invalid credentials, please try again.");
+        } else if (err.response.status === 500) {
+          setError("Server error, please try again later.");
+        } else {
+          setError(err.response.data.message || "An error occurred.");
+        }
       } else {
-        setError("An unexpected error occurred. Please try again."); // Fallback error message
-        console.error("Unexpected error:", err); // Log unexpected errors
+        setError("An unexpected error occurred. Please try again.");
       }
     }
+    
   };
 
   return (
@@ -90,12 +85,10 @@ const LogIn = () => {
               required
             />
 
-            <button type="submit" className="login-btn">
-              Log In
-            </button>
+            <button type="submit" className="login-btn">Log In</button>
           </form>
 
-          {error && <div>{error}</div>} {/* Display error message */}
+          {error && <div style={{ color: "red" }}>{error}</div>}
 
           <p style={{ textAlign: "center", color: "#ccc", marginTop: "1rem" }}>
             Don't have an account yet? Sign up below.
