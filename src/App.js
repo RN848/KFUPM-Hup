@@ -12,6 +12,7 @@ import ManageProfile from "./pages/ManageProfile";
 import YourProfile from "./pages/YourProfile";
 
 import LogIn from "./pages/LogIn";
+import LogOut from "./pages/LogOut.js";
 import SignUp from "./pages/SignUp";
 import NewClub from "./pages/NewClub";
 import SportsReserve from "./pages/SportsReserve";
@@ -31,6 +32,7 @@ import EditClub from "./pages/EditClub";
 import ErrorPage from "./pages/ErrorPage";
 import LoadingPage from "./pages/LoadingPage";
 import ClLeadHomePage from "./pages/ClLeadHomePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -40,77 +42,95 @@ function App() {
           <Route>
             <Route index element={<LogIn />} />
             {/*{frame 18}*/}
-
-            <Route path="home" element={<Home />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="*" element={<ErrorPage />} />
-
-            <Route path="Create-Activity-news" element={<CreateActivity />} />
-            {/*{frame 13}*/}
-
-            <Route path="Manage-Profile" element={<ManageProfile />} />
-            {/*{frame 14}*/}
-
-            <Route path="Your-Profile" element={<YourProfile />} />
-            {/*{frame 20}*/}
-
-
-
-            <Route path="Sign-Up" element={<SignUp />} />
-            {/*{frame 19}*/}
-
-            <Route path="New-Club" element={<NewClub />} />
-            {/*{frame 22}*/}
-
-            <Route path="Sports-reservation" element={<SportsReserve />} />
-            {/*{frame 22}*/}
-
-            <Route path="Latest-News" element={<LatestNews />} />
-            {/*{frame 8}*/}
-
-            <Route path="edit-Activity" element={<EditActivity />} />
-            {/*{frame 15}*/}
-
-            <Route path="new-reservation" element={<NewReservation />} />
-            {/*{frame 3}*/}
-
-            <Route path="reservaion-success" element={<ReservationSuccess />} />
-            {/*{frame 4}*/}
-
-            <Route path="news-clubs" element={<NewsAndClubs />} />
-            {/*{frame 7}*/}
-
-            <Route path="activity-view" element={<ActivityView />} />
-            {/*{frame 7}*/}
-
+            {/* Protected Routes */}
             <Route
-              path="/reservation-details"
-              element={<ReservationDetails />}
+              path="home"
+              element={<ProtectedRoute element={<Home />} />}
             />
-            {/*{frame 5&6}*/}
-
-            <Route path="/club-members" element={<ClubMembers />} />
-            {/*{frame 16}*/}
-
-            <Route path="/member-profile" element={<MemberProfile />} />
-            {/*{frame 17}*/}
-
-            <Route path="/clubs" element={<Clubs />} />
-            {/*{frame 21}*/}
-
-            <Route path="/edit-club" element={<EditClub />} />
-            {/*{frame 23}*/}
-
-            <Route path="/error" element={<ErrorPage />} />
-            {/*{frame 24}*/}
-
-            <Route path="/club-profile" element={<ClubProfile />} />
-            {/*{frame 11}*/}
-
+            <Route
+              path="Create-Activity-news"
+              element={<ProtectedRoute element={<CreateActivity />} />}
+            />
+            <Route
+              path="Manage-Profile"
+              element={<ProtectedRoute element={<ManageProfile />} />}
+            />
+            <Route
+              path="Your-Profile"
+              element={<ProtectedRoute element={<YourProfile />} />}
+            />
+            <Route
+              path="New-Club"
+              element={<ProtectedRoute element={<NewClub />} />}
+            />
+            <Route
+              path="Sports-reservation"
+              element={<ProtectedRoute element={<SportsReserve />} />}
+            />
+            <Route
+              path="Latest-News"
+              element={<ProtectedRoute element={<LatestNews />} />}
+            />
+            <Route
+              path="edit-Activity"
+              element={<ProtectedRoute element={<EditActivity />} />}
+            />
+            <Route
+              path="new-reservation"
+              element={<ProtectedRoute element={<NewReservation />} />}
+            />
+            <Route
+              path="reservation-success"
+              element={<ProtectedRoute element={<ReservationSuccess />} />}
+            />
+            <Route
+              path="news-clubs"
+              element={<ProtectedRoute element={<NewsAndClubs />} />}
+            />
+            <Route
+              path="activity-view"
+              element={<ProtectedRoute element={<ActivityView />} />}
+            />
+            <Route
+              path="reservation-details"
+              element={<ProtectedRoute element={<ReservationDetails />} />}
+            />
+            <Route
+              path="club-members"
+              element={<ProtectedRoute element={<ClubMembers />} />}
+            />
+            <Route
+              path="member-profile"
+              element={<ProtectedRoute element={<MemberProfile />} />}
+            />
+            <Route
+              path="clubs"
+              element={<ProtectedRoute element={<Clubs />} />}
+            />
+            <Route
+              path="edit-club"
+              element={<ProtectedRoute element={<EditClub />} />}
+            />
+            <Route
+              path="club-profile"
+              element={<ProtectedRoute element={<ClubProfile />} />}
+            />
+            <Route
+              path="clubleaderHomePage"
+              element={<ProtectedRoute element={<ClLeadHomePage />} />}
+            />
+            <Route path="contact" element={<Contact />} />{" "}
+            {/* what is this ? */}
+            <Route path="*" element={<ErrorPage />} />
             <Route path="/loading" element={<LoadingPage />} />
             {/*{frame 25}*/}
-
-            <Route path={"/clubleaderHomePage"} element={<ClLeadHomePage />} />
+            <Route path="/error" element={<ErrorPage />} />
+            {/*{frame 24}*/}
+            <Route path="Sign-Up" element={<SignUp />} />
+            {/*{frame 19}*/}
+            <Route path="Log-In" element={<LogIn />} />
+            {/*{frame 19}*/}
+            <Route path="/LogOut" element={<LogOut />} />
           </Route>
         </Routes>
       </Suspense>

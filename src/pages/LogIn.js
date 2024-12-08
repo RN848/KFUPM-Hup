@@ -1,48 +1,66 @@
+// LogIn.js
 import Body from "../components/Body";
 import "../styles/pages/_logIn.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+
+
+
 
 const LogIn = () => {
-  localStorage.clear();
-  const navigate = useNavigate();
-  const [inputs, setInputs] = useState({
+  // localStorage.clear();
+  const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const adminLogin = {
-    email: "admin@gmail.com",
-    password: "passwordAdmin",
-    isAdmin: true,
-    isOwner: false,
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleInputChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
   };
-  const ClubAccount = {
-    email: "club@gmail.com",
-    password: "passwordClub",
-    isAdmin: false,
-    isOwner: true,
-  };
-  const handleInputChange = (e) => {
-    setInputs({ ...inputs, [e.target.id]: e.target.value });
-  };
-  const checkForm = (e) => {
+
+
+/////////////////////////////////////////////////////////////
+  // const handleInputChange = (e) => {
+  //   setData({ ...data, [e.target.id]: e.target.value });
+  // };
+/////////////////////////////////////////////////////////////
+
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     let userRole = "normal"; // default role
+    try {
+      const url = "http://localhost:5000/api/authRoutes/Log-In"; // Correct login API endpoint
+      const { data: res } = await axios.post(url, data);
+      localStorage.setItem("token", res.data); // Store token in localStorage
 
-    if (
-      inputs.email === adminLogin.email &&
-      inputs.password === adminLogin.password
-    ) {
-      userRole = "admin";
-    } else if (
-      inputs.email === ClubAccount.email &&
-      inputs.password === ClubAccount.password
-    ) {
-      userRole = "clubAccount";
+///////////////////////////////////////////////////////
+      if (res.data.role==="admin"){
+        userRole="admin"
+      }else if(res.data.role==="clubAccount"){
+        userRole="clubAccount"
+      }
+      localStorage.setItem("userRole", userRole); // Store the user role in local storage
+
+
+//////////////////////////////////////////////////////
+      navigate("/home"); // Redirect to home page on successful login
+    } catch (err) {
+      // Check if error response exists from backend
+      if (err.response && err.response.status >= 400 && err.response.status <= 500) {
+        setError(err.response.data.message); // Show error message from backend
+        console.error("Login failed:", err.response.data.message); // Log detailed error for debugging
+      } else {
+        setError("An unexpected error occurred. Please try again."); // Fallback error message
+        console.error("Unexpected error:", err); // Log unexpected errors
+      }
     }
-
-    localStorage.setItem("userRole", userRole); // Store the user role in local storage
-    navigate("/home");
   };
 
   return (
@@ -51,13 +69,13 @@ const LogIn = () => {
         <h1 className="main-heading">Welcome to KFUPM HUB</h1>
         <div className="login-form">
           <h2 className="login-title">Log In</h2>
-          <form onSubmit={checkForm}>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
             <input
               type="email"
-              id="email"
+              name="email"
               placeholder="Enter your email"
-              value={inputs.email}
+              value={data.email}
               onChange={handleInputChange}
               required
             />
@@ -65,9 +83,9 @@ const LogIn = () => {
             <label htmlFor="password">Password</label>
             <input
               type="password"
-              id="password"
+              name="password"
               placeholder="Enter your password"
-              value={inputs.password}
+              value={data.password}
               onChange={handleInputChange}
               required
             />
@@ -76,6 +94,9 @@ const LogIn = () => {
               Log In
             </button>
           </form>
+
+          {error && <div>{error}</div>} {/* Display error message */}
+
           <p style={{ textAlign: "center", color: "#ccc", marginTop: "1rem" }}>
             Don't have an account yet? Sign up below.
           </p>
