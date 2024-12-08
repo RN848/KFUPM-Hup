@@ -70,12 +70,12 @@ const NewReservation = () => {
     "Friday",
     "Saturday",
   ];
-*/
- /* const availableTimes = {
+
+  const availableTimes = {
     "Basketball|Court 1|Sunday": ["08:00", "10:00", "14:00", "16:00"],
     "Football|Field 1|Monday": ["09:00", "11:00", "15:00", "17:00"],
-  };
-*/
+  }
+  */
   const allTimeSlots = [
 
     "15:00",
@@ -86,7 +86,7 @@ const NewReservation = () => {
   ];
 
     // Function to fetch available time slots based on sport, field, and date using axios
-    /*const fetchTimes = async () => {
+    const fetchTimes = async () => {
         if (sport.filter && selectedField && selectedDay) {
             try {
                 const response = await axios.get(
@@ -145,7 +145,7 @@ const NewReservation = () => {
             }
         }
     };
-*/
+
   const isFormComplete =
     sport.filter && reservationType && selectedField && selectedDay;
 
@@ -153,8 +153,8 @@ const NewReservation = () => {
   const timesForSelection = isFormComplete
     ? availableTimes[selectedKey] || []
     : [];
-/*
-  const handleReserveClick = () => {
+
+ /* const handleReserveClick = () => {
     if (!isFormComplete || !selectedTime) {
       setErrorMessage("Please complete all fields before reserving.");
     } else {
