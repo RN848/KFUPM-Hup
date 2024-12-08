@@ -609,3 +609,33 @@ h1 {
 .logout-btn:hover {
   background-color: #c82333; /* Darker red when hovering */
 }
+/* Customize the background of the calendar */
+.react-calendar {
+  background-color: grey !important;  /* Set background color to grey */
+  color: white !important;  /* Set text color to white */
+}
+
+/* Customize the day names (Sunday, Monday, etc.) */
+.react-calendar__month-view__days__day {
+  color: black !important;  /* Set day names to white */
+}
+
+/* Customize the numbers (1, 2, 3, etc.) */
+.react-calendar__month-view__days__day--next-month,
+.react-calendar__month-view__days__day--prev-month,
+.react-calendar__month-view__days__day--today {
+  color: white!important;  /* Set date numbers to white */
+}
+
+/* Change color of the selected date */
+.react-calendar__tile--active {
+  background-color: deepskyblue !important;  /* Set background for selected date */
+  color: white !important;  /* Set text color for selected date */
+}
+
+/* Optional: change the hover color for tiles */
+.react-calendar__tile:hover {
+  background-color: #4CAF50 !important; /* Green hover background */
+  color: white !important;  /* White text on hover */
+}
+
