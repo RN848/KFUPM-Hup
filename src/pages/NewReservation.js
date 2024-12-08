@@ -3,13 +3,17 @@ import "../styles/main.css";
 import "../styles/master.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Calendar from "react-calendar";
+import { enUS } from "date-fns/locale"; // Import English locale
+import axios from "axios";
+
 import {
   Image,
   Button,
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 import Basketball from "../images/sports/sport-1.jpg";
@@ -24,8 +28,11 @@ const NewReservation = () => {
   const [reservationType, setReservationType] = useState("Public");
   const [selectedField, setSelectedField] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+ // const [selectedDate, setSelectedDate] = useState(null);
+    const [availableTimes, setAvailableTimes] = useState([]);  // Add state for available times
+    const [selectedTime, setSelectedTime] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+
 
   const navigate = useNavigate();
 
@@ -52,8 +59,8 @@ const NewReservation = () => {
     ],
   };
 
-  const fields = sport.filter ? sportFields[sport.filter] || [] : [];
-
+ const fields = sport.filter ? sportFields[sport.filter] || [] : [];
+/*
   const days = [
     "Sunday",
     "Monday",
@@ -67,34 +74,77 @@ const NewReservation = () => {
   const availableTimes = {
     "Basketball|Court 1|Sunday": ["08:00", "10:00", "14:00", "16:00"],
     "Football|Field 1|Monday": ["09:00", "11:00", "15:00", "17:00"],
-  };
-
+  }
+  */
   const allTimeSlots = [
-    "00:00",
-    "01:00",
-    "02:00",
-    "03:00",
-    "04:00",
-    "05:00",
-    "06:00",
-    "07:00",
-    "08:00",
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
+
     "15:00",
-    "16:00",
     "17:00",
-    "18:00",
     "19:00",
-    "20:00",
     "21:00",
-    "22:00",
-    "23:00",
+
   ];
+
+    // Function to fetch available time slots based on sport, field, and date using axios
+    const fetchTimes = async () => {
+        if (sport.filter && selectedField && selectedDay) {
+            try {
+                const response = await axios.get(
+                    `http://localhost:5000/api/reservationRoute/available-timeslots`, {
+                        params: {
+                            sport: sport.filter,
+                            field: selectedField,
+                            date: selectedDay.toISOString().split('T')[0],  // Format date to YYYY-MM-DD
+                        }
+                    }
+                );
+                setAvailableTimes(response.data); // Set the available time slots in the state
+            } catch (err) {
+                console.error('Error fetching available time slots:', err);
+                setErrorMessage('Failed to fetch available time slots');
+            }
+        }
+    };
+
+    // Trigger fetch whenever sport, field, or date changes
+    useEffect(() => {
+        fetchTimes();
+    }, [sport.filter, selectedField, selectedDay]);
+
+    // Dummy list of sports for selection
+
+
+    // Handle the reservation click
+    const handleReserveClick = async () => {
+        if (!selectedTime) {
+            setErrorMessage("Please select a time slot.");
+        } else {
+            setErrorMessage("");
+
+            // Prepare the request payload
+            const reservationData = {
+                sport: sport.filter,
+                field: selectedField,
+                date: selectedDay,
+                time: selectedTime,
+                reservationType: reservationType,
+            };
+
+            try {
+                // Sending the reservation data to the backend using Axios
+                const response = await axios.post(
+                    "http://localhost:5000/api/reservationRoute",
+                    reservationData
+                );
+
+                console.log("Reservation successful", response.data);
+                navigate("/reservation-success"); // Navigate to the success page
+            } catch (error) {
+                console.error("Reservation failed", error);
+                setErrorMessage("Reservation failed, please try again later.");
+            }
+        }
+    };
 
   const isFormComplete =
     sport.filter && reservationType && selectedField && selectedDay;
@@ -104,7 +154,7 @@ const NewReservation = () => {
     ? availableTimes[selectedKey] || []
     : [];
 
-  const handleReserveClick = () => {
+ /* const handleReserveClick = () => {
     if (!isFormComplete || !selectedTime) {
       setErrorMessage("Please complete all fields before reserving.");
     } else {
@@ -112,7 +162,7 @@ const NewReservation = () => {
       navigate("/reservaion-success");
     }
   };
-
+*/
   return (
     <Body>
       <div className="body">
@@ -236,22 +286,32 @@ const NewReservation = () => {
             </div>
           </Col>
 
+
           {/* Days */}
           <Col className="wid-colum">
-            <h2 style={{ color: "white" }}>Days</h2>
-            <div className="grid-layout">
-              {days.map((day) => (
-                <Button
-                  key={day}
-                  variant={selectedDay === day ? "primary" : "secondary"}
-                  onClick={() => setSelectedDay(day)}
-                  className="grid-button"
-                >
-                  {day}
-                </Button>
-              ))}
+            <h2 style={{ color: "white" }}>Select a Date</h2>
+            <div className="calendar-container">
+                <Calendar
+                    locale={enUS}  // Make sure this is set properly
+                    className="custom-calendar"
+                    tileDisabled={({ date, view }) => {
+                        const today = new Date();
+                        const nextSunday = new Date(today);
+                        nextSunday.setDate(today.getDate() + (6 - today.getDay()));
+                        const nextSaturday = new Date(nextSunday);
+                        nextSaturday.setDate(nextSunday.getDate() + 7);
+
+                        return (
+                            view === "month" &&
+                            (date < nextSunday || date > nextSaturday)
+                        );
+                    }}
+                    onClickDay={(value) => setSelectedDay(value)}
+                />
+
             </div>
           </Col>
+
 
           {/* Time Slots */}
           <Col className="wid-colum">
