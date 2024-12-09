@@ -101,20 +101,30 @@ const NewReservation = () => {
       return;
     }
 
+    const token = localStorage.getItem("token");
+    console.log("Token for reservation:", token); // Log token for debugging
+
+    // Ensure sport is sent as a string, not as an object
     const reservationData = {
-      email: "user@example.com", // Replace with actual user email if available
-      sport: sport.filter,
+      sport: sport.filter, // Use sport.filter to send only the string value
       field: selectedField,
-      date: selectedDay.toISOString().split("T")[0],
+      date: selectedDay.toISOString().split("T")[0], // Ensure ISO 8601 format
       time: selectedTime,
       type: reservationType,
     };
 
+    console.log("Reservation data being sent:", reservationData);
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/reservationRoute",
-        reservationData
+        reservationData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
+
+      console.log("Reservation response:", response.data);
 
       navigate("/reservation-success", {
         state: { reservationId: response.data._id },
