@@ -10,6 +10,9 @@ import Col from "react-bootstrap/Col";
 import { Image, Button } from "react-bootstrap";
 import { getAllClubs } from "../api/apiClubService"; // Import the API service for clubs
 import { getAllEvents } from "../api/apiEventService"; // Import the API service for events
+import { getFollowedClubs, getJoinedEvents } from "../api/apiUserService";
+import EventCard from "../components/EventCard";
+import ClubCard from "../components/ClubCard"; // Import API services for followed clubs and joined events
 
 const NewsAndClubs = () => {
   const navigate = useNavigate();
@@ -22,8 +25,8 @@ const NewsAndClubs = () => {
   const [clubStatuses, setClubStatuses] = useState([]); // Track club follow status
 
   // Example data: These should ideally come from the user's profile
-  const [followClubs, setFollowClubs] = useState(["1", "2"]); // User's following clubs
-  const [enrolledClubs, setEnrolledClubs] = useState(["3"]); // User's enrolled clubs
+  const [followClubs, setFollowClubs] = useState([]); // User's following clubs
+  const [enrolledClubs, setEnrolledClubs] = useState([]); // User's enrolled clubs
 
   // Fetch clubs and events data
   useEffect(() => {
@@ -31,10 +34,13 @@ const NewsAndClubs = () => {
       try {
         const clubs = await getAllClubs(); // Fetch clubs using the service
         const events = await getAllEvents(); // Fetch events using the service
-
+        const followedClubs = await getFollowedClubs();  // Fetch followed clubs
+        const joinedEvents = await getJoinedEvents();   // Fetch joined events
 
         setClubList(clubs); // Set fetched clubs data
         setNewsList(events); // Set fetched events data
+        setFollowClubs(followedClubs);  // Set followed clubs
+        setEnrolledClubs(joinedEvents); // Set enrolled events
         setClubStatuses(clubs.map(() => "follow")); // Initialize statuses to "follow"
       } catch (error) {
         console.error("Error fetching clubs and events:", error);
@@ -60,11 +66,13 @@ const NewsAndClubs = () => {
         updatedStatuses[index] === "follow" ? "following" : "follow";
     setClubStatuses(updatedStatuses);
   };
+  console.log(followClubs);
+  console.log(enrolledClubs);
 
   // Filter News Based on Selection
   const filteredNews = newsList.filter((news) => {
-    if (filter === "following") return followClubs.includes(news.club);
-    if (filter === "enrolled") return enrolledClubs.includes(news.club);
+    if (filter === "following") return followClubs.data.includes(news.club);
+    if (filter === "enrolled") return enrolledClubs.data.includes(news.club);
     return true; // Default: Show all
   });
 
@@ -98,39 +106,15 @@ const NewsAndClubs = () => {
                 </div>
                 <Row className="g-4">
                   {filteredNews.map((news, index) => (
-                      <Col key={index} lg={6} md={6} sm={12} xs={12}>
-                        <a href={"/activity-view"}>
-                          <div className="news-card">
-                            <Image
-                                src={news.img}
-                                className="news-img"
-                                alt={news.title}
-                            />
-                            <div className="news-details">
-                              <h3 className="news-title">{news.title}</h3>
-                              <p className="news-desc">{news.desc}</p>
-                              <Button
-                                  className={`join-btn ${
-                                      clickedNews.includes(index) ? "joined" : ""
-                                  }`}
-                                  onClick={(e) => {
-                                    e.preventDefault(); // Prevent link navigation
-                                    e.stopPropagation();
-                                    handleJoinClick(index);
-                                  }}
-                              >
-                                {clickedNews.includes(index) ? "Joined" : "Join"}
-                              </Button>
-                              {clickedNews.includes(index) && (
-                                  <p className="joined-message">
-                                    You have successfully joined this activity!
-                                  </p>
-                              )}
-                            </div>
-                          </div>
-                        </a>
-                      </Col>
+                      <EventCard
+                          key={index}
+                          news={news}
+                          index={index}
+                          clickedNews={clickedNews}
+                      />
                   ))}
+
+
                 </Row>
                 <div className="view-all d-flex justify-content-center mt-4">
                   <Button id="allNews" onClick={() => navigate("/latest-news")}>
@@ -145,30 +129,15 @@ const NewsAndClubs = () => {
               <div className="clubs-box">
                 <h1 className="page-title">Clubs</h1>
                 <div className="clubs-list">
-                  {clubList.map((club, index) => (
-                      <a href={"/club-profile"} key={index}>
-                        <div className="club-item">
-                          <Image
-                              src={club.clubPicture || "../images/clubs/default_logo.png"}
-                              className="club-logo"
-                              alt={club.name}
-                          />
-                          <div className="club-details">
-                            <h4 className="club-title">{club.name}</h4>
-                            <Button
-                                className={`club-action-btn ${clubStatuses[index]}`}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  handleFollowClick(index);
-                                }}
-                            >
-                              {clubStatuses[index] === "follow" ? "Follow" : "Following"}
-                            </Button>
-                          </div>
-                        </div>
-                      </a>
-                  ))}
+                      {clubList.map((club, index) => (
+                            <ClubCard
+                                key={index}
+                                club={club}
+                                index={index}
+                                clubStatuses={clubStatuses}
+                                handleFollowClick={handleFollowClick} // Pass follow functionality
+                            />
+                        ))}
                 </div>
                 <div className="view-all d-flex justify-content-center mt-4">
                   <Button onClick={() => navigate("/clubs")}>All</Button>
