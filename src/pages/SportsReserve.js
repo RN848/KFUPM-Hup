@@ -4,54 +4,58 @@ import "../styles/master.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Image } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import { NormInput } from "../components/Inputs";
-import { Textarea } from "../components/Inputs";
-import { Radio } from "../components/Inputs";
-import { Uplode } from "../components/Inputs";
-import { Link } from "../components/Inputs";
 
 import Basketball from "../images/sports/sport-1.jpg";
 import Football from "../images/sports/sport-2.jpg";
-import tennis from "../images/sports/sport-3.jpg";
+import Tennis from "../images/sports/sport-3.jpg";
 import Volleyball from "../images/sports/sport-4.jpg";
 import Squash from "../images/sports/sport-5.jpg";
 import Badminton from "../images/sports/sport-6.jpg";
 
 const SportsReserve = () => {
-  const [sport, setsport] = useState({
-    filter: "",
-  });
-
-  const [inputs, setInputs] = useState({
-    code: "",
-  });
-
+  const [sport, setSport] = useState({ filter: "" });
+  const [backendReservations, setBackendReservations] = useState([]);
+  const [inputs, setInputs] = useState({ code: "" });
   const navigate = useNavigate();
 
   const sportsList = [
     { name: "Basketball", image: Basketball },
     { name: "Football", image: Football },
-    { name: "ennis", image: tennis },
+    { name: "Tennis", image: Tennis },
     { name: "Volleyball", image: Volleyball },
     { name: "Squash", image: Squash },
     { name: "Badminton", image: Badminton },
   ];
 
-  const sportsMap = sportsList.map((s) => {
-    const isActive = sport === s.name;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/reservationRoute"
+        );
+        setBackendReservations(response.data);
+      } catch (error) {
+        console.error("Error fetching from backend:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
+  const sportsMap = sportsList.map((s) => {
+    const isActive = sport.filter === s.name;
     return (
-      <div className={isActive ? "focus" : ""}>
+      <div className={isActive ? "focus" : ""} key={s.name}>
         <a
-          href=""
+          href="#"
           onClick={(e) => {
             e.preventDefault();
-            setsport(s.name);
+            setSport({ filter: s.name });
           }}
         >
           <Image className="img" src={s.image} alt={s.name}></Image>
@@ -61,45 +65,49 @@ const SportsReserve = () => {
     );
   });
 
-  const reservesList = [
-    { sport: "Football", feild: "Feild 1", day: "Sunday", time: "1:00" },
-    { sport: "Basketball", feild: "Feild 2", day: "monday", time: "1:00" },
-    { sport: "tennis", feild: "Feild 1", day: "Sunday", time: "1:00" },
-    { sport: "Football", feild: "Feild 3", day: "friday", time: "1:00" },
-    { sport: "Basketball", feild: "Feild 4", day: "Sunday", time: "1:00" },
-    { sport: "Football", feild: "Feild 4", day: "monday", time: "1:00" },
-    { sport: "Football", feild: "Feild 1", day: "Sunday", time: "1:00" },
-    { sport: "Volleyball", feild: "Feild 6", day: "friday", time: "1:00" },
-    { sport: "Football", feild: "Feild 2", day: "monday", time: "1:00" },
-    { sport: "tennis", feild: "Feild 2", day: "Sunday", time: "1:00" },
-    { sport: "Badminton", feild: "Feild 1", day: "friday", time: "1:00" },
-    { sport: "Football", feild: "Feild 3", day: "Sunday", time: "1:00" },
-    { sport: "Squash", feild: "Feild 1", day: "Sunday", time: "1:00" },
-    { sport: "Squash", feild: "Feild 3", day: "monday", time: "1:00" },
-    { sport: "Football", feild: "Feild 1", day: "Sunday", time: "1:00" },
-  ];
-
-  const filteredReserves = reservesList.filter(
-    (box) => sport.filter === "" || box.sport === sport
+  const filteredReservations = backendReservations.filter(
+    (box) => sport.filter === "" || box.sport === sport.filter
   );
 
-  const reserveMap = filteredReserves.map((box) => {
+  const reservationMap = filteredReservations.map((box, index) => {
+    let displayDay = box.day;
+    let displayDate = "";
+
+    if (box.date) {
+      const reservationDate = new Date(box.date);
+      const weekday = reservationDate.toLocaleDateString("en-US", {
+        weekday: "long",
+      });
+      const fullDate = reservationDate.toLocaleDateString("en-US");
+      displayDay = `${weekday}, ${fullDate}`;
+    }
+
     return (
-      <Col lg={4} md={4} sm={6} xs={12} className="sport-col" key={box.sport}>
+      <Col
+        lg={4}
+        md={4}
+        sm={6}
+        xs={12}
+        className="sport-col"
+        key={box._id || index}
+      >
         <a
-          href=""
+          href="#"
           onClick={(e) => {
             e.preventDefault();
             navigate("/reservation-details", {
-              state: { isOwnerView: false, reservation: box },
+              state: {
+                isOwnerView: false,
+                reservation: { ...box, day: displayDay },
+              },
             });
           }}
         >
           <div>
             <h3>{box.sport}</h3>
-            <div className="deteils">
-              <span>{box.feild}</span>
-              <span>{box.day}</span>
+            <div className="details">
+              <span>{box.field}</span>
+              <span>{displayDay}</span>
               <span>{box.time}</span>
             </div>
           </div>
@@ -111,7 +119,7 @@ const SportsReserve = () => {
   return (
     <Body>
       <div className="body">
-        <h1>Sport Reservation </h1>
+        <h1>Sport Reservation</h1>
         <Row
           className={"g-4 wid-row reverse"}
           style={{ marginBottom: "1.5em" }}
@@ -131,7 +139,7 @@ const SportsReserve = () => {
               >
                 <div
                   style={{
-                    margin: "0 10px  15px 0",
+                    margin: "0 10px 15px 0",
                     display: "flex",
                     gap: "10px",
                   }}
@@ -152,17 +160,7 @@ const SportsReserve = () => {
                         navigate("/reservation-details", {
                           state: {
                             isOwnerView: true,
-                            reservation: {
-                              sport: "Football",
-                              field: "Field 1",
-                              day: "Sunday",
-                              time: "10:00 - 11:00",
-                              studentsNeeded: 10,
-                              studentsJoined: 4,
-                              timeLeft: "02:30",
-                              isPublic: true,
-                              code: "32423",
-                            },
+                            reservation: backendReservations[0] || null,
                           },
                         })
                       }
@@ -191,7 +189,7 @@ const SportsReserve = () => {
             </div>
           </Col>
         </Row>
-        <Row className={"g-4 wid-row sports-box"}>{reserveMap}</Row>
+        <Row className={"g-4 wid-row sports-box"}>{reservationMap}</Row>
       </div>
     </Body>
   );

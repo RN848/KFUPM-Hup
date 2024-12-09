@@ -24,27 +24,41 @@ const LogIn = () => {
     e.preventDefault();
 
     if (!emailRegex.test(data.email)) {
-      setError("Please enter a valid KFUPM email (e.g., yxxxxxxxxx@kfupm.edu.sa).");
+      setError(
+        "Please enter a valid KFUPM email (e.g., yxxxxxxxxx@kfupm.edu.sa)."
+      );
       return;
     }
     try {
       const url = "http://localhost:5000/api/authRoutes/Log-In";
       const { data: res } = await axios.post(url, data);
-      
+
       // Assuming OTP verified is included in the response or just trust the backend not returning if not verified
       localStorage.setItem("token", res.data.token);
       const userRole = res.data.role || "normal";
       localStorage.setItem("userRole", userRole);
-    
+
       navigate("/home");
     } catch (err) {
       if (err.response) {
-        if (err.response.status === 403 && err.response.data.message === "Your account is not verified. Please verify your OTP.") {
+        if (
+          err.response.status === 403 &&
+          err.response.data.message ===
+            "Your account is not verified. Please verify your OTP."
+        ) {
           // If the user's account is not verified, redirect them to the verify-otp page
-          navigate("/verify-otp", { state: { email: data.email, notVerified: true } });
-        } else if (err.response.status === 404 && err.response.data.message === "User not found") {
+          navigate("/verify-otp", {
+            state: { email: data.email, notVerified: true },
+          });
+        } else if (
+          err.response.status === 404 &&
+          err.response.data.message === "User not found"
+        ) {
           setError("You do not have an account. Please sign up.");
-        } else if (err.response.status === 401 && err.response.data.message === "Invalid credentials") {
+        } else if (
+          err.response.status === 401 &&
+          err.response.data.message === "Invalid credentials"
+        ) {
           setError("Invalid credentials, please try again.");
         } else if (err.response.status === 500) {
           setError("Server error, please try again later.");
@@ -55,7 +69,6 @@ const LogIn = () => {
         setError("An unexpected error occurred. Please try again.");
       }
     }
-    
   };
 
   return (
@@ -85,7 +98,9 @@ const LogIn = () => {
               required
             />
 
-            <button type="submit" className="login-btn">Log In</button>
+            <button type="submit" className="login-btn">
+              Log In
+            </button>
           </form>
 
           {error && <div style={{ color: "red" }}>{error}</div>}

@@ -10,7 +10,7 @@ function VerifyOTPForm() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const { state } = useLocation(); // This gives access to the state passed by navigate()
-  
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@kfupm\.edu\.sa$/;
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,7 @@ function VerifyOTPForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("OTP entered by user:", otp); 
+    console.log("OTP entered by user:", otp);
     setLoading(true);
 
     if (!emailRegex.test(email)) {
@@ -39,7 +39,10 @@ function VerifyOTPForm() {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/otpRoutes/verify-otp", { email, otp });
+      const res = await axios.post(
+        "http://localhost:5000/api/otpRoutes/verify-otp",
+        { email, otp }
+      );
       setMessage(res.data.message);
 
       navigate("/home");
@@ -59,7 +62,10 @@ function VerifyOTPForm() {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5000/api/otpRoutes/request-otp", { email });
+      const res = await axios.post(
+        "http://localhost:5000/api/otpRoutes/request-otp",
+        { email }
+      );
       setMessage(res.data.message);
     } catch (error) {
       console.error("Error resending OTP:", error);
@@ -109,8 +115,12 @@ function VerifyOTPForm() {
             Resend OTP
           </button>
 
-          {message && <div style={{ color: "green", marginTop: "1rem" }}>{message}</div>}
-          {loading && <div style={{ color: "#888", marginTop: "1rem" }}>Loading...</div>}
+          {message && (
+            <div style={{ color: "green", marginTop: "1rem" }}>{message}</div>
+          )}
+          {loading && (
+            <div style={{ color: "#888", marginTop: "1rem" }}>Loading...</div>
+          )}
         </div>
       </div>
     </Body>
