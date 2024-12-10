@@ -1,18 +1,31 @@
+// Clubs.js
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 import Body from "../components/Body";
 import "../styles/pages/_clubs.scss";
+// Removed the incorrect import of defaultLogo from public
 import { useNavigate } from "react-router-dom";
-import { getAllClubs, updateClub, deleteClub } from "../api/apiClubService"; // Correct import for named exports
+import {
+  getAllClubs,
+  deleteClub
+} from "../api/apiClubService"; // Importing necessary club APIs
+import {
+  followClub,
+  unfollowClub,
+  getFollowedClubs
+} from "../api/apiUserService"; // Importing necessary user APIs
 
 const Clubs = () => {
   const [isAdminView, setAdminView] = useState(false);
   const [clubs, setClubs] = useState([]);
-  const [clubStatuses, setClubStatuses] = useState([]);
+  const [clubStatuses, setClubStatuses] = useState({}); // Changed to object
   const [filter, setFilter] = useState("");
+  const [error, setError] = useState(null); // Error state
+  const [message, setMessage] = useState(null); // Success/Error messages
   const navigate = useNavigate();
 
-  // Check if the user is an admin
+  // Check if the user is an admin and fetch clubs
   useEffect(() => {
     const storedRole = localStorage.getItem("userRole");
     if (storedRole && storedRole.trim() === "admin") {
@@ -22,77 +35,116 @@ const Clubs = () => {
     // Fetch clubs data using apiClubService
     const fetchClubs = async () => {
       try {
-        const clubsData = await getAllClubs(); // Fetch clubs using the service
-        setClubs(clubsData); // Assuming response.data contains the list of clubs
-        setClubStatuses(clubsData.map((club) => club.status || "follow")); // Initialize the statuses
+        const followedClubsResponse = await getFollowedClubs(); // Fetch followed clubs
+        const followedClubIds = new Set(followedClubsResponse.data.map((club) => club._id));
+
+        const clubsData = await getAllClubs(); // Fetch all clubs
+        setClubs(clubsData); // Set clubs data
+
+        // Initialize the statuses based on followed clubs
+        const initialStatuses = {};
+        clubsData.forEach((club) => {
+          initialStatuses[club._id] = followedClubIds.has(club._id) ? "following" : "follow";
+        });
+        setClubStatuses(initialStatuses);
       } catch (error) {
         console.error("Error fetching clubs:", error);
+        setError("Failed to load clubs. Please try again later.");
       }
     };
 
     fetchClubs();
   }, []);
 
-  // Filter clubs based on following/enrolled
-  const filteredClubs = clubs.filter((club, index) => {
-    if (filter === "following") return clubStatuses[index] === "following";
-    if (filter === "enrolled") return clubStatuses[index] === "enrolled";
-    return true;
+  // Filter clubs based on follow status
+  const filteredClubs = clubs.filter((club) => {
+    if (filter === "following") return clubStatuses[club._id] === "following";
+    return true; // Show all if no filter
   });
 
   // Toggle club follow status
-  const handleFollowClick = (index) => {
-    const updatedStatuses = [...clubStatuses];
-    updatedStatuses[index] = updatedStatuses[index] === "follow" ? "following" : "follow";
+  const handleFollowClick = async (clubId) => {
+    const currentStatus = clubStatuses[clubId];
+    const updatedStatuses = { ...clubStatuses };
+    updatedStatuses[clubId] = currentStatus === "follow" ? "following" : "follow";
     setClubStatuses(updatedStatuses);
 
-    // Update the club status in the API
-    updateClub(clubs[index].id, { status: updatedStatuses[index] })
-        .catch((error) => {
-          console.error("Error updating club status:", error);
-        });
+    try {
+      if (currentStatus === "follow") {
+        await followClub(clubId); // API call to follow
+        const clubName = clubs.find(club => club._id === clubId)?.name || "the club";
+        setMessage(`You are now following ${clubName}.`);
+      } else {
+        await unfollowClub(clubId); // API call to unfollow
+        const clubName = clubs.find(club => club._id === clubId)?.name || "the club";
+        setMessage(`You have unfollowed ${clubName}.`);
+      }
+    } catch (error) {
+      console.error("Error updating club status:", error);
+      setError("Failed to update follow status. Please try again.");
+      // Revert the status if API call fails
+      updatedStatuses[clubId] = currentStatus;
+      setClubStatuses(updatedStatuses);
+    }
+
+    // Clear messages after 3 seconds
+    setTimeout(() => {
+      setMessage(null);
+      setError(null);
+    }, 3000);
   };
 
   // Handle removing a club (for admins)
-  const handleRemoveClub = (clubId, index) => {
-    setClubs(clubs.filter((_, i) => i !== index));
+  const handleRemoveClub = async (clubId) => {
+    // Optimistically remove the club from UI
+    const updatedClubs = clubs.filter((club) => club._id !== clubId);
+    const updatedStatuses = { ...clubStatuses };
+    delete updatedStatuses[clubId];
+    setClubs(updatedClubs);
+    setClubStatuses(updatedStatuses);
 
-    // Delete the club using the API
-    deleteClub(clubId).catch((error) => {
+    try {
+      await deleteClub(clubId); // API call to delete
+      setMessage("Club removed successfully.");
+    } catch (error) {
       console.error("Error deleting club:", error);
-    });
+      setError("Failed to delete the club. Please try again.");
+      // Revert UI changes if API call fails
+      setClubs(clubs);
+      setClubStatuses({ ...clubStatuses, [clubId]: "follow" }); // Assuming it was 'follow'
+    }
+
+    // Clear messages after 3 seconds
+    setTimeout(() => {
+      setMessage(null);
+      setError(null);
+    }, 3000);
   };
 
   return (
       <Body>
         <div className="clubs-page">
-          <header>
-            <div>
-              <h1 style={{ display: "inline", marginRight: "15px" }}>Clubs</h1>
+          <header className="d-flex justify-content-between align-items-center mb-4">
+            <div className="d-flex container-fluid flex-column">
+              <div>
+                <h1 className="d-inline me-3">Clubs</h1>
+              </div>
               {!isAdminView && (
-                  <div className={"news-filter "}>
+                  <div className="news-filter d-inline">
                     <Button
-                        className={`filter-btn ${filter === "following" ? "active" : ""}`}
+                        variant={filter === "following" ? "primary" : "outline-primary"}
+                        className="me-2"
                         onClick={() =>
-                            setFilter(filter === "" || filter === "enrolled" ? "following" : "")
+                            setFilter(filter === "following" ? "" : "following")
                         }
                     >
                       Following
-                    </Button>
-                    <Button
-                        className={`filter-btn ${filter === "enrolled" ? "active" : ""}`}
-                        onClick={() =>
-                            setFilter(filter === "" || filter === "following" ? "enrolled" : "")
-                        }
-                    >
-                      Enrolled
                     </Button>
                   </div>
               )}
             </div>
             {isAdminView && (
                 <Button
-                    className="add-btn"
                     variant="primary"
                     onClick={() => navigate("/new-club")}
                 >
@@ -101,29 +153,38 @@ const Clubs = () => {
             )}
           </header>
 
+          {/* Display success or error messages */}
+          {message && <Alert variant="success">{message}</Alert>}
+          {error && <Alert variant="danger">{error}</Alert>}
+
           <div className="clubs-grid">
-            {filteredClubs.map((club, index) => (
+            {filteredClubs.map((club) => (
                 <div
-                    className={"club-card p-2"}
-                    key={club.id}
+                    className="club-card p-2"
+                    key={club._id} // Ensure using _id
                     onClick={() =>
-                        navigate("/club-profile", { state: { clubId: club.id } })
+                        navigate("/club-profile", { state: { clubId: club._id } })
                     }
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", position: "relative" }}
                 >
                   <img
-                      src={club.logo}
+                      src={club.clubPicture || "/images/clubs/computer_club.png"} // Fallback image
                       alt={`${club.name} Logo`}
-                      className="club-logo"
+                      className="club-logo mb-2"
+                      onError={(e) => {
+                        e.target.onerror = null; // Prevent infinite loop if default image also fails
+                        e.target.src = "/images/clubs/computer_club.png"; // Set fallback image
+                      }}
                   />
-                  <h3>{club.name}</h3>
+                  <h3 className="club-name">{club.name}</h3>
                   <div className="buttons">
                     {isAdminView ? (
                         <>
                           <Button
                               variant="primary"
+                              className="me-2"
                               onClick={(e) => {
-                                e.stopPropagation();
+                                e.stopPropagation(); // Prevent card navigation
                                 navigate("/edit-club", { state: { club } });
                               }}
                           >
@@ -132,8 +193,8 @@ const Clubs = () => {
                           <Button
                               variant="danger"
                               onClick={(e) => {
-                                e.stopPropagation();
-                                handleRemoveClub(club.id, index);
+                                e.stopPropagation(); // Prevent card navigation
+                                handleRemoveClub(club._id);
                               }}
                           >
                             Remove
@@ -141,13 +202,14 @@ const Clubs = () => {
                         </>
                     ) : (
                         <Button
-                            className={`club-action-btn ${clubStatuses[index]}`}
+                            variant={clubStatuses[club._id] === "follow" ? "outline-primary" : "primary"}
+                            className="club-action-btn"
                             onClick={(e) => {
-                              e.stopPropagation();
-                              handleFollowClick(index);
+                              e.stopPropagation(); // Prevent card navigation
+                              handleFollowClick(club._id); // Pass clubId instead of index
                             }}
                         >
-                          {clubStatuses[index] === "follow" ? "Follow" : "Following"}
+                          {clubStatuses[club._id] === "follow" ? "Follow" : "Following"}
                         </Button>
                     )}
                   </div>
@@ -155,13 +217,12 @@ const Clubs = () => {
             ))}
           </div>
 
-          <Button
-              variant="secondary"
-              className="back-button"
-              onClick={() => window.history.back()}
-          >
-            Back
-          </Button>
+          {/* Back Button */}
+          <div className="d-flex justify-content-center mt-4">
+            <Button variant="secondary" onClick={() => navigate(-1)}>
+              Back
+            </Button>
+          </div>
         </div>
       </Body>
   );

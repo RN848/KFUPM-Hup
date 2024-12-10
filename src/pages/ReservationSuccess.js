@@ -110,6 +110,8 @@ const ReservationSuccess = () => {
       </div>
     </Body>
   );
+
+
 };
 
 export default ReservationSuccess;
