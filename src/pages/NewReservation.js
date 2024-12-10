@@ -23,7 +23,6 @@ import Volleyball from "../images/sports/sport-4.jpg";
 import Squash from "../images/sports/sport-5.jpg";
 import Badminton from "../images/sports/sport-6.jpg";
 
-
 const NewReservation = () => {
   const [sport, setSport] = useState({ filter: "" });
   const [reservationType, setReservationType] = useState("Public");
@@ -35,8 +34,6 @@ const NewReservation = () => {
   const [weekRange, setWeekRange] = useState({ start: null, end: null });
 
   const navigate = useNavigate();
-
-
 
   const sportsList = [
     { name: "Basketball", image: Basketball },
@@ -74,10 +71,6 @@ const NewReservation = () => {
   ];
 
   const fields = sport.filter ? sportFields[sport.filter] || [] : [];
-
-
-
-
 
   // make one week ahead available
   useEffect(() => {
@@ -133,18 +126,14 @@ const NewReservation = () => {
     }
 
     const token = localStorage.getItem("token");
-    console.log("Token for reservation:", token); // Log token for debugging
 
-    // Ensure sport is sent as a string, not as an object
     const reservationData = {
-      sport: sport.filter, // Use sport.filter to send only the string value
+      sport: sport.filter,
       field: selectedField,
-      date: selectedDay.toISOString().split("T")[0], // Ensure ISO 8601 format
+      date: selectedDay.toISOString().split("T")[0],
       time: selectedTime,
       type: reservationType,
     };
-
-    console.log("Reservation data being sent:", reservationData);
 
     try {
       const response = await axios.post(
@@ -155,8 +144,12 @@ const NewReservation = () => {
         }
       );
 
-      console.log("Reservation response:", response.data);
+      console.log(
+        "Navigating to Reservation Success with ID:",
+        response.data._id
+      );
 
+      // Navigate to the success page with the reservationId
       navigate("/reservation-success", {
         state: { reservationId: response.data._id },
       });
@@ -288,21 +281,21 @@ const NewReservation = () => {
               ))}
             </div>
           </Col>
-          { /*calendar*/}
+          {/*calendar*/}
           <Col className="wid-colum">
             <h2 style={{ color: "white" }}>Select a Date</h2>
             <Calendar
-                locale={enUS}
-                tileDisabled={({ date }) => {
-                  const today = new Date();
-                  // Disable past dates (before today)
-                  if (date < today.setHours(0, 0, 0, 0)) {
-                    return true;
-                  }
-                  // Disable dates outside of this week (before Sunday or after Saturday)
-                  return date < weekRange.start || date > weekRange.end;
-                }}
-                onClickDay={(value) => setSelectedDay(value)}
+              locale={enUS}
+              tileDisabled={({ date }) => {
+                const today = new Date();
+                // Disable past dates (before today)
+                if (date < today.setHours(0, 0, 0, 0)) {
+                  return true;
+                }
+                // Disable dates outside of this week (before Sunday or after Saturday)
+                return date < weekRange.start || date > weekRange.end;
+              }}
+              onClickDay={(value) => setSelectedDay(value)}
             />
           </Col>
 

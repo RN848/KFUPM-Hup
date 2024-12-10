@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Body from "../components/Body";
 import axios from "axios";
@@ -8,18 +8,30 @@ import { useLocation, useNavigate } from "react-router-dom";
 const ReservationDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isOwnerView, reservation } = location.state || {};
-
+  const { isOwnerView, reservation: initialReservation } = location.state || {};
+  const [participants, setParticipants] = useState(
+      initialReservation?.participants || 1
+  );
   const handleJoinLeave = async () => {
-    if (!reservation || !reservation._id) {
+    if (!initialReservation || !initialReservation._id) {
       alert("No reservation ID found!");
       return;
     }
+
+
+
+
     try {
-      await axios.post(
-        `http://localhost:5000/api/reservationRoute/${reservation._id}/join`,
-        { email: "user@example.com" } // Add user email if required by backend
+     const response= await axios.post(
+        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/join`,""
+         // Add user email if required by backend
       );
+      // Update the participants count dynamically
+      if (response.data && response.data.reservation) {
+        // Update participants state with the latest count
+        setParticipants(response.data.reservation.participants);
+        console.log("Updated participants:", response.data.reservation.participants);
+      }
       alert("Joined successfully!");
     } catch (err) {
       console.error("Error joining reservation", err);
@@ -27,46 +39,47 @@ const ReservationDetails = () => {
     }
   };
 
-  if (!reservation)
+  if (!initialReservation)
     return (
       <Body>
         <p>Loading...</p>
       </Body>
     );
 
-  const reservationDate = new Date(reservation.date);
+  const reservationDate = new Date(initialReservation.date);
   const dayName = reservationDate.toLocaleDateString("en-US", {
     weekday: "long",
   });
+
 
   return (
     <Body>
       <div className="reservation-details">
         <h2>Reservation Details</h2>
         <p style={{ color: "white" }}>
-          <strong>Participants:</strong> {reservation.participants}
+          <strong>Participants:</strong> {participants}
         </p>
         <div className="details-container">
-          <h3>{reservation.sport}</h3>
+          <h3>{initialReservation.sport}</h3>
           <div className="details-row">
             <span>
-              <strong>Field:</strong> {reservation.field}
+              <strong>Field:</strong> {initialReservation.field}
             </span>
             <span>
               <strong>Day:</strong> {dayName}
             </span>
             <span>
-              <strong>Time:</strong> {reservation.time}
+              <strong>Time:</strong> {initialReservation.time}
             </span>
           </div>
         </div>
         <div className="details-container">
           <div className="details-row">
             <span>
-              <strong>Type:</strong> {reservation.type}
+              <strong>Type:</strong> {initialReservation.type}
             </span>
             <div className="button-group">
-              <div className="code-box">Code : {reservation.code}</div>
+              <div className="code-box">Code : {initialReservation.code}</div>
               <Button variant="primary">Share</Button>
             </div>
           </div>
