@@ -33,6 +33,7 @@ import ErrorPage from "./pages/ErrorPage";
 import LoadingPage from "./pages/LoadingPage";
 import ClLeadHomePage from "./pages/ClLeadHomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import addMember from "./pages/addMember";
 
 // OTP Pages (import these if they are available)
 import RequestOTPForm from "./pages/RequestOTPForm";  // OTP request page
@@ -135,6 +136,7 @@ function App() {
             <Route path="Sign-Up" element={<SignUp />} />
             <Route path="Log-In" element={<LogIn />} />
             <Route path="/LogOut" element={<LogOut />} />
+            <Route path="/add-member" element={<addMember />} />
           </Route>
         </Routes>
       </Suspense>

@@ -12,6 +12,8 @@ import {useNavigate} from "react-router-dom";
 const EditActivity = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { clubId  } = location.state || {};
   const [newsList, setNewsList] = useState([
     {
       title: "News Activity 1",
@@ -72,8 +74,7 @@ const EditActivity = () => {
                       padding: "0.5rem 1rem",
                     }}
                     onClick={() => {
-                      localStorage.setItem("fromEdit", "true");
-                      navigate("/Create-activity-news")
+                      navigate("/Create-activity-news",{state : {fromEdit:true,clubId:clubId}});
                     }
                   }
 

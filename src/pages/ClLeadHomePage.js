@@ -153,7 +153,7 @@ const ClLeadHomePage = () => {
                                       className="edit-btn"
                                       onClick={() => {
                                         navigate("/edit-activity", {
-                                          state: { activityId: activity._id },
+                                          state: { clubId: clubId },
                                         });
                                       }}
                                   >
