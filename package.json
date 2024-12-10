@@ -14,6 +14,8 @@
     "axios": "^1.7.8",
     "bootstrap": "^5.3.3",
     "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "i": "^0.3.7",
     "nodemailer": "^6.9.16",
     "otp-generator": "^4.0.1",
     "react": "^18.3.1",
@@ -49,6 +51,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "babel-loader": "^9.2.1",
     "react-router-dom": "^6.27.0",
     "sass": "^1.80.6"
   }

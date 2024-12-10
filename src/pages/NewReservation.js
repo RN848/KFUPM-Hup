@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Calendar from "react-calendar";
 import { enUS } from "date-fns/locale";
+
 import axios from "axios";
 import {
   Image,
@@ -22,6 +23,7 @@ import Volleyball from "../images/sports/sport-4.jpg";
 import Squash from "../images/sports/sport-5.jpg";
 import Badminton from "../images/sports/sport-6.jpg";
 
+
 const NewReservation = () => {
   const [sport, setSport] = useState({ filter: "" });
   const [reservationType, setReservationType] = useState("Public");
@@ -30,8 +32,11 @@ const NewReservation = () => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [reservedTimes, setReservedTimes] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [weekRange, setWeekRange] = useState({ start: null, end: null });
 
   const navigate = useNavigate();
+
+
 
   const sportsList = [
     { name: "Basketball", image: Basketball },
@@ -70,6 +75,32 @@ const NewReservation = () => {
 
   const fields = sport.filter ? sportFields[sport.filter] || [] : [];
 
+
+
+
+
+  // make one week ahead available
+  useEffect(() => {
+    // Get the current date
+    const today = new Date();
+
+    // Normalize today's date to the beginning of the day (00:00:00)
+    today.setHours(0, 0, 0, 0);
+
+    // Get the current day of the week (0 is Sunday, 6 is Saturday)
+    const currentDay = today.getDay();
+
+    // Calculate the current week's Sunday (start of the week)
+    const sunday = new Date(today);
+    sunday.setDate(today.getDate() - currentDay); // Subtract days to reach Sunday
+
+    // Calculate the current week's Saturday (end of the week)
+    const saturday = new Date(today);
+    saturday.setDate(today.getDate() + (6 - currentDay)); // Add days to reach Saturday
+
+    // Set the start and end of the week
+    setWeekRange({ start: sunday, end: saturday });
+  }, []);
   useEffect(() => {
     const fetchReservedTimes = async () => {
       if (sport.filter && selectedField && selectedDay) {
@@ -257,13 +288,21 @@ const NewReservation = () => {
               ))}
             </div>
           </Col>
-
+          { /*calendar*/}
           <Col className="wid-colum">
             <h2 style={{ color: "white" }}>Select a Date</h2>
             <Calendar
-              locale={enUS}
-              tileDisabled={({ date }) => date < new Date()}
-              onClickDay={(value) => setSelectedDay(value)}
+                locale={enUS}
+                tileDisabled={({ date }) => {
+                  const today = new Date();
+                  // Disable past dates (before today)
+                  if (date < today.setHours(0, 0, 0, 0)) {
+                    return true;
+                  }
+                  // Disable dates outside of this week (before Sunday or after Saturday)
+                  return date < weekRange.start || date > weekRange.end;
+                }}
+                onClickDay={(value) => setSelectedDay(value)}
             />
           </Col>
 
