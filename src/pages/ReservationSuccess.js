@@ -12,11 +12,13 @@ const ReservationSuccess = () => {
   const { state } = useLocation();
   const { reservationId } = state || {};
 
-  const [remainingTime, setRemainingTime] = useState(25200); // 7 hours in seconds
+  const [remainingTime, setRemainingTime] = useState(25200); // Countdown timer (7 hours)
   const [reservationDetails, setReservationDetails] = useState(null);
 
+  // Fetch reservation details from backend
   useEffect(() => {
     if (!reservationId) return;
+
     const fetchDetails = async () => {
       try {
         const response = await axios.get(
@@ -24,31 +26,37 @@ const ReservationSuccess = () => {
         );
         setReservationDetails(response.data);
       } catch (err) {
-        console.error("Error fetching reservation details", err);
+        console.error("Error fetching reservation details:", err);
       }
     };
+
     fetchDetails();
   }, [reservationId]);
 
+  // Countdown timer logic
   useEffect(() => {
     const countdown = setInterval(() => {
       setRemainingTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
     }, 1000);
+
     return () => clearInterval(countdown);
   }, []);
 
-  if (!reservationId)
+  if (!reservationId) {
     return (
       <Body>
         <p>No reservation ID provided.</p>
       </Body>
     );
-  if (!reservationDetails)
+  }
+
+  if (!reservationDetails) {
     return (
       <Body>
         <p>Loading reservation details...</p>
       </Body>
     );
+  }
 
   const hours = Math.floor(remainingTime / 3600);
   const minutes = Math.floor((remainingTime % 3600) / 60);
@@ -59,7 +67,8 @@ const ReservationSuccess = () => {
       <div className="reservation-success">
         <h2>Reserved Successfully</h2>
         <p>
-          <strong>Participants:</strong> {reservationDetails.participants}
+          Need at least <strong>{reservationDetails.studentsNeeded}</strong>{" "}
+          students to confirm
         </p>
         <p style={{ color: "#6c757d", fontSize: "1rem" }}>
           The reservation will cancel after
@@ -80,13 +89,17 @@ const ReservationSuccess = () => {
             className="details-button"
             onClick={() =>
               navigate("/reservation-details", {
-                state: { isOwnerView: true, reservation: reservationDetails },
+                state: {
+                  isOwnerView: true,
+                  reservation: reservationDetails,
+                },
               })
             }
           >
             View Details
           </Button>
         </div>
+
         <Button
           variant="light"
           className="home-button"
