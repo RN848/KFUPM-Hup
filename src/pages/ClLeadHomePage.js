@@ -38,18 +38,16 @@ const ClLeadHomePage = () => {
         const clubs = await getAllClubs();
         // Fetch the user's profile
         const userId = await fetchUserProfile();
-        console.log(userId);
 
         // Find the club where the clubAccount matches the user's ID
         const club = clubs.find((cl) => {
-          console.log(cl.clubAccount + " " + userId.data.ID);
           if (cl.clubAccount) {
-            return cl.clubAccount === userId.data.ID; // Use the correct ID to match
+            return cl.clubAccount === userId.data._id; // Use the correct ID to match
           } else {
             return false;
           }
         });
-
+        console.log(club._id)
         if (club) {
           // If a club is found, set the clubId
           setClubId(club._id);

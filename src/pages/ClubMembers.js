@@ -5,12 +5,9 @@ import "../styles/pages/_clubMembers.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Body from "../components/Body";
-import {useLocation, useNavigate} from "react-router-dom";
-import {
-  fetchClubMembers,
-  removeMemberFromClub,
-} from "../api/apiClubService";
-import {fetchUserProfile} from "../api/apiUserService"; // Import the new API functions
+import { useLocation, useNavigate } from "react-router-dom";
+import { fetchClubMembers, removeMemberFromClub } from "../api/apiClubService";
+import { fetchUserProfile } from "../api/apiUserService"; // Assuming you need this API call
 
 const ClubMembers = () => {
   const navigate = useNavigate();
@@ -21,12 +18,13 @@ const ClubMembers = () => {
   // Replace this with the actual club ID. This could come from context, props, or authentication data.
   const location = useLocation();
   const { clubId } = location.state || {};
+
   // Fetch members from the backend API on component mount
   useEffect(() => {
     const getMembers = async () => {
       try {
         const fetchedMembers = await fetchClubMembers(clubId);
-        setMembers(fetchedMembers);
+        setMembers(fetchedMembers); // Assume fetchedMembers is an array
         setLoading(false);
       } catch (err) {
         console.error("Error fetching members:", err);
@@ -46,14 +44,13 @@ const ClubMembers = () => {
       try {
         await removeMemberFromClub(clubId, id);
         // Update local state after successful deletion
-        setMembers(members.filter((member) => member.id !== id));
+        setMembers(members.filter((member) => member._id !== id));
       } catch (err) {
         console.error(`Error removing member with ID ${id}:`, err);
         alert("Failed to remove member. Please try again.");
       }
     }
   };
-
 
   // Handle adding a new member
   const handleAddMember = () => {
@@ -87,11 +84,7 @@ const ClubMembers = () => {
         <div className="club-members">
           <header>
             <h1>Club Members</h1>
-            <Button
-                variant="primary"
-                className="add-member-btn"
-                onClick={handleAddMember}
-            >
+            <Button variant="primary" className="add-member-btn" onClick={handleAddMember}>
               Add New Member
             </Button>
           </header>
@@ -100,15 +93,15 @@ const ClubMembers = () => {
             {members.length === 0 ? (
                 <p>No members found.</p>
             ) : (
-                members.map((memberid) => {
-                  const member = fetchUserProfile()
+                members.map((member) => {
+                  // Assuming member has profilePicture, name, role, and interests
                   return (
                       <div
                           className="member-card"
-                          key={member.id} // Ensure 'id' is unique and matches backend data
+                          key={member._id} // Ensure 'id' is unique and matches backend data
                           onClick={() =>
                               navigate("/member-profile", {
-                                state: {member},
+                                state: { member },
                               })
                           }
                       >
@@ -119,14 +112,11 @@ const ClubMembers = () => {
                                 className="profile-picture"
                             />
                         ) : (
-                            <FontAwesomeIcon
-                                icon={faUserCircle}
-                                className="default-icon"
-                            />
+                            <FontAwesomeIcon icon={faUserCircle} className="default-icon" />
                         )}
                         <h3>{member.name}</h3>
                         <p>{member.interests}</p>
-                        <p style={{color: "white"}}>
+                        <p style={{ color: "white" }}>
                           <strong>{member.role}</strong>
                         </p>
                         <Button
@@ -141,13 +131,13 @@ const ClubMembers = () => {
                             variant="danger"
                             onClick={(e) => {
                               e.stopPropagation(); // Prevent triggering the card's onClick
-                              handleRemove(member.id);
+                              handleRemove(member._id); // Use _id for consistency
                             }}
                         >
                           Remove
                         </Button>
                       </div>
-                  )
+                  );
                 })
             )}
           </div>
@@ -167,3 +157,4 @@ const ClubMembers = () => {
 };
 
 export default ClubMembers;
+
