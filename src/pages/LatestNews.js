@@ -1,3 +1,4 @@
+// LatestNews.js
 import React, { useState, useEffect } from "react";
 import Body from "../components/Body";
 import "../styles/main.css";
@@ -5,22 +6,30 @@ import "../styles/master.css";
 import "../styles/pages/_latestNews.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Image, Button } from "react-bootstrap";
+import { Image, Button, Alert } from "react-bootstrap";
 import { getAllEvents } from "../api/apiEventService"; // Importing the event service
+import {getFollowedClubs, getJoinedEvents, joinEvent, leaveEvent} from "../api/apiUserService"; // Importing join and leave event services
 
 const LatestNews = () => {
   const [filter, setFilter] = useState(""); // Filter state
-  const [clickedNews, setClickedNews] = useState([]); // Track joined activities
+  const [enrolledEventIds, setEnrolledEventIds] = useState([]); // Track enrolled activities by event IDs
   const [events, setEvents] = useState([]); // Events list
   const [loading, setLoading] = useState(true); // Loading state for fetching data
   const [error, setError] = useState(null); // Error state
-
+  const [message, setMessage] = useState(""); // Success/Error messages
+  const [followClubs, setFollowClubs] = useState([]); // User's following clubs
   // Fetch events on component mount
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const data = await getAllEvents(); // Fetch events using the service
         setEvents(data); // Set fetched events to state
+
+        const followedClubsResponse = await getFollowedClubs(); // Fetch followed clubs
+         const joinedEvents = await getJoinedEvents();
+
+        setFollowClubs(followedClubsResponse.data); // Assuming response has a 'data' property
+         setEnrolledEventIds(joinedEvents.data.map(event => event._id));
       } catch (err) {
         setError("Error fetching events. Please try again.");
         console.error("Error fetching events:", err);
@@ -32,57 +41,83 @@ const LatestNews = () => {
     fetchEvents();
   }, []); // Empty dependency array means this effect runs only once, after the component mounts
 
-  const handleJoinClick = (index) => {
-    if (!clickedNews.includes(index)) {
-      setClickedNews([...clickedNews, index]);
+  // Handler to join or leave an event
+  const handleJoinEvent = async (eventId) => {
+    if (enrolledEventIds.includes(eventId)) {
+      // User wants to leave the event
+      try {
+        await leaveEvent(eventId);
+        setEnrolledEventIds(enrolledEventIds.filter((id) => id !== eventId));
+        setMessage("You have left this activity.");
+      } catch (err) {
+        setError("Failed to leave the activity. Please try again.");
+        console.error("Error leaving event:", err);
+      }
     } else {
-      setClickedNews(clickedNews.filter((i) => i !== index)); // Allow toggling
+      // User wants to join the event
+      try {
+        await joinEvent(eventId);
+        setEnrolledEventIds([...enrolledEventIds, eventId]);
+        setMessage("You have joined this activity!");
+      } catch (err) {
+        setError("Failed to join the activity. Please try again.");
+        console.error("Error joining event:", err);
+      }
     }
+
+    // Clear messages after 3 seconds
+    setTimeout(() => {
+      setMessage("");
+      setError(null);
+    }, 3000);
   };
 
-  // Filtered events list
-  const filteredNewsList = events.filter((_, index) => {
-    if (filter === "following") return index % 2 === 0; // Example: Show every alternate event
-    if (filter === "enrolled") return clickedNews.includes(index); // Show joined events
-    return true; // Show all if no filter
+  // Filtered events list based on the selected filter
+  const filteredNewsList = events.filter((news) => {
+    if (filter === "following") {
+      // Ensure followClubs and news.createdByClub are defined
+      if (!followClubs || !news.createdByClub) return false;
+      return followClubs.some(club => {
+        console.log(club.name + " OLA " + news.createdByClub.toString())
+        console.log(club._id.toString() === news.createdByClub.toString())
+        return club._id.toString() === news.createdByClub.toString()
+      });
+    }
+    if (filter === "enrolled") {
+      // Show only enrolled events
+      return enrolledEventIds.includes(news._id);
+    }
+    return true; // Default: Show all
   });
 
-  const newsMap = filteredNewsList.map((event, index) => (
-      <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
-        <a href={`/activity-view`} className="news-link">
-          <div className="news-card">
-            <Image className="news-img" src={event.img} alt={event.title} />
-            <div className="news-details">
-              <h3 className="news-title">{event.title}</h3>
-              <p className="news-desc">{event.desc}</p>
-              <Button
-                  className={`join-btn ${clickedNews.includes(index) ? "joined" : ""}`}
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent link navigation
-                    e.stopPropagation(); // Stop the event from propagating to the parent <a>
-                    handleJoinClick(index);
-                  }}
-              >
-                {clickedNews.includes(index) ? "Joined" : "Join"}
-              </Button>
-            </div>
-          </div>
-        </a>
-      </Col>
-  ));
-
   if (loading) {
-    return <div>Loading...</div>; // Display loading message while fetching data
+    return (
+        <Body>
+          <div className="news-page">
+            <div>Loading...</div> {/* Display loading message while fetching data */}
+          </div>
+        </Body>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>; // Display error message if there is an issue
+    return (
+        <Body>
+          <div className="news-page">
+            <Alert variant="danger">{error}</Alert> {/* Display error message */}
+          </div>
+        </Body>
+    );
   }
 
   return (
       <Body>
         <div className="news-page">
           <h1 className="page-title">Latest News and Activities</h1>
+          {/* Display success or error messages */}
+          {message && <Alert variant="success">{message}</Alert>}
+          {error && <Alert variant="danger">{error}</Alert>}
+          {/* Filter Buttons */}
           <div className="news-filter">
             <Button
                 className={`filter-btn ${filter === "following" ? "active" : ""}`}
@@ -97,14 +132,58 @@ const LatestNews = () => {
               Enrolled
             </Button>
           </div>
-          <Row className="news-container">{newsMap}</Row>
+          {/* Events Grid */}
+          <Row className="news-container">
+            {filteredNewsList.length > 0 ? (
+                filteredNewsList.map((event) => (
+                    <Col key={event._id} lg={6} md={6} sm={12} xs={12} className="news-col">
+                      <div
+                          className="news-card"
+                          style={{ cursor: "pointer", position: "relative" }}
+                          onClick={() => {
+                            // Navigate to the activity view page
+                            window.location.href = `/activity-view/${event._id}`;
+                          }}
+                      >
+                        <Image
+                            className="news-img"
+                            src={event.img || "/images/activities/activity-01.png"}
+                            alt={event.title || "Activity Image"}
+                            fluid
+                        />
+                        <div className="news-details">
+                          <h3 className="news-title">{event.title}</h3>
+                          <p className="news-desc">{event.desc}</p>
+                          <Button
+                              className={`join-btn ${enrolledEventIds.includes(event._id) ? "joined" : ""}`}
+                              onClick={(e) => {
+                                e.preventDefault(); // Prevent link navigation
+                                e.stopPropagation(); // Stop the event from propagating to the parent <div>
+                                handleJoinEvent(event._id); // Handle join click
+                              }}
+                          >
+                            {enrolledEventIds.includes(event._id) ? "Joined" : "Join"}
+                          </Button>
+                        </div>
+                      </div>
+                    </Col>
+                ))
+            ) : (
+                <Col>
+                  <p>No events to display.</p>
+                </Col>
+            )}
+          </Row>
           {/* Back Button */}
-          <Button className="back-btn" onClick={() => window.history.back()}>
-            Back
-          </Button>
+          <div className="d-flex justify-content-center mt-4">
+            <Button className="back-btn" onClick={() => window.history.back()}>
+              Back
+            </Button>
+          </div>
         </div>
       </Body>
   );
 };
 
 export default LatestNews;
+
