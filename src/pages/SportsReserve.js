@@ -1,3 +1,4 @@
+// SportsReserve.js
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
@@ -37,15 +38,18 @@ const SportsReserve = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/reservationRoute"
+          `http://localhost:5000/api/reservationRoute?${
+            sport.filter ? `sport=${sport.filter}` : ""
+          }`
         );
         setBackendReservations(response.data);
       } catch (error) {
-        console.error("Error fetching from backend:", error);
+        console.error("Error fetching reservations:", error);
       }
     };
+
     fetchData();
-  }, []);
+  }, [sport]);
 
   const sportsMap = sportsList.map((s) => {
     const isActive = sport.filter === s.name;
@@ -65,22 +69,12 @@ const SportsReserve = () => {
     );
   });
 
-  const filteredReservations = backendReservations.filter(
-    (box) => sport.filter === "" || box.sport === sport.filter
-  );
-
-  const reservationMap = filteredReservations.map((box, index) => {
-    let displayDay = box.day;
-    let displayDate = "";
-
-    if (box.date) {
-      const reservationDate = new Date(box.date);
-      const weekday = reservationDate.toLocaleDateString("en-US", {
-        weekday: "long",
-      });
-      const fullDate = reservationDate.toLocaleDateString("en-US");
-      displayDay = `${weekday}, ${fullDate}`;
-    }
+  const reservationMap = backendReservations.map((reservation, index) => {
+    const reservationDate = new Date(reservation.date);
+    const displayDay = reservationDate.toLocaleDateString("en-US", {
+      weekday: "long",
+    });
+    const displayDate = reservationDate.toLocaleDateString("en-US");
 
     return (
       <Col
@@ -89,7 +83,7 @@ const SportsReserve = () => {
         sm={6}
         xs={12}
         className="sport-col"
-        key={box._id || index}
+        key={reservation._id || index}
       >
         <a
           href="#"
@@ -98,17 +92,31 @@ const SportsReserve = () => {
             navigate("/reservation-details", {
               state: {
                 isOwnerView: false,
-                reservation: { ...box, day: displayDay },
+                reservation: {
+                  ...reservation,
+                  day: `${displayDay}, ${displayDate}`,
+                },
               },
             });
           }}
         >
-          <div>
-            <h3>{box.sport}</h3>
-            <div className="details">
-              <span>{box.field}</span>
-              <span>{displayDay}</span>
-              <span>{box.time}</span>
+          <div className="reservation-card">
+            <h3 className="sport-title">{reservation.sport}</h3>
+            <div
+              className="reservation-details"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "10px 20px",
+                gap: "30px",
+              }}
+            >
+              <p>Field: {reservation.field}</p>
+              <p>
+                Date: {displayDay}, {displayDate}
+              </p>
+              <p>Time: {reservation.time}</p>
             </div>
           </div>
         </a>
