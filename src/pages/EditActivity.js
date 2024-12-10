@@ -5,42 +5,28 @@ import "../styles/pages/_latestNews.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Image } from "react-bootstrap";
+import defaultImg from "../public/images/activities/activity-01.png"
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {fetchClubActivities} from "../api/apiClubService";
 
 const EditActivity = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
   const { clubId  } = location.state || {};
-  const [newsList, setNewsList] = useState([
-    {
-      title: "News Activity 1",
-      desc: "Description for activity 1.",
-      img: "../images/activities/activity-01.png",
-      clup: "1",
-    },
-    {
-      title: "News Activity 2",
-      desc: "Description for activity 2.",
-      img: "../images/activities/activity-02.jpeg",
-      clup: "2",
-    },
-    {
-      title: "News Activity 3",
-      desc: "Description for activity 3.",
-      img: "../images/activities/activity-03.jpg",
-      clup: "3",
-    },
-    {
-      title: "News Activity 4",
-      desc: "Description for activity 4.",
-      img: "../images/activities/activity-04.jpg",
-      clup: "1",
-    },
-  ]);
+  const [newsList, setNewsList] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const clubActivities = await fetchClubActivities(clubId);
+      console.log(clubActivities);
+      setNewsList(clubActivities)
 
+    };
+
+    fetchData()
+  }, []);
   const handleEditClick = (title) => {
     alert(`Editing activity: ${title}`);
   };
@@ -55,7 +41,7 @@ const EditActivity = () => {
           {newsList.map((news, index) => (
             <Col key={index} lg={6} md={6} sm={12} xs={12} className="news-col">
               <div className="news-card">
-                <Image className="news-img" src={news.img} alt={news.title} />
+                <Image className="news-img" src={news.img || defaultImg} alt={news.title} />
                 <div
                   className="news-details"
                   style={{
@@ -65,7 +51,7 @@ const EditActivity = () => {
                   }}
                 >
                   <h3 className="news-title">{news.title}</h3>
-                  <p className="news-desc">{news.desc}</p>
+                  <p className="news-desc">{news.description}</p>
                   <Button
                     className="news-join-btn"
                     style={{

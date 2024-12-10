@@ -3,6 +3,7 @@ import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
 import "../styles/pages/_clLeadHomePage.scss";
+import DefaultImg from "../public/images/activities/activity-01.png"
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -132,13 +133,15 @@ const ClLeadHomePage = () => {
               ) : (
                   <div className="activity-container">
                     {clubActivities.length > 0 ? (
-                        clubActivities.map((activity, index) => (
+                        clubActivities.map((activity, index) => {
+                          console.log(activity)
+                          return (
                             <div className="activity-item" key={`activity-${index}`}>
                               <div className="activity-card">
                                 <Image
-                                    src={activity.AcImg}
+                                    src={activity.img || DefaultImg}
                                     className="activity-img"
-                                    alt={activity.AcName}
+                                    alt={activity.description}
                                     onError={(e) => {
                                       e.target.onerror = null;
                                       e.target.src =
@@ -146,8 +149,8 @@ const ClLeadHomePage = () => {
                                     }}
                                 />
                                 <div className="activity-info">
-                                  <h3>{activity.AcName}</h3>
-                                  <p>{activity.AcDescription}</p>
+                                  <h3>{activity.title}</h3>
+                                  <p>{activity.subTitle}</p>
                                   <Button
                                       variant="dark"
                                       className="edit-btn"
@@ -162,7 +165,8 @@ const ClLeadHomePage = () => {
                                 </div>
                               </div>
                             </div>
-                        ))
+                        )
+                        })
                     ) : (
                         <p className="no-activities">No activities found.</p>
                     )}
