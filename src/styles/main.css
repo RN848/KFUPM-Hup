@@ -571,7 +571,7 @@ h1 {
   left: 0;
   background-color: #f8f9fa; /* Light background for the dropdown */
   border-radius: 5px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
   min-width: 160px; /* Adjust to fit your items */
 }
@@ -638,5 +638,71 @@ h1 {
   background-color: #4CAF50 !important; /* Green hover background */
   color: white !important;  /* White text on hover */
 }
+
+.reservation-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: flex-start; /* Align to the top of the page */
+  min-height: 100vh; /* Full height view */
+  padding-top: 20px; /* Add space from the top */
+}
+
+
+/* Style the reservation card */
+.reservation-success {
+  color: white; /* White text */
+  padding: 40px; /* Larger padding */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  max-width: 800px; /* Increased container width */
+  width: 100%; /* Full width for small screens */
+  text-align: center;
+  border: 2px solid #555; /* Subtle border */
+}
+
+/* Styling for details container */
+.details-container {
+  margin: 20px 0; /* Space between sections */
+  padding: 20px; /* Larger padding */
+  border-radius: 6px; /* Rounded corners for inner section */
+}
+
+/* Style the details row for alignment */
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Style for code box */
+.code-box {
+  background-color: #555;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* Style for buttons */
+.button-group {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Add spacing between buttons */
+}
+
+
+button {
+  padding: 10px 20px; /* Larger buttons */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9; /* Hover effect */
+}
+
 
 

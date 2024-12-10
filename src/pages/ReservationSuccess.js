@@ -55,48 +55,60 @@ const ReservationSuccess = () => {
   const seconds = remainingTime % 60;
 
   return (
-    <Body>
-      <div className="reservation-success">
-        <h2>Reserved Successfully</h2>
-        <p>
-          <strong>Participants:</strong> {reservationDetails.participants}
-        </p>
-        <p style={{ color: "#6c757d", fontSize: "1rem" }}>
-          The reservation will cancel after
-          <strong>
-            {" "}
-            {`${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
-              seconds < 10 ? "0" : ""
-            }${seconds}`}
-          </strong>
-        </p>
+      <Body>
+        <div className="reservation-container">
+          <div className="reservation-success">
+            <h2>Reservation Successfully</h2>
+            <p>
+              <strong>Participants:</strong> {reservationDetails.participants}
+            </p>
+            <div className="details-container">
+              <h3>Sport Name</h3>
+              <div className="details-row">
+                <p style={{ fontSize: "1rem" }}>
+                  The reservation will cancel after
+                  <strong>
+                    {" "}
+                    {`${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
+                        seconds < 10 ? "0" : ""
+                    }${seconds}`}
+                  </strong>
+                </p>
+              </div>
+            </div>
+            <div className="details-container">
+              <div className="details-row">
 
-        <div className="reservation-details">
-          <div className="button-group">
-            <Button variant="primary">Share</Button>
-            <div className="code-box">Code : {reservationDetails.code}</div>
+                <div className="button-group">
+                  <div className="code-box">Code : {reservationDetails.code}</div>
+
+                  <Button variant="primary">Share</Button>
+                  <Button
+                      variant="light"
+                      className="home-button"
+                      onClick={() => navigate("/home")}
+                  >
+                    Home
+                  </Button>
+                  <Button
+                      className="details-button"
+                      onClick={() =>
+                          navigate("/reservation-details", {
+                            state: { isOwnerView: true, reservation: reservationDetails },
+                          })
+                      }
+                  >
+                    View Details
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
-          <Button
-            className="details-button"
-            onClick={() =>
-              navigate("/reservation-details", {
-                state: { isOwnerView: true, reservation: reservationDetails },
-              })
-            }
-          >
-            View Details
-          </Button>
         </div>
-        <Button
-          variant="light"
-          className="home-button"
-          onClick={() => navigate("/home")}
-        >
-          Home
-        </Button>
-      </div>
-    </Body>
+      </Body>
   );
+
+
 };
 
 export default ReservationSuccess;
