@@ -9,8 +9,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { NormInput } from "../components/Inputs";
-
 import Basketball from "../images/sports/sport-1.jpg";
 import Football from "../images/sports/sport-2.jpg";
 import Tennis from "../images/sports/sport-3.jpg";
@@ -23,6 +21,7 @@ const SportsReserve = () => {
   const [backendReservations, setBackendReservations] = useState([]);
   const [inputs, setInputs] = useState({ code: "" });
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const sportsList = [
     { name: "Basketball", image: Basketball },
@@ -37,7 +36,7 @@ const SportsReserve = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/reservationRoute?${
+          `http://localhost:4000/api/reservationRoute?${
             sport.filter ? `sport=${sport.filter}` : ""
           }`
         );
@@ -49,6 +48,61 @@ const SportsReserve = () => {
 
     fetchData();
   }, [sport]);
+
+  const validateCodeAndNavigate = async (code) => {
+    if (!code) {
+      setErrorMessage("Please enter a reservation code.");
+      return;
+    }
+
+    try {
+      // Make an API call to validate the code
+      const response = await axios.get(
+        `http://localhost:4000/api/reservationRoute/code/${code}`
+      );
+
+      // If valid, navigate to the reservation details page
+      if (response) {
+        navigate("/reservation-details", {
+          state: { isOwnerView: false, reservation: response.data },
+        });
+        console.log(response.data.reservation);
+      }
+    } catch (error) {
+      if (error.response?.status === 404) {
+        setErrorMessage("No reservation exists with the provided code.");
+      } else if (error.response?.status === 500) {
+        setErrorMessage("A server error occurred. Please try again later.");
+      } else {
+        setErrorMessage("An unexpected error occurred. Please try again.");
+      }
+    }
+  };
+
+  const handleCodeSubmit = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/reservationRoute/code/${inputs.code}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (response.data) {
+        navigate("/reservation-details", {
+          state: {
+            reservationId: response.data._id,
+            reservation: response.data,
+          },
+        });
+      } else {
+        alert("Reservation not found.");
+      }
+    } catch (error) {
+      console.error("Error fetching reservation by code:", error);
+      alert("Failed to find reservation.");
+    }
+  };
 
   const sportsMap = sportsList.map((s) => {
     const isActive = sport.filter === s.name;
@@ -140,41 +194,54 @@ const SportsReserve = () => {
                 className="form"
                 style={{
                   display: "flex",
-                  justifyContent: "center",
-                  alignItems: "end",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "10px",
                 }}
               >
                 <div
                   style={{
-                    margin: "0 10px 15px 0",
                     display: "flex",
+                    alignItems: "center",
                     gap: "10px",
                   }}
                 >
-                  <Col
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "15px",
+                  <label htmlFor="codeInput" style={{ marginBottom: "0" }}>
+                    Enter Code:
+                  </label>
+                  <input
+                    id="codeInput"
+                    type="text"
+                    value={inputs.code}
+                    onChange={(e) => {
+                      setInputs((prev) => ({ ...prev, code: e.target.value }));
+                      setErrorMessage("");
                     }}
-                  >
-                    <Button
-                      className="inputs-btn"
-                      as="input"
-                      type="button"
-                      value="My Reservations"
-                      onClick={() => navigate("/user-reservations")}
-                    />
-
-                    <Button
-                      className="inputs-btn"
-                      as="input"
-                      type="button"
-                      value="New Reservation"
-                      onClick={() => navigate("/new-reservation")}
-                    />
-                  </Col>
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        validateCodeAndNavigate(inputs.code);
+                      }
+                    }}
+                    style={{
+                      backgroundColor: "lightgray",
+                      color: "black",
+                      padding: "10px",
+                      borderRadius: "5px",
+                      border: "1px solid #ccc",
+                    }}
+                  />
+                  {errorMessage && (
+                    <p style={{ color: "red" }}>{errorMessage}</p>
+                  )}
                 </div>
+                <Button
+                  className="inputs-btn"
+                  as="input"
+                  type="button"
+                  value="New Reservation"
+                  onClick={() => navigate("/new-reservation")}
+                  style={{ marginTop: "10px" }}
+                />
               </div>
             </div>
           </Col>
