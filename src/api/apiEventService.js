@@ -1,7 +1,8 @@
+//src\pages\ClLeadHomePage.js
 import axios from "axios";
 
 // Base URL for the Event API
-const API_URL = "http://localhost:5000/api/eventRoute"; // Adjust this to your actual API URL
+const API_URL = "http://localhost:4000/api/eventRoute"; // Adjust this to your actual API URL
 
 // Fetch all events
 export const getAllEvents = async () => {

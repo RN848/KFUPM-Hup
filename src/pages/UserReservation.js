@@ -15,15 +15,17 @@ const UserReservations = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const response = await axios.get(
-            "http://localhost:5000/api/userRoutes",
-            {
-              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            }
+        const { data } = await axios.get(
+          `http://127.0.0.1:4000/api/userRoutes/profile/reservations`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
         );
-        console.log(response  + "THIS IS THE DATA");
-        setCreatedReservations(response.data.createdReservations || []);
-        setJoinedReservations(response.data.joinedReservations || []);
+        console.log(data + "THIS IS THE DATA");
+        setCreatedReservations(data.data.createdReservations || []);
+        setJoinedReservations(data.data.joinedReservations || []);
       } catch (err) {
         console.error(
           "Error fetching reservations:",

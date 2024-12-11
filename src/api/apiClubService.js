@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for the API
-const API_URL = "http://localhost:5000/api/clubRoute"; // Adjust to your actual API URL
+const API_URL = "http://localhost:4000/api/clubRoute"; // Adjust to your actual API URL
 
 // Helper function to get the auth token (from local storage)
 const getAuthToken = () => localStorage.getItem("token");
@@ -114,6 +114,16 @@ export const fetchClubActivities = async (clubId) => {
         return response.data; // Assuming the response data is an array of activities
     } catch (error) {
         console.error(`Error fetching activities for club ID ${clubId}:`, error);
+        throw error;
+    }
+};
+// Add an event to a club
+export const addEventToClub = async (clubId, eventId) => {
+    try {
+        const response = await axios.patch(`${API_URL}/add-event`, { clubId, eventId });
+        return response.data;
+    } catch (error) {
+        console.error(`Error adding event ${eventId} to club ${clubId}:`, error);
         throw error;
     }
 };

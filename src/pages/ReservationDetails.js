@@ -57,7 +57,7 @@ const ReservationDetails = () => {
   const handleJoin = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/join`,
+        `http://localhost:4000/api/reservationRoute/${initialReservation._id}/join`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -67,15 +67,29 @@ const ReservationDetails = () => {
       setParticipants(data.reservation.participants);
       alert("Joined successfully!");
     } catch (err) {
+    if (
+      err.response &&
+      err.response.status === 400 &&
+      err.response.data.error === "Reservation has reached its capacity"
+    ) {
+      alert("This reservation has already reached its maximum capacity.");
+    } else if (
+      err.response &&
+      err.response.status === 400 &&
+      err.response.data.error === "User has already joined this reservation"
+    ) {
+      alert("You have already joined this reservation.");
+    } else {
       console.error("Error joining reservation:", err);
       alert("Failed to join the reservation.");
     }
-  };
+  }
+};
 
   const handleLeave = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/leave`,
+        `http://localhost:4000/api/reservationRoute/${initialReservation._id}/leave`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -93,7 +107,7 @@ const ReservationDetails = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}`,
+        `http://localhost:4000/api/reservationRoute/${initialReservation._id}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -155,7 +169,21 @@ const ReservationDetails = () => {
             </span>
             <div className="button-group">
               <div className="code-box">Code : {initialReservation.code}</div>
-              <Button variant="primary">Share</Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  navigator.clipboard
+                    .writeText(initialReservation.code)
+                    .then(() => {
+                      alert("Code copied to clipboard!");
+                    })
+                    .catch((err) => {
+                      console.error("Failed to copy code: ", err);
+                    });
+                }}
+              >
+                Share
+              </Button>{" "}
             </div>
           </div>
         </div>
