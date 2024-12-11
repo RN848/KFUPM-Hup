@@ -48,7 +48,6 @@ const ClLeadHomePage = () => {
             return false;
           }
         });
-        console.log(club._id)
         if (club) {
           // If a club is found, set the clubId
           setClubId(club._id);
@@ -72,7 +71,6 @@ const ClLeadHomePage = () => {
     const getClubMembers = async () => {
       try {
         const members = await fetchClubMembers(clubId);
-        console.log(members);
         setClubMembers(members);
       } catch (error) {
         setErrorMembers(
@@ -134,7 +132,6 @@ const ClLeadHomePage = () => {
                   <div className="activity-container">
                     {clubActivities.length > 0 ? (
                         clubActivities.map((activity, index) => {
-                          console.log(activity)
                           return (
                             <div className="activity-item" key={`activity-${index}`}>
                               <div className="activity-card">
