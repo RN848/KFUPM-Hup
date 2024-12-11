@@ -1,9 +1,10 @@
+//src\pages\ClLeadHomePage.js
 import React, { useState, useEffect } from "react";
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
 import "../styles/pages/_clLeadHomePage.scss";
-import DefaultImg from "../public/images/activities/activity-01.png"
+import DefaultImg from "../public/images/activities/activity-01.png";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -48,7 +49,7 @@ const ClLeadHomePage = () => {
             return false;
           }
         });
-        console.log(club._id)
+        console.log(club._id);
         if (club) {
           // If a club is found, set the clubId
           setClubId(club._id);
@@ -76,7 +77,7 @@ const ClLeadHomePage = () => {
         setClubMembers(members);
       } catch (error) {
         setErrorMembers(
-            error.message || "Failed to fetch club members. Please try again."
+          error.message || "Failed to fetch club members. Please try again."
         );
       } finally {
         setLoadingMembers(false);
@@ -96,7 +97,7 @@ const ClLeadHomePage = () => {
         setClubActivities(activities);
       } catch (error) {
         setErrorActivities(
-            error.message || "Failed to fetch club activities. Please try again."
+          error.message || "Failed to fetch club activities. Please try again."
         );
       } finally {
         setLoadingActivities(false);
@@ -113,174 +114,177 @@ const ClLeadHomePage = () => {
   };
 
   return (
-      <Body>
-        <div className="body">
-          <Row className="ClLeadHomePage">
-            {/* Club News and Activity Section */}
-            <Col xl={7} lg={8} md={12} className="news-box">
-              <h1 className="section-title">Club News and Activity</h1>
+    <Body>
+      <div className="body">
+        <Row className="ClLeadHomePage">
+          {/* Club News and Activity Section */}
+          <Col xl={7} lg={8} md={12} className="news-box">
+            <h1 className="section-title">Club News and Activity</h1>
 
-              {/* Error Message for Activities */}
-              {errorActivities && <Alert variant="danger">{errorActivities}</Alert>}
+            {/* Error Message for Activities */}
+            {errorActivities && (
+              <Alert variant="danger">{errorActivities}</Alert>
+            )}
 
-              {/* Loading Spinner for Activities */}
-              {loadingActivities ? (
-                  <div className="text-center my-4">
-                    <Spinner animation="border" role="status">
-                      <span className="visually-hidden">Loading activities...</span>
-                    </Spinner>
-                  </div>
-              ) : (
-                  <div className="activity-container">
-                    {clubActivities.length > 0 ? (
-                        clubActivities.map((activity, index) => {
-                          console.log(activity)
-                          return (
-                            <div className="activity-item" key={`activity-${index}`}>
-                              <div className="activity-card">
-                                <Image
-                                    src={activity.img || DefaultImg}
-                                    className="activity-img"
-                                    alt={activity.description}
-                                    onError={(e) => {
-                                      e.target.onerror = null;
-                                      e.target.src =
-                                          "/images/activities/default_activity.png"; // Fallback image
-                                    }}
-                                />
-                                <div className="activity-info">
-                                  <h3>{activity.title}</h3>
-                                  <p>{activity.subTitle}</p>
-                                  <Button
-                                      variant="dark"
-                                      className="edit-btn"
-                                      onClick={() => {
-                                        navigate("/edit-activity", {
-                                          state: { clubId: clubId },
-                                        });
-                                      }}
-                                  >
-                                    Edit
-                                  </Button>
-                                </div>
-                              </div>
-                            </div>
-                        )
-                        })
-                    ) : (
-                        <p className="no-activities">No activities found.</p>
-                    )}
-                  </div>
-              )}
-
-              <div className="activity-buttons d-flex justify-content-center">
-                <Button
-                    variant="primary"
-                    className="add-btn"
-                    onClick={() => {
-                      localStorage.removeItem("fromEdit");
-                      navigate("/Create-Activity-news");
-                    }}
-                >
-                  Add New
-                </Button>
+            {/* Loading Spinner for Activities */}
+            {loadingActivities ? (
+              <div className="text-center my-4">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading activities...</span>
+                </Spinner>
               </div>
-            </Col>
-
-            {/* Members Section */}
-            <Col xl={4} lg={4} md={12} className="members-box">
-              <h1 className="section-title">Members</h1>
-
-              {/* Error Message for Members */}
-              {errorMembers && <Alert variant="danger">{errorMembers}</Alert>}
-
-              {/* Loading Spinner for Members */}
-              {loadingMembers ? (
-                  <div className="text-center my-4">
-                    <Spinner animation="border" role="status">
-                      <span className="visually-hidden">Loading members...</span>
-                    </Spinner>
-                  </div>
-              ) : (
-                  <div className="member-container">
-                    {clubMembers.length > 0 ? (
-                        clubMembers.map((member, index) => (
-                            <div className="member-item" key={`member-${index}`}>
-                              {member.profilePicture ? (
-                                  <Image
-                                      src={member.profilePicture}
-                                      className="member-img"
-                                      alt={member.name}
-                                      onError={(e) => {
-                                        e.target.onerror = null;
-                                        e.target.src =
-                                            "/images/clubMembers/default_member.png"; // Fallback image
-                                      }}
-                                  />
-                              ) : (
-                                  <FontAwesomeIcon
-                                      icon={faUserCircle}
-                                      className="default-icon member-img"
-                                  />
-                              )}
-
-                              <div className="member-info">
-                                <h4>{member.name}</h4>
-                                <div className="member-actions">
-                                  <Button
-                                      variant="primary"
-                                      className="profile-btn"
-                                      onClick={() =>
-                                          navigate("/member-profile", {
-                                            state: { memberId: member._id }, // Use _id for member
-                                          })
-                                      }
-                                  >
-                                    Profile
-                                  </Button>
-                                  <Button
-                                      variant="danger"
-                                      className="remove-btn"
-                                      onClick={() => handleRemove(member._id)} // Use _id for member
-                                  >
-                                    Remove
-                                  </Button>
-                                </div>
-                              </div>
-                            </div>
-                        ))
-                    ) : (
-                        <p className="no-members">No members found.</p>
-                    )}
-                  </div>
-              )}
-
-              <div className="member-buttons d-flex justify-content-center">
-                <Button
-                    variant="primary"
-                    className="all-btn"
-                    onClick={() => {
-                      navigate("/club-members", { state: { clubId: clubId } });
-                    }}
-                >
-                  More
-                </Button>
+            ) : (
+              <div className="activity-container">
+                {clubActivities.length > 0 ? (
+                  clubActivities.map((activity, index) => {
+                    console.log(activity);
+                    return (
+                      <div className="activity-item" key={`activity-${index}`}>
+                        <div className="activity-card">
+                          <Image
+                            src={activity.img || DefaultImg}
+                            className="activity-img"
+                            alt={activity.description}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src =
+                                "/images/activities/default_activity.png"; // Fallback image
+                            }}
+                          />
+                          <div className="activity-info">
+                            <h3>{activity.title}</h3>
+                            <p>{activity.subTitle}</p>
+                            <Button
+                              variant="dark"
+                              className="edit-btn"
+                              onClick={() => {
+                                navigate("/edit-activity", {
+                                  state: { clubId: clubId },
+                                });
+                              }}
+                            >
+                              Edit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="no-activities">No activities found.</p>
+                )}
               </div>
-            </Col>
-          </Row>
+            )}
 
-          {/* Manage Profile Section */}
-          <div className="manage-profile mt-4 text-center">
-            <Button
-                variant="light"
-                className="manage-profile-btn"
-                onClick={() => navigate("/edit-club")}
-            >
-              Manage Club Profile
-            </Button>
-          </div>
+            <div className="activity-buttons d-flex justify-content-center">
+              <Button
+                variant="primary"
+                className="add-btn"
+                onClick={() => {
+                  navigate("/Create-Activity-news", {
+                    state: { clubId: clubId, fromEdit: false },
+                  });
+                }}
+              >
+                Add New
+              </Button>
+            </div>
+          </Col>
+
+          {/* Members Section */}
+          <Col xl={4} lg={4} md={12} className="members-box">
+            <h1 className="section-title">Members</h1>
+
+            {/* Error Message for Members */}
+            {errorMembers && <Alert variant="danger">{errorMembers}</Alert>}
+
+            {/* Loading Spinner for Members */}
+            {loadingMembers ? (
+              <div className="text-center my-4">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading members...</span>
+                </Spinner>
+              </div>
+            ) : (
+              <div className="member-container">
+                {clubMembers.length > 0 ? (
+                  clubMembers.map((member, index) => (
+                    <div className="member-item" key={`member-${index}`}>
+                      {member.profilePicture ? (
+                        <Image
+                          src={member.profilePicture}
+                          className="member-img"
+                          alt={member.name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                              "/images/clubMembers/default_member.png"; // Fallback image
+                          }}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faUserCircle}
+                          className="default-icon member-img"
+                        />
+                      )}
+
+                      <div className="member-info">
+                        <h4>{member.name}</h4>
+                        <div className="member-actions">
+                          <Button
+                            variant="primary"
+                            className="profile-btn"
+                            onClick={() =>
+                              navigate("/member-profile", {
+                                state: { memberId: member._id }, // Use _id for member
+                              })
+                            }
+                          >
+                            Profile
+                          </Button>
+                          <Button
+                            variant="danger"
+                            className="remove-btn"
+                            onClick={() => handleRemove(member._id)} // Use _id for member
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="no-members">No members found.</p>
+                )}
+              </div>
+            )}
+
+            <div className="member-buttons d-flex justify-content-center">
+              <Button
+                variant="primary"
+                className="all-btn"
+                onClick={() => {
+                  navigate("/club-members", { state: { clubId: clubId } });
+                }}
+              >
+                More
+              </Button>
+            </div>
+          </Col>
+        </Row>
+
+        {/* Manage Profile Section */}
+        <div className="manage-profile mt-4 text-center">
+          <Button
+            variant="light"
+            className="manage-profile-btn"
+            onClick={() => navigate("/edit-club")}
+          >
+            Manage Club Profile
+          </Button>
         </div>
-      </Body>
+      </div>
+    </Body>
   );
 };
 

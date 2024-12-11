@@ -117,3 +117,13 @@ export const fetchClubActivities = async (clubId) => {
         throw error;
     }
 };
+// Add an event to a club
+export const addEventToClub = async (clubId, eventId) => {
+    try {
+        const response = await axios.patch(`${API_URL}/add-event`, { clubId, eventId });
+        return response.data;
+    } catch (error) {
+        console.error(`Error adding event ${eventId} to club ${clubId}:`, error);
+        throw error;
+    }
+};
