@@ -87,14 +87,15 @@ const ReservationSuccess = () => {
           </div>
           <Button
             className="details-button"
-            onClick={() =>
+            onClick={() => {
               navigate("/reservation-details", {
                 state: {
                   isOwnerView: true,
                   reservation: reservationDetails,
+                  reservationId: reservationDetails._id,
                 },
-              })
-            }
+              });
+            }}
           >
             View Details
           </Button>
@@ -110,8 +111,6 @@ const ReservationSuccess = () => {
       </div>
     </Body>
   );
-
-
 };
 
 export default ReservationSuccess;

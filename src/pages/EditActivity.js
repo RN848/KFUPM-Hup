@@ -20,7 +20,6 @@ const EditActivity = () => {
   useEffect(() => {
     const fetchData = async () => {
       const clubActivities = await fetchClubActivities(clubId);
-      console.log(clubActivities);
       setNewsList(clubActivities)
 
     };

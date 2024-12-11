@@ -49,7 +49,6 @@ const ClLeadHomePage = () => {
             return false;
           }
         });
-        console.log(club._id);
         if (club) {
           // If a club is found, set the clubId
           setClubId(club._id);
@@ -73,7 +72,6 @@ const ClLeadHomePage = () => {
     const getClubMembers = async () => {
       try {
         const members = await fetchClubMembers(clubId);
-        console.log(members);
         setClubMembers(members);
       } catch (error) {
         setErrorMembers(
@@ -175,6 +173,54 @@ const ClLeadHomePage = () => {
                 )}
               </div>
             )}
+              {/* Loading Spinner for Activities */}
+              {loadingActivities ? (
+                  <div className="text-center my-4">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading activities...</span>
+                    </Spinner>
+                  </div>
+              ) : (
+                  <div className="activity-container">
+                    {clubActivities.length > 0 ? (
+                        clubActivities.map((activity, index) => {
+                          return (
+                            <div className="activity-item" key={`activity-${index}`}>
+                              <div className="activity-card">
+                                <Image
+                                    src={activity.img || DefaultImg}
+                                    className="activity-img"
+                                    alt={activity.description}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src =
+                                          "/images/activities/default_activity.png"; // Fallback image
+                                    }}
+                                />
+                                <div className="activity-info">
+                                  <h3>{activity.title}</h3>
+                                  <p>{activity.subTitle}</p>
+                                  <Button
+                                      variant="dark"
+                                      className="edit-btn"
+                                      onClick={() => {
+                                        navigate("/edit-activity", {
+                                          state: { clubId: clubId },
+                                        });
+                                      }}
+                                  >
+                                    Edit
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                        )
+                        })
+                    ) : (
+                        <p className="no-activities">No activities found.</p>
+                    )}
+                  </div>
+              )}
 
             <div className="activity-buttons d-flex justify-content-center">
               <Button

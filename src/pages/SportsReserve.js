@@ -1,4 +1,3 @@
-// SportsReserve.js
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
@@ -91,7 +90,7 @@ const SportsReserve = () => {
             e.preventDefault();
             navigate("/reservation-details", {
               state: {
-                isOwnerView: false,
+                reservationId: reservation._id,
                 reservation: {
                   ...reservation,
                   day: `${displayDay}, ${displayDate}`,
@@ -163,16 +162,10 @@ const SportsReserve = () => {
                       className="inputs-btn"
                       as="input"
                       type="button"
-                      value="My Reservation"
-                      onClick={() =>
-                        navigate("/reservation-details", {
-                          state: {
-                            isOwnerView: true,
-                            reservation: backendReservations[0] || null,
-                          },
-                        })
-                      }
+                      value="My Reservations"
+                      onClick={() => navigate("/user-reservations")}
                     />
+
                     <Button
                       className="inputs-btn"
                       as="input"
@@ -181,17 +174,6 @@ const SportsReserve = () => {
                       onClick={() => navigate("/new-reservation")}
                     />
                   </Col>
-                </div>
-
-                <div style={{ padding: "0 0 15px 15px" }}>
-                  <NormInput
-                    inputs={inputs}
-                    setInputs={setInputs}
-                    input={"number"}
-                    type={"code"}
-                    label={"Code"}
-                    placeholder={"2335"}
-                  />
                 </div>
               </div>
             </div>

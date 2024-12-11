@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Body from "../components/Body";
 import axios from "axios";
@@ -8,49 +8,124 @@ import { useLocation, useNavigate } from "react-router-dom";
 const ReservationDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isOwnerView, reservation: initialReservation } = location.state || {};
+  const { reservation: initialReservation } = location.state || {};
+
   const [participants, setParticipants] = useState(
-      initialReservation?.participants || 1
+    initialReservation?.participants || 1
   );
-  const handleJoinLeave = async () => {
-    if (!initialReservation || !initialReservation._id) {
-      alert("No reservation ID found!");
-      return;
-    }
+  const [isOwner, setIsOwner] = useState(false);
+  const [hasJoined, setHasJoined] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const userId = localStorage.getItem("userId"); // Assume user ID is stored here
 
-
-
-
-    try {
-     const response= await axios.post(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/join`,""
-         // Add user email if required by backend
-      );
-      // Update the participants count dynamically
-      if (response.data && response.data.reservation) {
-        // Update participants state with the latest count
-        setParticipants(response.data.reservation.participants);
-        console.log("Updated participants:", response.data.reservation.participants);
+  useEffect(() => {
+    const fetchUserStatus = async () => {
+      if (location.state?.isOwnerView) {
+        // If the navigation state indicates owner view, set directly
+        setIsOwner(true);
+        setLoading(false);
+        return;
       }
+
+      try {
+        const { data: user } = await axios.get(`/api/users/${userId}`);
+        if (initialReservation) {
+          // Check if the user is the owner of the reservation
+          setIsOwner(
+            user.createdReservations.some(
+              (reservation) => reservation._id === initialReservation._id
+            )
+          );
+
+          // Check if the user has already joined the reservation
+          setHasJoined(
+            user.joinedReservations.some(
+              (reservation) => reservation._id === initialReservation._id
+            )
+          );
+        }
+      } catch (err) {
+        console.error("Error fetching user status:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserStatus();
+  }, [initialReservation, userId, location.state]);
+
+  const handleJoin = async () => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/join`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      setHasJoined(true);
+      setParticipants(data.reservation.participants);
       alert("Joined successfully!");
     } catch (err) {
-      console.error("Error joining reservation", err);
+      console.error("Error joining reservation:", err);
       alert("Failed to join the reservation.");
     }
   };
 
-  if (!initialReservation)
+  const handleLeave = async () => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/leave`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      setHasJoined(false);
+      setParticipants(data.reservation.participants);
+      alert("Left the reservation successfully!");
+    } catch (err) {
+      console.error("Error leaving reservation:", err);
+      alert("Failed to leave the reservation.");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `http://localhost:5000/api/reservationRoute/${initialReservation._id}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      alert("Reservation deleted successfully!");
+      navigate("/Sports-reservation");
+    } catch (err) {
+      console.error("Error deleting reservation:", err);
+      alert("Failed to delete the reservation.");
+    }
+  };
+
+  if (loading) {
     return (
       <Body>
-        <p>Loading...</p>
+        <p>Loading reservation details...</p>
       </Body>
     );
+  }
+
+  if (!initialReservation) {
+    return (
+      <Body>
+        <p>No reservation found.</p>
+      </Body>
+    );
+  }
 
   const reservationDate = new Date(initialReservation.date);
   const dayName = reservationDate.toLocaleDateString("en-US", {
     weekday: "long",
   });
-
 
   return (
     <Body>
@@ -85,24 +160,25 @@ const ReservationDetails = () => {
           </div>
         </div>
         <div className="action-buttons">
-          {isOwnerView ? (
-            <>
-              <Button variant="primary">Save</Button>
-              <Button variant="danger">Delete</Button>
-            </>
+          {isOwner ? (
+            <Button variant="danger" onClick={handleDelete}>
+              Delete Reservation
+            </Button>
+          ) : hasJoined ? (
+            <Button variant="warning" onClick={handleLeave}>
+              Leave Reservation
+            </Button>
           ) : (
-            <>
-              <Button variant="primary" onClick={handleJoinLeave}>
-                Join / Leave
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => navigate("/Sports-reservation")}
-              >
-                Back
-              </Button>
-            </>
+            <Button variant="primary" onClick={handleJoin}>
+              Join Reservation
+            </Button>
           )}
+          <Button
+            variant="secondary"
+            onClick={() => navigate("/Sports-reservation")}
+          >
+            Back
+          </Button>
         </div>
       </div>
     </Body>
