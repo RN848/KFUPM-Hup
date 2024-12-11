@@ -33,10 +33,11 @@ import ErrorPage from "./pages/ErrorPage";
 import LoadingPage from "./pages/LoadingPage";
 import ClLeadHomePage from "./pages/ClLeadHomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UserReservations from "./pages/UserReservation";
 
 // OTP Pages (import these if they are available)
-import RequestOTPForm from "./pages/RequestOTPForm";  // OTP request page
-import VerifyOTPForm from "./pages/VerifyOTPForm";    // OTP verify page
+import RequestOTPForm from "./pages/RequestOTPForm"; // OTP request page
+import VerifyOTPForm from "./pages/VerifyOTPForm"; // OTP verify page
 
 function App() {
   return (
@@ -127,6 +128,10 @@ function App() {
             <Route
               path="clubleaderHomePage"
               element={<ProtectedRoute element={<ClLeadHomePage />} />}
+            />
+            <Route
+              path="user-reservations"
+              element={<ProtectedRoute element={<UserReservations />} />}
             />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<ErrorPage />} />

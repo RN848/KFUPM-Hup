@@ -40,7 +40,7 @@ function VerifyOTPForm() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/otpRoutes/verify-otp",
+        "http://localhost:4000/api/otpRoutes/verify-otp",
         { email, otp }
       );
       setMessage(res.data.message);
@@ -63,7 +63,7 @@ function VerifyOTPForm() {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:5000/api/otpRoutes/request-otp",
+        "http://localhost:4000/api/otpRoutes/request-otp",
         { email }
       );
       setMessage(res.data.message);
