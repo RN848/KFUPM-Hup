@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getClubById } from "../api/apiClubService"; // Adjust the path as needed
-import { followClub, unfollowClub, getJoinedEvents } from "../api/apiUserService"; // Adjust imports as needed
+import {followClub, unfollowClub, getJoinedEvents, leaveEvent, joinEvent} from "../api/apiUserService"; // Adjust imports as needed
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
@@ -89,10 +89,31 @@ const ClubProfile = () => {
     }, 3000);
   };
 
+
   const handleJoinClick = async (eventId) => {
-    // Handle join/leave event functionality
-    // Since you've fixed these errors, this can remain as is
+    if (joinedActivities.includes(eventId)) {
+      // User wants to leave the event
+      try {
+        await leaveEvent(eventId);
+        setJoinedActivities(joinedActivities.filter(id => id !== eventId));
+      } catch (error) {
+        console.error("Error leaving event:", error);
+        // Optionally, display an error message to the user
+      }
+    } else {
+      // User wants to join the event
+      try {
+        await joinEvent(eventId);
+        setJoinedActivities([...joinedActivities, eventId]);
+      } catch (error) {
+        console.error("Error joining event:", error);
+        // Optionally, display an error message to the user
+      }
+    }
   };
+
+
+
 
   if (error) {
     return (
@@ -166,16 +187,16 @@ const ClubProfile = () => {
                       <Col key={activity._id} xs={12} md={6} className="mb-4">
                         <div className="activity-card">
                           <Image
-                              src={activity.poster || defaultImg} // Correct fallback
+                              src={activity.img || defaultImg} // Correct fallback
                               className="activity-image"
-                              alt={activity.name}
+                              alt={activity.title}
                               onError={(e) => {
                                 e.target.onerror = null; // Prevent infinite loop if default image also fails
                                 e.target.src = "/images/activities/default_activity.png"; // Set fallback image
                               }}
                           />
                           <div className="activity-content">
-                            <h3 className="activity-title">{activity.name}</h3>
+                            <h3 className="activity-title">{activity.title}</h3>
                             <p className="activity-description">
                               {activity.description}
                             </p>

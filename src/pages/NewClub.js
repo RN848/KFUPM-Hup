@@ -1,78 +1,86 @@
-// NewClub.js
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useNavigate } from "react-router-dom";
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/pages/_logIn.scss";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert"; // Import Alert for feedback messages
+import Alert from "react-bootstrap/Alert";
 import { NormInput } from "../components/Inputs";
-import { createClub } from "../api/apiClubService"; // Import the createClub API function
+import { createClub } from "../api/apiClubService";
+import {fetchUserProfile, fetchUserProfileById, signUpUser} from "../api/apiUserService";
 
 const NewClub = () => {
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({
     clubName: "",
     description: "",
-    leader: "",
   });
 
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const [success, setSuccess] = useState(null); // Success message state
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
+  // Helper to generate club account email
+  const generateClubEmail = (clubName) => {
+    const sanitizedClubName = clubName.replace(/\s+/g, "").toLowerCase(); // Remove spaces and convert to lowercase
+    return `${sanitizedClubName}@kfupm.edu.sa`;
+  };
 
   // Handler for form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
 
-    // Reset previous messages
     setError(null);
     setSuccess(null);
 
-    // Basic validation (optional)
-    if (!inputs.clubName.trim() || !inputs.description.trim() ) {
+    if (!inputs.clubName.trim() || !inputs.description.trim()) {
       setError("Please fill in all the fields.");
       return;
     }
 
-    setLoading(true); // Set loading state to true
+    setLoading(true);
 
     try {
-      // Make the API call to create a new club
+      // Create a club account user first
+      const clubEmail = generateClubEmail(inputs.clubName);
+      const clubPassword = `${inputs.clubName}_1H`; // Generate a simple password
+      const clubAccount = await signUpUser({
+        name: inputs.clubName,
+        email: clubEmail,
+        password: clubPassword,
+        role: "clubAccount",
+      });
+      clubAccount.Account.otpVerified = true;
+      console.log(clubAccount.Account)
+      // Create the club with the newly created account
       const response = await createClub({
         name: inputs.clubName,
         description: inputs.description,
+        clubAccount: clubAccount.Account._id, // Assuming the response includes the new account's ID
       });
 
-      // Assuming the response contains the created club's data
-      console.log(response)
       setSuccess(`Club "${response.name}" has been created successfully!`);
-
-      // Optionally, navigate to the new club's profile page after a delay
-      // Uncomment the following lines if you have a route for club profiles
-      /*
-      setTimeout(() => {
-        navigate(`/club-profile/${response._id}`);
-      }, 2000); // Redirect after 2 seconds
-      */
 
       // Reset the form inputs
       setInputs({
         clubName: "",
         description: "",
       });
+
+      // Optionally navigate to the new club's profile page
+      setTimeout(() => {
+        alert(`clubEmail ${clubEmail} clubPassword ${clubPassword}`);
+        navigate('/club-profile', {state: {clubId: response._id}});
+      }, 2000);
     } catch (err) {
       console.error("Error creating club:", err);
-      // Handle different error responses based on your backend implementation
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("An unexpected error occurred. Please try again.");
-      }
+      setError(
+          err.response?.data?.message || "An unexpected error occurred. Please try again."
+      );
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
@@ -83,10 +91,7 @@ const NewClub = () => {
             New Club
           </h1>
           <div className="login-form">
-            {/* Display Success Message */}
             {success && <Alert variant="success">{success}</Alert>}
-
-            {/* Display Error Message */}
             {error && <Alert variant="danger">{error}</Alert>}
 
             <Form className="form" onSubmit={handleSubmit}>
@@ -106,10 +111,10 @@ const NewClub = () => {
                   label={"Description"}
                   placeholder={"Description of Club"}
               />
-             <Button
+              <Button
                   className="login-btn"
                   type="submit"
-                  disabled={loading} // Disable button while loading
+                  disabled={loading}
               >
                 {loading ? "Creating..." : "Create"}
               </Button>

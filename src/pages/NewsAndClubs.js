@@ -40,9 +40,9 @@ const NewsAndClubs = () => {
     const fetchData = async () => {
       try {
         const AllClubs = await getAllClubs(); // Fetch clubs using the service
-        const clubs = AllClubs.slice(0, 8); // Limit to the first 8
+        const clubs = AllClubs.slice(0, 4); // Limit to the first 8
         const AllEvents = await getAllEvents(); // Fetch events using the service
-        const events = AllEvents.slice(0, 8); // Limit to the first 8
+        const events = AllEvents.slice(0, 4); // Limit to the first 8
 
         const followedClubsResponse = await getFollowedClubs(); // Fetch followed clubs
         const joinedEventsResponse = await getJoinedEvents(); // Fetch joined events
