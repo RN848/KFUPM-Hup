@@ -38,6 +38,16 @@ export const fetchUserProfile = async () => {
     }
 };
 
+
+export const fetchUserProfileById = async (userId) => {
+    try {
+        const response = await axios.get(`${API_URL}/profile/${userId}`);
+        return response;
+    } catch (error) {
+        throw error.response ? error.response.data : error.message;
+    }
+};
+
 // Follow a Club
 export const followClub = async (clubId) => {
     try {

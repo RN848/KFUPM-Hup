@@ -4,13 +4,13 @@ import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
 import "../styles/pages/_latestNews.scss";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Image, Button, Alert } from "react-bootstrap";
+import { Row, Col, Image, Button, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { getAllEvents } from "../api/apiEventService"; // Importing the event service
-import {getFollowedClubs, getJoinedEvents, joinEvent, leaveEvent} from "../api/apiUserService"; // Importing join and leave event services
+import { getFollowedClubs, getJoinedEvents, joinEvent, leaveEvent } from "../api/apiUserService"; // Importing join and leave event services
 
 const LatestNews = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [filter, setFilter] = useState(""); // Filter state
   const [enrolledEventIds, setEnrolledEventIds] = useState([]); // Track enrolled activities by event IDs
   const [events, setEvents] = useState([]); // Events list
@@ -18,6 +18,7 @@ const LatestNews = () => {
   const [error, setError] = useState(null); // Error state
   const [message, setMessage] = useState(""); // Success/Error messages
   const [followClubs, setFollowClubs] = useState([]); // User's following clubs
+
   // Fetch events on component mount
   useEffect(() => {
     const fetchEvents = async () => {
@@ -26,10 +27,10 @@ const LatestNews = () => {
         setEvents(data); // Set fetched events to state
 
         const followedClubsResponse = await getFollowedClubs(); // Fetch followed clubs
-         const joinedEvents = await getJoinedEvents();
+        const joinedEventsResponse = await getJoinedEvents();
 
-        setFollowClubs(followedClubsResponse.data); // Assuming response has a 'data' property
-         setEnrolledEventIds(joinedEvents.data.map(event => event._id));
+        setFollowClubs(followedClubsResponse); // Assuming response is an array
+        setEnrolledEventIds(joinedEventsResponse.data.map((event) => event._id));
       } catch (err) {
         setError("Error fetching events. Please try again.");
         console.error("Error fetching events:", err);
@@ -77,10 +78,10 @@ const LatestNews = () => {
     if (filter === "following") {
       // Ensure followClubs and news.createdByClub are defined
       if (!followClubs || !news.createdByClub) return false;
-      return followClubs.some(club => {
-        console.log(club.name + " OLA " + news.createdByClub.toString())
-        console.log(club._id.toString() === news.createdByClub.toString())
-        return club._id.toString() === news.createdByClub.toString()
+      return followClubs.data.some((club) => {
+        console.log(club.name + " OLA " + news.createdByClub.toString());
+        console.log(club._id.toString() === news.createdByClub.toString());
+        return club._id.toString() === news.createdByClub.toString();
       });
     }
     if (filter === "enrolled") {
@@ -136,13 +137,20 @@ const LatestNews = () => {
           <Row className="news-container">
             {filteredNewsList.length > 0 ? (
                 filteredNewsList.map((event) => (
-                    <Col key={event._id} lg={6} md={6} sm={12} xs={12} className="news-col">
+                    <Col
+                        key={event._id}
+                        lg={6}
+                        md={6}
+                        sm={12}
+                        xs={12}
+                        className="news-col"
+                    >
                       <div
                           className="news-card"
                           style={{ cursor: "pointer", position: "relative" }}
                           onClick={() => {
-                            // Navigate to the activity view page
-                            window.location.href = `/activity-view/${event._id}`;
+                            // Navigate to the activity view page using navigate
+                            navigate('/activity-view', { state: { eventId: event._id } });
                           }}
                       >
                         <Image
@@ -155,7 +163,9 @@ const LatestNews = () => {
                           <h3 className="news-title">{event.title}</h3>
                           <p className="news-desc">{event.desc}</p>
                           <Button
-                              className={`join-btn ${enrolledEventIds.includes(event._id) ? "joined" : ""}`}
+                              className={`join-btn ${
+                                  enrolledEventIds.includes(event._id) ? "joined" : ""
+                              }`}
                               onClick={(e) => {
                                 e.preventDefault(); // Prevent link navigation
                                 e.stopPropagation(); // Stop the event from propagating to the parent <div>
@@ -176,7 +186,7 @@ const LatestNews = () => {
           </Row>
           {/* Back Button */}
           <div className="d-flex justify-content-center mt-4">
-            <Button className="back-btn" onClick={() => window.history.back()}>
+            <Button className="back-btn" onClick={() => navigate(-1)}>
               Back
             </Button>
           </div>
@@ -186,4 +196,3 @@ const LatestNews = () => {
 };
 
 export default LatestNews;
-

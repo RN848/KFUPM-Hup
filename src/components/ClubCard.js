@@ -25,7 +25,6 @@ export default function ClubCard({ club, index, clubStatuses, setClubStatuses })
         }
     };
     return (
-        <a href={"/club-profile"} key={index}>
             <div className="club-item">
                 <Image
                     src={club.clubPicture || "/images/clubs/computer_club.png"}
@@ -46,6 +45,5 @@ export default function ClubCard({ club, index, clubStatuses, setClubStatuses })
                     </Button>
                 </div>
             </div>
-        </a>
     );
 }
