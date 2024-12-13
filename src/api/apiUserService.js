@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/userRoutes";
-
+const API_URL = process.env.REACT_APP_API_URL;
 const getAuthToken = () => localStorage.getItem("token");
 
 // Sign-Up User

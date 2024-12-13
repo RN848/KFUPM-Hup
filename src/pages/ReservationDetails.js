@@ -18,6 +18,8 @@ const ReservationDetails = () => {
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("userId"); // Assume user ID is stored here
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     const fetchUserStatus = async () => {
       if (location.state?.isOwnerView) {
@@ -57,7 +59,7 @@ const ReservationDetails = () => {
   const handleJoin = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/join`,
+        `${apiUrl}/reservationRoute/${initialReservation._id}/join`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -89,7 +91,7 @@ const ReservationDetails = () => {
   const handleLeave = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/leave`,
+        `${apiUrl}/reservationRoute/${initialReservation._id}/leave`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -107,7 +109,7 @@ const ReservationDetails = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}`,
+        `${apiUrl}/reservationRoute/${initialReservation._id}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

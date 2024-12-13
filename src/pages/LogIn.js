@@ -4,6 +4,7 @@ import "../styles/pages/_logIn.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const LogIn = () => {
   const [data, setData] = useState({
@@ -30,7 +31,7 @@ const LogIn = () => {
       return;
     }
     try {
-      const url = "http://localhost:5000/api/authRoutes/Log-In";
+      const url = `${apiUrl}/authRoutes/Log-In`;
       const { data: res } = await axios.post(url, data);
 
       // Assuming OTP verified is included in the response or just trust the backend not returning if not verified

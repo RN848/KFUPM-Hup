@@ -11,12 +11,13 @@ const UserReservations = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchReservations = async () => {
       try {
         const { data } = await axios.get(
-          `http://127.0.0.1:5000/api/userRoutes/profile/reservations`,
+          `${apiUrl}/userRoutes/profile/reservations`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
