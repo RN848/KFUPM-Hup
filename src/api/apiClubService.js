@@ -9,9 +9,10 @@ const getAuthToken = () => localStorage.getItem("token");
 // Fetch all clubs
 export const getAllClubs = async () => {
     try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(`${API_URL}/clubRoute`);
         return response.data;
     } catch (error) {
+
         console.error("Error fetching clubs:", error);
         throw error;
     }

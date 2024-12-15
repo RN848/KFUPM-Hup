@@ -126,7 +126,7 @@ export const getEnrolledClubs = async () => {
 // Get Followed Clubs
 export const getFollowedClubs = async () => {
     try {
-        const response = await axios.get(`${API_URL}/followed-clubs`, {
+        const response = await axios.get(`${API_URL}/userRoutes/followed-clubs`, {
             headers: { Authorization: `Bearer ${getAuthToken()}` },
         });
         return response.data;
@@ -138,7 +138,7 @@ export const getFollowedClubs = async () => {
 // Get Joined Events
 export const getJoinedEvents = async () => {
     try {
-        const response = await axios.get(`${API_URL}/joined-events`, {
+        const response = await axios.get(`${API_URL}/userRoutes/joined-events`, {
             headers: { Authorization: `Bearer ${getAuthToken()}` },
         });
         return response.data;

@@ -7,7 +7,7 @@ const API_URL = process.env.REACT_APP_API_URL; // Adjust this to your actual API
 // Fetch all events
 export const getAllEvents = async () => {
     try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(`${API_URL}/eventRoute`);
         return response.data;
     } catch (error) {
         console.error("Error fetching events:", error);
