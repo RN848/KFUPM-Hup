@@ -31,12 +31,13 @@ const SportsReserve = () => {
     { name: "Squash", image: Squash },
     { name: "Badminton", image: Badminton },
   ];
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/reservationRoute?${
+          `${apiUrl}/reservationRoute?${
             sport.filter ? `sport=${sport.filter}` : ""
           }`
         );
@@ -58,7 +59,7 @@ const SportsReserve = () => {
     try {
       // Make an API call to validate the code
       const response = await axios.get(
-        `http://localhost:5000/api/reservationRoute/code/${code}`
+        `${apiUrl}/reservationRoute/code/${code}`
       );
 
       // If valid, navigate to the reservation details page
@@ -82,7 +83,7 @@ const SportsReserve = () => {
   const handleCodeSubmit = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/reservationRoute/code/${inputs.code}`,
+        `${apiUrl}/reservationRoute/code/${inputs.code}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

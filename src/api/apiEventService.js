@@ -2,12 +2,12 @@
 import axios from "axios";
 
 // Base URL for the Event API
-const API_URL = "http://localhost:5000/api/eventRoute"; // Adjust this to your actual API URL
+const API_URL = process.env.REACT_APP_API_URL; // Adjust this to your actual API URL
 
 // Fetch all events
 export const getAllEvents = async () => {
     try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(`${API_URL}/eventRoute`);
         return response.data;
     } catch (error) {
         console.error("Error fetching events:", error);

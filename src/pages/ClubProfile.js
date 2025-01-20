@@ -151,7 +151,7 @@ const ClubProfile = () => {
             <Row className="club-header align-items-center">
               <Col xs={12} md={4} className="text-center">
                 <Image
-                    src={clubData.clubPicture || "/images/clubs/computer_club.png"} // Fallback image
+                    src={clubData.clubPicture || "/images/clubs/aniket-gaurav.png"} // Fallback image
                     alt={`${clubData.name} Logo`}
                     className="club-logo"
                     onError={(e) => {

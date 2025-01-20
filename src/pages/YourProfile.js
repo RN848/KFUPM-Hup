@@ -30,6 +30,7 @@ const YourProfile = () => {
   const [error, setError] = useState(""); // State for any error messages
   const [loading, setLoading] = useState(true); // State to track if data is still being fetched
   const navigate = useNavigate(); // Initialize navigation hook
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   // useEffect hook to fetch user profile data when the component is mounted
   useEffect(() => {
@@ -43,7 +44,7 @@ const YourProfile = () => {
 
         // Fetch the profile data from the API
         const res = await fetch(
-          "http://localhost:5000/api/userRoutes/profile",
+          `${apiUrl}/userRoutes/profile`,
           {
             method: "GET",
             headers: {
@@ -100,7 +101,7 @@ const YourProfile = () => {
 
       // Send PUT request to update the profile
       const response = await axios.put(
-        "http://localhost:5000/api/userRoutes/profile",
+        `${apiUrl}/userRoutes/profile`,
         inputs,
         {
           headers: {

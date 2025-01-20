@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for the API
-const API_URL = "http://localhost:5000/api/clubRoute"; // Adjust to your actual API URL
+const API_URL = process.env.REACT_APP_API_URL; // Adjust to your actual API URL
 
 // Helper function to get the auth token (from local storage)
 const getAuthToken = () => localStorage.getItem("token");
@@ -9,9 +9,10 @@ const getAuthToken = () => localStorage.getItem("token");
 // Fetch all clubs
 export const getAllClubs = async () => {
     try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(`${API_URL}/clubRoute`);
         return response.data;
     } catch (error) {
+
         console.error("Error fetching clubs:", error);
         throw error;
     }
