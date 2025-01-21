@@ -24,7 +24,6 @@ const UserReservations = () => {
             },
           }
         );
-        console.log(data + "THIS IS THE DATA");
         setCreatedReservations(data.data.createdReservations || []);
         setJoinedReservations(data.data.joinedReservations || []);
       } catch (err) {

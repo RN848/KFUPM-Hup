@@ -145,10 +145,6 @@ const NewReservation = () => {
         }
       );
 
-      console.log(
-        "Navigating to Reservation Success with ID:",
-        response.data._id
-      );
 
       // Navigate to the success page with the reservationId
       navigate("/reservation-success", {
@@ -310,8 +306,8 @@ const NewReservation = () => {
                     reservedTimes.includes(time)
                       ? "danger"
                       : selectedTime === time
-                      ? "primary"
-                      : "secondary"
+                        ? "primary"
+                        : "secondary"
                   }
                   onClick={() => setSelectedTime(time)}
                   disabled={!isFormComplete || reservedTimes.includes(time)} // Disable if form is incomplete

@@ -82,8 +82,6 @@ const YourProfile = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submit triggered");
-    console.log(inputs); // Prevent default form submission behavior
     setError(""); // Clear any previous errors
 
     // Basic validation for required fields
@@ -112,10 +110,8 @@ const YourProfile = () => {
 
       if (response.status === 200) {
         alert("Profile updated successfully!");
-        console.log(inputs.id);
 
         // Assuming the response includes the updated data
-        console.log(response.data); // Log the response to verify the updated data
         setInputs(response.data);
         navigate("/home"); // Redirect after successful update
       }
@@ -144,7 +140,7 @@ const YourProfile = () => {
       <div className="body">
         <h1>Your Profile</h1>
         {error && <div className="error">{error}</div>} {/* Display error message if any */}
-        
+
         <Row className={"g-4 wid-row d-flex"} md={2} sm={1} xs={1}>
           <Col>
             <div className="wid-colum justify-content-center">
@@ -232,7 +228,7 @@ const YourProfile = () => {
                   placeholder={"User ID"}
                   onChange={handleInputChange} // Handle input change
                 />
-  
+
                 {/* Buttons */}
                 <div className="form">
                   <div
@@ -252,7 +248,7 @@ const YourProfile = () => {
                       onClick={handleCancel} // Navigate without saving
                       style={{ width: "120px" }} // Adjust button width to match previous styles
                     />
-  
+
                     {/* Save Button */}
                     <Button
                       className={"inputs-btn"}
@@ -270,8 +266,8 @@ const YourProfile = () => {
       </div>
     </Body>
   );
-  
-  
+
+
 };
 
 export default YourProfile; // Export the component for use in other parts of the app

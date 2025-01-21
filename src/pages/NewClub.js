@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import { NormInput } from "../components/Inputs";
 import { createClub } from "../api/apiClubService";
-import {fetchUserProfile, fetchUserProfileById, signUpUser} from "../api/apiUserService";
+import { fetchUserProfile, fetchUserProfileById, signUpUser } from "../api/apiUserService";
 
 const NewClub = () => {
   const navigate = useNavigate();
@@ -53,7 +53,6 @@ const NewClub = () => {
         role: "clubAccount",
       });
       clubAccount.Account.otpVerified = true;
-      console.log(clubAccount.Account)
       // Create the club with the newly created account
       const response = await createClub({
         name: inputs.clubName,
@@ -72,12 +71,12 @@ const NewClub = () => {
       // Optionally navigate to the new club's profile page
       setTimeout(() => {
         alert(`clubEmail ${clubEmail} clubPassword ${clubPassword}`);
-        navigate('/club-profile', {state: {clubId: response._id}});
+        navigate('/club-profile', { state: { clubId: response._id } });
       }, 2000);
     } catch (err) {
       console.error("Error creating club:", err);
       setError(
-          err.response?.data?.message || "An unexpected error occurred. Please try again."
+        err.response?.data?.message || "An unexpected error occurred. Please try again."
       );
     } finally {
       setLoading(false);
@@ -85,43 +84,43 @@ const NewClub = () => {
   };
 
   return (
-      <Body>
-        <div className="login-container">
-          <h1 className="main-heading" style={{ color: "white" }}>
-            New Club
-          </h1>
-          <div className="login-form">
-            {success && <Alert variant="success">{success}</Alert>}
-            {error && <Alert variant="danger">{error}</Alert>}
+    <Body>
+      <div className="login-container">
+        <h1 className="main-heading" style={{ color: "white" }}>
+          New Club
+        </h1>
+        <div className="login-form">
+          {success && <Alert variant="success">{success}</Alert>}
+          {error && <Alert variant="danger">{error}</Alert>}
 
-            <Form className="form" onSubmit={handleSubmit}>
-              <NormInput
-                  inputs={inputs}
-                  setInputs={setInputs}
-                  input={"clubName"}
-                  type={"text"}
-                  label={"Club Name"}
-                  placeholder={"Enter the club name"}
-              />
-              <NormInput
-                  inputs={inputs}
-                  setInputs={setInputs}
-                  input={"description"}
-                  type={"text"}
-                  label={"Description"}
-                  placeholder={"Description of Club"}
-              />
-              <Button
-                  className="login-btn"
-                  type="submit"
-                  disabled={loading}
-              >
-                {loading ? "Creating..." : "Create"}
-              </Button>
-            </Form>
-          </div>
+          <Form className="form" onSubmit={handleSubmit}>
+            <NormInput
+              inputs={inputs}
+              setInputs={setInputs}
+              input={"clubName"}
+              type={"text"}
+              label={"Club Name"}
+              placeholder={"Enter the club name"}
+            />
+            <NormInput
+              inputs={inputs}
+              setInputs={setInputs}
+              input={"description"}
+              type={"text"}
+              label={"Description"}
+              placeholder={"Description of Club"}
+            />
+            <Button
+              className="login-btn"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Creating..." : "Create"}
+            </Button>
+          </Form>
         </div>
-      </Body>
+      </div>
+    </Body>
   );
 };
 

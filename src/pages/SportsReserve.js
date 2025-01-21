@@ -37,8 +37,7 @@ const SportsReserve = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${apiUrl}/reservationRoute?${
-            sport.filter ? `sport=${sport.filter}` : ""
+          `${apiUrl}/reservationRoute?${sport.filter ? `sport=${sport.filter}` : ""
           }`
         );
         setBackendReservations(response.data);
@@ -67,7 +66,6 @@ const SportsReserve = () => {
         navigate("/reservation-details", {
           state: { isOwnerView: false, reservation: response.data },
         });
-        console.log(response.data.reservation);
       }
     } catch (error) {
       if (error.response?.status === 404) {

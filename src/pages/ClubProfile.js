@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getClubById } from "../api/apiClubService"; // Adjust the path as needed
-import {followClub, unfollowClub, getJoinedEvents, leaveEvent, joinEvent} from "../api/apiUserService"; // Adjust imports as needed
+import { followClub, unfollowClub, getJoinedEvents, leaveEvent, joinEvent } from "../api/apiUserService"; // Adjust imports as needed
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
@@ -31,9 +31,7 @@ const ClubProfile = () => {
     if (clubId) {
       const fetchClubData = async () => {
         try {
-          console.log("Fetching data for clubId:", clubId);
           const club = await getClubById(clubId); // Fetch club data by ID
-          console.log("Club data received:", club);
 
           if (!club) {
             throw new Error("Club not found");
@@ -53,7 +51,6 @@ const ClubProfile = () => {
           const joinedEventsResponse = await getJoinedEvents();
           const joinedEventIds = joinedEventsResponse.data.map(event => event._id);
           setJoinedActivities(joinedEventIds);
-          console.log("Joined Event IDs:", joinedEventIds);
         } catch (err) {
           console.error("Error fetching club data:", err);
           setError("Failed to load club data. Please try again later.");
@@ -117,110 +114,108 @@ const ClubProfile = () => {
 
   if (error) {
     return (
-        <Body>
-          <div className="club-profile-body">
-            <Container>
-              <Alert variant="danger">{error}</Alert>
-              {/* Optionally, add a button to go back */}
-              <Button variant="secondary" onClick={() => navigate("/clubs")}>
-                Back to Clubs
-              </Button>
-            </Container>
-          </div>
-        </Body>
+      <Body>
+        <div className="club-profile-body">
+          <Container>
+            <Alert variant="danger">{error}</Alert>
+            {/* Optionally, add a button to go back */}
+            <Button variant="secondary" onClick={() => navigate("/clubs")}>
+              Back to Clubs
+            </Button>
+          </Container>
+        </div>
+      </Body>
     );
   }
 
   if (!clubData) {
     return (
-        <Body>
-          <div className="club-profile-body">
-            <Container>
-              <div>Loading...</div>
-            </Container>
-          </div>
-        </Body>
+      <Body>
+        <div className="club-profile-body">
+          <Container>
+            <div>Loading...</div>
+          </Container>
+        </div>
+      </Body>
     );
   }
 
   return (
-      <Body>
-        <div className="club-profile-body">
-          <Container>
-            {/* Club Header Section */}
-            <Row className="club-header align-items-center">
-              <Col xs={12} md={4} className="text-center">
-                <Image
-                    src={clubData.clubPicture || "/images/clubs/aniket-gaurav.png"} // Fallback image
-                    alt={`${clubData.name} Logo`}
-                    className="club-logo"
-                    onError={(e) => {
-                      e.target.onerror = null; // Prevent infinite loop if default image also fails
-                      e.target.src = "/images/clubs/computer_club.png"; // Set fallback image
-                    }}
-                />
-              </Col>
-              <Col xs={12} md={8}>
-                <div className="club-info">
-                  <h1 className="club-name">{clubData.name}</h1>
-                  <p className="club-desc">{clubData.desc}</p>
-                  <Button
-                      className={`club-action-btn ${
-                          isFollowing ? "following" : "follow"
-                      }`}
-                      onClick={handleFollowClick}
-                  >
-                    {isFollowing ? "Following" : "Follow"}
-                  </Button>
-                  {/* Success or Error Messages */}
-                  {message && <Alert variant="success" className="mt-2">{message}</Alert>}
-                  {error && <Alert variant="danger" className="mt-2">{error}</Alert>}
-                </div>
-              </Col>
-            </Row>
+    <Body>
+      <div className="club-profile-body">
+        <Container>
+          {/* Club Header Section */}
+          <Row className="club-header align-items-center">
+            <Col xs={12} md={4} className="text-center">
+              <Image
+                src={clubData.clubPicture || "/images/clubs/aniket-gaurav.png"} // Fallback image
+                alt={`${clubData.name} Logo`}
+                className="club-logo"
+                onError={(e) => {
+                  e.target.onerror = null; // Prevent infinite loop if default image also fails
+                  e.target.src = "/images/clubs/computer_club.png"; // Set fallback image
+                }}
+              />
+            </Col>
+            <Col xs={12} md={8}>
+              <div className="club-info">
+                <h1 className="club-name">{clubData.name}</h1>
+                <p className="club-desc">{clubData.desc}</p>
+                <Button
+                  className={`club-action-btn ${isFollowing ? "following" : "follow"
+                    }`}
+                  onClick={handleFollowClick}
+                >
+                  {isFollowing ? "Following" : "Follow"}
+                </Button>
+                {/* Success or Error Messages */}
+                {message && <Alert variant="success" className="mt-2">{message}</Alert>}
+                {error && <Alert variant="danger" className="mt-2">{error}</Alert>}
+              </div>
+            </Col>
+          </Row>
 
-            {/* Activities Section */}
-            <h2 className="section-title mt-5">Upcoming Activities</h2>
-            <Row className="activity-section">
-              {clubActivities.length > 0 ? (
-                  clubActivities.map((activity) => (
-                      <Col key={activity._id} xs={12} md={6} className="mb-4">
-                        <div className="activity-card">
-                          <Image
-                              src={activity.img || defaultImg} // Correct fallback
-                              className="activity-image"
-                              alt={activity.title}
-                              onError={(e) => {
-                                e.target.onerror = null; // Prevent infinite loop if default image also fails
-                                e.target.src = "/images/activities/default_activity.png"; // Set fallback image
-                              }}
-                          />
-                          <div className="activity-content">
-                            <h3 className="activity-title">{activity.title}</h3>
-                            <p className="activity-description">
-                              {activity.description}
-                            </p>
-                            <Button
-                                className={`join-btn ${
-                                    joinedActivities.includes(activity._id) ? "joined" : ""
-                                }`}
-                                onClick={() => handleJoinClick(activity._id)}
-                            >
-                              {joinedActivities.includes(activity._id) ? "Joined" : "Join"}
-                            </Button>
-                          </div>
-                        </div>
-                      </Col>
-                  ))
-              ) : (
-                  <Col>
-                    <p>No upcoming activities.</p>
-                  </Col>
-              )}
-            </Row>
-          </Container>
-        </div>
-      </Body>
+          {/* Activities Section */}
+          <h2 className="section-title mt-5">Upcoming Activities</h2>
+          <Row className="activity-section">
+            {clubActivities.length > 0 ? (
+              clubActivities.map((activity) => (
+                <Col key={activity._id} xs={12} md={6} className="mb-4">
+                  <div className="activity-card">
+                    <Image
+                      src={activity.img || defaultImg} // Correct fallback
+                      className="activity-image"
+                      alt={activity.title}
+                      onError={(e) => {
+                        e.target.onerror = null; // Prevent infinite loop if default image also fails
+                        e.target.src = "/images/activities/default_activity.png"; // Set fallback image
+                      }}
+                    />
+                    <div className="activity-content">
+                      <h3 className="activity-title">{activity.title}</h3>
+                      <p className="activity-description">
+                        {activity.description}
+                      </p>
+                      <Button
+                        className={`join-btn ${joinedActivities.includes(activity._id) ? "joined" : ""
+                          }`}
+                        onClick={() => handleJoinClick(activity._id)}
+                      >
+                        {joinedActivities.includes(activity._id) ? "Joined" : "Join"}
+                      </Button>
+                    </div>
+                  </div>
+                </Col>
+              ))
+            ) : (
+              <Col>
+                <p>No upcoming activities.</p>
+              </Col>
+            )}
+          </Row>
+        </Container>
+      </div>
+    </Body>
   );
 };
 

@@ -25,7 +25,6 @@ function VerifyOTPForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("OTP entered by user:", otp);
     setLoading(true);
 
     if (!emailRegex.test(email)) {
