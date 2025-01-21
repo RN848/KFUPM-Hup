@@ -18,7 +18,7 @@ export const getAllEvents = async () => {
 // Fetch a single event by ID
 export const getEventById = async (id) => {
     try {
-        const response = await axios.get(`${API_URL}/${id}`);
+        const response = await axios.get(`${API_URL}/eventRoute/${id}`);
         return response.data;
     } catch (error) {
         console.error(`Error fetching event with ID ${id}:`, error);
@@ -29,7 +29,7 @@ export const getEventById = async (id) => {
 // Create a new event
 export const createEvent = async (eventData) => {
     try {
-        const response = await axios.post(API_URL, eventData);
+        const response = await axios.post(`${API_URL}/eventRoute`, eventData);
         return response.data;
     } catch (error) {
         console.error("Error creating event:", error);
@@ -40,7 +40,7 @@ export const createEvent = async (eventData) => {
 // Update an existing event by ID
 export const updateEvent = async (id, eventData) => {
     try {
-        const response = await axios.put(`${API_URL}/${id}`, eventData);
+        const response = await axios.put(`${API_URL}/eventRoute/${id}`, eventData);
         return response.data;
     } catch (error) {
         console.error(`Error updating event with ID ${id}:`, error);
@@ -51,7 +51,7 @@ export const updateEvent = async (id, eventData) => {
 // Delete an event by ID
 export const deleteEvent = async (id) => {
     try {
-        const response = await axios.delete(`${API_URL}/${id}`);
+        const response = await axios.delete(`${API_URL}/eventRoute/${id}`);
         return response.data;
     } catch (error) {
         console.error(`Error deleting event with ID ${id}:`, error);

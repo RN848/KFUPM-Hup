@@ -21,7 +21,7 @@ export const getAllClubs = async () => {
 // Fetch a single club by ID
 export const getClubById = async (id) => {
     try {
-        const response = await axios.get(`${API_URL}/${id}`);
+        const response = await axios.get(`${API_URL}/clubRoute/${id}`);
         return response.data;
     } catch (error) {
         console.error(`Error fetching club with ID ${id}:`, error);
@@ -32,7 +32,7 @@ export const getClubById = async (id) => {
 // Create a new club
 export const createClub = async (clubData) => {
     try {
-        const response = await axios.post(API_URL, clubData,  {
+        const response = await axios.post(`${API_URL}/clubRoute`, clubData, {
             headers: { Authorization: `Bearer ${getAuthToken()}` },
         });
         return response.data;
@@ -45,7 +45,7 @@ export const createClub = async (clubData) => {
 // Update an existing club by ID
 export const updateClub = async (clubId, updatedData) => {
     try {
-        const response = await axios.put(`${API_URL}/${clubId}`, updatedData, {
+        const response = await axios.put(`${API_URL}/clubRoute/${clubId}`, updatedData, {
             headers: { Authorization: `Bearer ${getAuthToken()}` },
         });
         return response.data;
@@ -58,7 +58,7 @@ export const updateClub = async (clubId, updatedData) => {
 // Delete a club by ID
 export const deleteClub = async (id) => {
     try {
-        const response = await axios.delete(`${API_URL}/${id}`, {
+        const response = await axios.delete(`${API_URL}/clubRoute/${id}`, {
             headers: { Authorization: `Bearer ${getAuthToken()}` },
         });
         return response.data;
@@ -71,7 +71,7 @@ export const deleteClub = async (id) => {
 // Fetch all members of a club
 export const fetchClubMembers = async (clubId) => {
     try {
-        const response = await axios.get(`${API_URL}/${clubId}/members`);
+        const response = await axios.get(`${API_URL}/clubRoute/${clubId}/members`);
         return response.data; // Assuming response.data contains array of members
     } catch (error) {
         console.error(`Error fetching members for club ID ${clubId}:`, error);
@@ -83,7 +83,7 @@ export const fetchClubMembers = async (clubId) => {
 export const addMemberToClub = async (clubId, memberId) => {
     try {
         const response = await axios.post(
-            `${API_URL}/${clubId}/members`,
+            `${API_URL}/clubRoute/${clubId}/members`,
             { memberId },
             { headers: { Authorization: `Bearer ${getAuthToken()}` } }
         );
@@ -98,7 +98,7 @@ export const addMemberToClub = async (clubId, memberId) => {
 export const removeMemberFromClub = async (clubId, memberId) => {
     try {
         const response = await axios.delete(
-            `${API_URL}/${clubId}/members/${memberId}`,
+            `${API_URL}/${clubId}/clubRoute/members/${memberId}`,
             { headers: { Authorization: `Bearer ${getAuthToken()}` } }
         );
         return response.data; // Returns updated members list or success message
@@ -111,7 +111,7 @@ export const removeMemberFromClub = async (clubId, memberId) => {
 // Fetch all activities of a club
 export const fetchClubActivities = async (clubId) => {
     try {
-        const response = await axios.get(`${API_URL}/${clubId}/activities`);
+        const response = await axios.get(`${API_URL}/clubRoute/${clubId}/activities`);
         return response.data; // Assuming the response data is an array of activities
     } catch (error) {
         console.error(`Error fetching activities for club ID ${clubId}:`, error);
@@ -121,7 +121,7 @@ export const fetchClubActivities = async (clubId) => {
 // Add an event to a club
 export const addEventToClub = async (clubId, eventId) => {
     try {
-        const response = await axios.patch(`${API_URL}/add-event`, { clubId, eventId });
+        const response = await axios.patch(`${API_URL}/clubRoute/add-event`, { clubId, eventId });
         return response.data;
     } catch (error) {
         console.error(`Error adding event ${eventId} to club ${clubId}:`, error);

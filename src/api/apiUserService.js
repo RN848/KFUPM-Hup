@@ -6,7 +6,7 @@ const getAuthToken = () => localStorage.getItem("token");
 // Sign-Up User
 export const signUpUser = async (userData) => {
     try {
-        const response = await axios.post(`${API_URL}/sign-Up`, userData);
+        const response = await axios.post(`${API_URL}/userRoutes/sign-Up`, userData);
         return response.data;
     } catch (error) {
         throw error.response ? error.response.data : error.message;
@@ -16,7 +16,7 @@ export const signUpUser = async (userData) => {
 // Update User Profile
 export const updateUserProfile = async (updatedData) => {
     try {
-        const response = await axios.put(`${API_URL}/profile`, updatedData, {
+        const response = await axios.put(`${API_URL}/userRoutes/profile`, updatedData, {
             headers: { Authorization: `Bearer ${getAuthToken()}` },
         });
         return response.data;
@@ -28,7 +28,7 @@ export const updateUserProfile = async (updatedData) => {
 // Fetch User Profile
 export const fetchUserProfile = async () => {
     try {
-        const response = await axios.get(`${API_URL}/profile`, {
+        const response = await axios.get(`${API_URL}/userRoutes/profile`, {
             headers: { Authorization: `Bearer ${getAuthToken()}` },
         });
         return response.data;
@@ -40,7 +40,7 @@ export const fetchUserProfile = async () => {
 
 export const fetchUserProfileById = async (userId) => {
     try {
-        const response = await axios.get(`${API_URL}/profile/${userId}`);
+        const response = await axios.get(`${API_URL}/userRoutes/profile/${userId}`);
         return response;
     } catch (error) {
         throw error.response ? error.response.data : error.message;
@@ -51,7 +51,7 @@ export const fetchUserProfileById = async (userId) => {
 export const followClub = async (clubId) => {
     try {
         const response = await axios.post(
-            `${API_URL}/follow-club`,
+            `${API_URL}/userRoutes/follow-club`,
             { clubId },
             {
                 headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -67,7 +67,7 @@ export const followClub = async (clubId) => {
 export const unfollowClub = async (clubId) => {
     try {
         const response = await axios.post(
-            `${API_URL}/unfollow-club`,
+            `${API_URL}/userRoutes/unfollow-club`,
             { clubId },
             {
                 headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -83,7 +83,7 @@ export const unfollowClub = async (clubId) => {
 export const joinEvent = async (eventId) => {
     try {
         const response = await axios.post(
-            `${API_URL}/join-event`,
+            `${API_URL}/userRoutes/join-event`,
             { eventId },
             {
                 headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -99,7 +99,7 @@ export const joinEvent = async (eventId) => {
 export const leaveEvent = async (eventId) => {
     try {
         const response = await axios.post(
-            `${API_URL}/leave-event`,
+            `${API_URL}/userRoutes/leave-event`,
             { eventId },
             {
                 headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -114,7 +114,7 @@ export const leaveEvent = async (eventId) => {
 // Get Enrolled Clubs
 export const getEnrolledClubs = async () => {
     try {
-        const response = await axios.get(`${API_URL}/enrolled-clubs`, {
+        const response = await axios.get(`${API_URL}/userRoutes/enrolled-clubs`, {
             headers: { Authorization: `Bearer ${getAuthToken()}` },
         });
         return response.data;
