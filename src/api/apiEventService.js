@@ -2,8 +2,8 @@
 import axios from "axios";
 
 // Base URL for the Event API
-const API_URL = process.env.REACT_APP_API_URL; // Adjust this to your actual API URL
 
+const API_URL = `${process.env.REACT_APP_API_URL}/api`; // Adjust to your actual API URL
 // Fetch all events
 export const getAllEvents = async () => {
   try {

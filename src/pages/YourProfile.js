@@ -99,7 +99,7 @@ const YourProfile = () => {
 
       // Send PUT request to update the profile
       const response = await axios.put(
-        "http://localhost:5000/api/userRoutes/profile",
+        "http://api.kfupmhub.xyz/api/userRoutes/profile",
         inputs,
         {
           headers: {

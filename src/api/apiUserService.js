@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = `${process.env.REACT_APP_API_URL}/api`; // Adjust this to your actual API URL
 const getAuthToken = () => localStorage.getItem("token");
 
 // Sign-Up User
