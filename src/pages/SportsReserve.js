@@ -38,7 +38,7 @@ const SportsReserve = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${apiUrl}/reservationRoute?${sport.filter ? `sport=${sport.filter}` : ""
+          `${apiUrl}/api/reservationRoute?${sport.filter ? `sport=${sport.filter}` : ""
           }`
         );
         setBackendReservations(response.data);
@@ -56,7 +56,7 @@ const SportsReserve = () => {
     }
     try {
       const response = await axios.get(
-        `${apiUrl}/reservationRoute/code/${code}`
+        `${apiUrl}/api/reservationRoute/code/${code}`
       );
       if (response) {
         navigate("/reservation-details", {
@@ -77,7 +77,7 @@ const SportsReserve = () => {
   const handleCodeSubmit = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/reservationRoute/code/${inputs.code}`,
+        `${apiUrl}/api/reservationRoute/code/${inputs.code}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

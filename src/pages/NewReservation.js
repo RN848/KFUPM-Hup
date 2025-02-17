@@ -81,7 +81,7 @@ const NewReservation = () => {
       if (sport.filter && selectedField && selectedDay) {
         try {
           const response = await axios.get(
-            `${apiUrl}/reservationRoute/available-timeslots`,
+            `${apiUrl}/api/reservationRoute/available-timeslots`,
             {
               params: {
                 sport: sport.filter,
@@ -116,7 +116,7 @@ const NewReservation = () => {
     };
     try {
       const response = await axios.post(
-        `${apiUrl}/reservationRoute`,
+        `${apiUrl}/api/reservationRoute`,
         `http://${process.env.REACT_APP_API_URL}/api/reservationRoute`,
         reservationData,
         { headers: { Authorization: `Bearer ${token}` } }

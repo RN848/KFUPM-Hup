@@ -44,7 +44,7 @@ const YourProfile = () => {
 
         // Fetch the profile data from the API
         const res = await fetch(
-          `${apiUrl}/userRoutes/profile`,
+          `${apiUrl}/api/userRoutes/profile`,
           {
             method: "GET",
             headers: {

@@ -24,7 +24,7 @@ const ReservationSuccess = () => {
     const fetchDetails = async () => {
       try {
         const response = await axios.get(
-          `${apiUrl}/reservationRoute/${reservationId}`
+          `${apiUrl}/api/reservationRoute/${reservationId}`
         );
         setReservationDetails(response.data);
       } catch (err) {
