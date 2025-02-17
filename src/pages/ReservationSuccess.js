@@ -15,6 +15,8 @@ const ReservationSuccess = () => {
   const [remainingTime, setRemainingTime] = useState(25200); // Countdown timer (7 hours)
   const [reservationDetails, setReservationDetails] = useState(null);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   // Fetch reservation details from backend
   useEffect(() => {
     if (!reservationId) return;
@@ -22,7 +24,7 @@ const ReservationSuccess = () => {
     const fetchDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5001/api/reservationRoute/${reservationId}`
+          `${apiUrl}/reservationRoute/${reservationId}`
         );
         setReservationDetails(response.data);
       } catch (err) {

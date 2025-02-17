@@ -14,6 +14,8 @@ function VerifyOTPForm() {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@kfupm\.edu\.sa$/;
   const [loading, setLoading] = useState(false);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     // If the state contains an email, set it so the user doesn't have to re-enter
     if (state?.email) {
@@ -23,7 +25,6 @@ function VerifyOTPForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("OTP entered by user:", otp);
     setLoading(true);
 
     if (!emailRegex.test(email)) {
@@ -40,7 +41,7 @@ function VerifyOTPForm() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5001/api/otpRoutes/verify-otp",
+        `${apiUrl}/otpRoutes/verify-otp`,
         { email, otp }
       );
       setMessage(res.data.message);
@@ -63,7 +64,7 @@ function VerifyOTPForm() {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:5001/api/otpRoutes/request-otp",
+        `${apiUrl}/otpRoutes/request-otp`,
         { email }
       );
       setMessage(res.data.message);

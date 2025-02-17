@@ -4,6 +4,7 @@ import "../styles/pages/_logIn.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -37,7 +38,7 @@ const SignUp = () => {
 
     try {
       setLoading(true); // Show loading screen when starting the request
-      const url = "http://localhost:5001/api/userRoutes/Sign-Up"; 
+      const url = `${apiUrl}/userRoutes/Sign-Up`;
       const { data: res } = await axios.post(url, data);
       setMessage(res.message);
 

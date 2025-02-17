@@ -18,6 +18,8 @@ const ReservationDetails = () => {
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("userId"); // Assume user ID is stored here
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     const fetchUserStatus = async () => {
       if (location.state?.isOwnerView) {
@@ -57,7 +59,7 @@ const ReservationDetails = () => {
   const handleJoin = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5001/api/reservationRoute/${initialReservation._id}/join`,
+        `${apiUrl}/reservationRoute/${initialReservation._id}/join`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -67,29 +69,29 @@ const ReservationDetails = () => {
       setParticipants(data.reservation.participants);
       alert("Joined successfully!");
     } catch (err) {
-    if (
-      err.response &&
-      err.response.status === 400 &&
-      err.response.data.error === "Reservation has reached its capacity"
-    ) {
-      alert("This reservation has already reached its maximum capacity.");
-    } else if (
-      err.response &&
-      err.response.status === 400 &&
-      err.response.data.error === "User has already joined this reservation"
-    ) {
-      alert("You have already joined this reservation.");
-    } else {
-      console.error("Error joining reservation:", err);
-      alert("Failed to join the reservation.");
+      if (
+        err.response &&
+        err.response.status === 400 &&
+        err.response.data.error === "Reservation has reached its capacity"
+      ) {
+        alert("This reservation has already reached its maximum capacity.");
+      } else if (
+        err.response &&
+        err.response.status === 400 &&
+        err.response.data.error === "User has already joined this reservation"
+      ) {
+        alert("You have already joined this reservation.");
+      } else {
+        console.error("Error joining reservation:", err);
+        alert("Failed to join the reservation.");
+      }
     }
-  }
-};
+  };
 
   const handleLeave = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5001/api/reservationRoute/${initialReservation._id}/leave`,
+        `${apiUrl}/reservationRoute/${initialReservation._id}/leave`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -107,7 +109,7 @@ const ReservationDetails = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5001/api/reservationRoute/${initialReservation._id}`,
+        `${apiUrl}/reservationRoute/${initialReservation._id}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

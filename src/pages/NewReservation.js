@@ -21,6 +21,7 @@ const NewReservation = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [weekRange, setWeekRange] = useState({ start: null, end: null });
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   // Example sports
   const sportsList = [
@@ -80,7 +81,7 @@ const NewReservation = () => {
       if (sport.filter && selectedField && selectedDay) {
         try {
           const response = await axios.get(
-            "http://localhost:5001/api/reservationRoute/available-timeslots",
+            `${apiUrl}/reservationRoute/available-timeslots`,
             {
               params: {
                 sport: sport.filter,
@@ -115,10 +116,14 @@ const NewReservation = () => {
     };
     try {
       const response = await axios.post(
+        `${apiUrl}/reservationRoute`,
         "http://localhost:5001/api/reservationRoute",
         reservationData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
+
+      // Navigate to the success page with the reservationId
       navigate("/reservation-success", {
         state: { reservationId: response.data._id },
       });

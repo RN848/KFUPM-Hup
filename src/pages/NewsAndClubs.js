@@ -117,8 +117,6 @@ const NewsAndClubs = () => {
       // Ensure followClubs and news.createdByClub are defined
       if (!followClubs || !news.createdByClub) return false;
       return followClubs.some(club => {
-        console.log(club.name + " OLA " + news.createdByClub.toString())
-        console.log(club._id.toString() === news.createdByClub.toString())
         return club._id.toString() === news.createdByClub.toString()
       });
     }
@@ -131,75 +129,75 @@ const NewsAndClubs = () => {
 
 
   return (
-      <Body>
-        <div className="news-and-clubs-page">
-          <Row>
-            {/* News Section */}
-            <Col lg={9} md={12}>
-              <div className="news-box">
-                <div className="news-header d-flex justify-content-between align-items-center">
-                  <h1 className="page-title">Latest News and Activities</h1>
-                  <div className="news-filter">
-                    <Button
-                        className={`filter-btn ${filter === "following" ? "active" : ""}`}
-                        onClick={() =>
-                            setFilter(filter === "following" ? "" : "following")
-                        }
-                    >
-                      Following
-                    </Button>
-                    <Button
-                        className={`filter-btn ${filter === "enrolled" ? "active" : ""}`}
-                        onClick={() =>
-                            setFilter(filter === "enrolled" ? "" : "enrolled")
-                        }
-                    >
-                      Enrolled
-                    </Button>
-                  </div>
-                </div>
-                <Row className="g-4">
-                  {filteredNews.map((news) => (
-                      <EventCard
-                          key={news._id} // Use unique event ID
-                          news={news}
-                          isEnrolled={enrolledEventIds.includes(news._id)}
-                          handleJoinEvent={handleJoinEvent}
-                      />
-                  ))}
-                </Row>
-                <div className="view-all d-flex justify-content-center mt-4">
-                  <Button id="allNews" onClick={() => navigate("/latest-news")}>
-                    All
+    <Body>
+      <div className="news-and-clubs-page">
+        <Row>
+          {/* News Section */}
+          <Col lg={9} md={12}>
+            <div className="news-box">
+              <div className="news-header d-flex justify-content-between align-items-center">
+                <h1 className="page-title">Latest News and Activities</h1>
+                <div className="news-filter">
+                  <Button
+                    className={`filter-btn ${filter === "following" ? "active" : ""}`}
+                    onClick={() =>
+                      setFilter(filter === "following" ? "" : "following")
+                    }
+                  >
+                    Following
+                  </Button>
+                  <Button
+                    className={`filter-btn ${filter === "enrolled" ? "active" : ""}`}
+                    onClick={() =>
+                      setFilter(filter === "enrolled" ? "" : "enrolled")
+                    }
+                  >
+                    Enrolled
                   </Button>
                 </div>
               </div>
-            </Col>
-
-            {/* Clubs Section */}
-            <Col lg={3} md={12}>
-              <div className="clubs-box">
-                <h1 className="page-title">Clubs</h1>
-                <div className="clubs-list">
-                  {clubList.map((club, index) => (
-                      <ClubCard
-                          key={club._id} // Use unique club ID
-                          club={club}
-                          index={index}
-                          clubStatuses={clubStatuses}
-                          setClubStatuses={setClubStatuses}
-                          handleFollowClub={handleFollowClub}
-                      />
-                  ))}
-                </div>
-                <div className="view-all d-flex justify-content-center mt-4">
-                  <Button onClick={() => navigate("/clubs")}>All</Button>
-                </div>
+              <Row className="g-4">
+                {filteredNews.map((news) => (
+                  <EventCard
+                    key={news._id} // Use unique event ID
+                    news={news}
+                    isEnrolled={enrolledEventIds.includes(news._id)}
+                    handleJoinEvent={handleJoinEvent}
+                  />
+                ))}
+              </Row>
+              <div className="view-all d-flex justify-content-center mt-4">
+                <Button id="allNews" onClick={() => navigate("/latest-news")}>
+                  All
+                </Button>
               </div>
-            </Col>
-          </Row>
-        </div>
-      </Body>
+            </div>
+          </Col>
+
+          {/* Clubs Section */}
+          <Col lg={3} md={12}>
+            <div className="clubs-box">
+              <h1 className="page-title">Clubs</h1>
+              <div className="clubs-list">
+                {clubList.map((club, index) => (
+                  <ClubCard
+                    key={club._id} // Use unique club ID
+                    club={club}
+                    index={index}
+                    clubStatuses={clubStatuses}
+                    setClubStatuses={setClubStatuses}
+                    handleFollowClub={handleFollowClub}
+                  />
+                ))}
+              </div>
+              <div className="view-all d-flex justify-content-center mt-4">
+                <Button onClick={() => navigate("/clubs")}>All</Button>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </div>
+    </Body>
   );
 };
 

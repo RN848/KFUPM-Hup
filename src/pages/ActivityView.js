@@ -16,7 +16,7 @@ import {
   unfollowClub,
   getFollowedClubs,
 } from "../api/apiUserService";
-import {getClubById} from "../api/apiClubService"; // Import necessary API functions
+import { getClubById } from "../api/apiClubService"; // Import necessary API functions
 
 const ActivityView = () => {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ const ActivityView = () => {
         // Assuming event has a field 'createdByClub' which is the club's ID
         const followedClubsResponse = await getFollowedClubs();
         const isClubFollowed = followedClubsResponse.data.some(
-            (club) => club._id.toString() === event.createdByClub.toString()
+          (club) => club._id.toString() === event.createdByClub.toString()
         );
         setIsFollowing(isClubFollowed);
 
@@ -95,7 +95,7 @@ const ActivityView = () => {
     } catch (err) {
       console.error("Error updating join status:", err);
       setError(
-          `Failed to ${isJoined ? "leave" : "join"} the activity. Please try again.`
+        `Failed to ${isJoined ? "leave" : "join"} the activity. Please try again.`
       );
     }
 
@@ -119,7 +119,6 @@ const ActivityView = () => {
       if (!isFollowing) {
         // User wants to follow the club
         await followClub(clubId);
-        console.log(activityData)
         setIsFollowing(true);
       } else {
         // User wants to unfollow the club
@@ -129,7 +128,7 @@ const ActivityView = () => {
     } catch (err) {
       console.error("Error updating follow status:", err);
       setError(
-          `Failed to ${isFollowing ? "unfollow" : "follow"} the club. Please try again.`
+        `Failed to ${isFollowing ? "unfollow" : "follow"} the club. Please try again.`
       );
     }
 
@@ -139,124 +138,123 @@ const ActivityView = () => {
   // If there's an error, display it
   if (error) {
     return (
-        <Body>
-          <div className="activity-view-body">
-            <Row className="justify-content-center">
-              <Col md={8}>
-                <Alert variant="danger">{error}</Alert>
-                <Button variant="secondary" onClick={() => navigate(-1)}>
-                  Back
-                </Button>
-              </Col>
-            </Row>
-          </div>
-        </Body>
+      <Body>
+        <div className="activity-view-body">
+          <Row className="justify-content-center">
+            <Col md={8}>
+              <Alert variant="danger">{error}</Alert>
+              <Button variant="secondary" onClick={() => navigate(-1)}>
+                Back
+              </Button>
+            </Col>
+          </Row>
+        </div>
+      </Body>
     );
   }
 
   // While loading data, display a loading message
   if (!activityData) {
     return (
-        <Body>
-          <div className="activity-view-body">
-            <Row className="justify-content-center">
-              <Col md={8}>
-                <div>Loading...</div>
-              </Col>
-            </Row>
-          </div>
-        </Body>
+      <Body>
+        <div className="activity-view-body">
+          <Row className="justify-content-center">
+            <Col md={8}>
+              <div>Loading...</div>
+            </Col>
+          </Row>
+        </div>
+      </Body>
     );
   }
 
   return (
-      <Body>
-        <div className="activity-view-body">
-          {/* Back Button */}
-          <div className="d-flex justify-content-end mb-3">
-            <Button
-                style={{ backgroundColor: "#6c757d", border: "none" }}
-                onClick={() => navigate(-1)}
-            >
-              Back
-            </Button>
-          </div>
+    <Body>
+      <div className="activity-view-body">
+        {/* Back Button */}
+        <div className="d-flex justify-content-end mb-3">
+          <Button
+            style={{ backgroundColor: "#6c757d", border: "none" }}
+            onClick={() => navigate(-1)}
+          >
+            Back
+          </Button>
+        </div>
 
-          {/* Activity Header Section */}
-          <Row className="activity-section">
-            <Col xs={12} md={6}>
+        {/* Activity Header Section */}
+        <Row className="activity-section">
+          <Col xs={12} md={6}>
+            <Image
+              src={activityData.img || "/images/activities/activity-02.jpeg"} // Fallback image
+              alt={activityData.title}
+              className="activity-image rounded-5"
+              fluid
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <div className="activity-details">
+              <h2 className="activity-title " style={{ color: "white" }}>{activityData.title}</h2>
+              <h4 className="activity-description" style={{ color: "wheat" }}>{activityData.description}</h4>
+              {/* Join Button */}
+              <Button
+                className={`news-join-btn ${isJoined ? "joined" : ""}`}
+                onClick={handleJoinClick}
+              >
+                {isJoined ? "Joined" : "Join"}
+              </Button>
+              {isJoined && (
+                <p className="joined-message">
+                  You have successfully joined this activity!
+                </p>
+              )}
+              <p className="activity-details-text">{activityData.details}</p>
+            </div>
+          </Col>
+        </Row>
+
+        {/* Club Section */}
+        <div className="club-section mt-4">
+          <Row className="align-items-center">
+            <Col xs="auto">
               <Image
-                  src={activityData.img || "/images/activities/activity-02.jpeg"} // Fallback image
-                  alt={activityData.title}
-                  className="activity-image rounded-5"
-                  fluid
+                src={activityData.clubLogo || "/images/clubs/computer_club.png"} // Fallback image
+                alt={activityData.clubName}
+                className="club-logo"
+                fluid
               />
             </Col>
-            <Col xs={12} md={6}>
-              <div className="activity-details">
-                <h2 className="activity-title " style={{color:"white"}}>{activityData.title}</h2>
-                <h4 className="activity-description"style={{color:"wheat"}}>{activityData.description}</h4>
-                {/* Join Button */}
+            <Col>
+              <div className="club-info">
+                <h4 className="club-name">{activityData.clubName}</h4>
                 <Button
-                    className={`news-join-btn ${isJoined ? "joined" : ""}`}
-                    onClick={handleJoinClick}
+                  className={`club-action-btn ${isFollowing ? "following" : "follow"
+                    }`}
+                  onClick={handleFollowClick}
                 >
-                  {isJoined ? "Joined" : "Join"}
+                  {isFollowing ? "Following" : "Follow"}
                 </Button>
-                {isJoined && (
-                    <p className="joined-message">
-                      You have successfully joined this activity!
-                    </p>
-                )}
-                <p className="activity-details-text">{activityData.details}</p>
               </div>
             </Col>
           </Row>
-
-          {/* Club Section */}
-          <div className="club-section mt-4">
-            <Row className="align-items-center">
-              <Col xs="auto">
-                <Image
-                    src={activityData.clubLogo || "/images/clubs/computer_club.png"} // Fallback image
-                    alt={activityData.clubName}
-                    className="club-logo"
-                    fluid
-                />
-              </Col>
-              <Col>
-                <div className="club-info">
-                  <h4 className="club-name">{activityData.clubName}</h4>
-                  <Button
-                      className={`club-action-btn ${
-                          isFollowing ? "following" : "follow"
-                      }`}
-                      onClick={handleFollowClick}
-                  >
-                    {isFollowing ? "Following" : "Follow"}
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          </div>
-
-          {/* Success and Error Messages */}
-          {message && (
-              <Row className="justify-content-center mt-3">
-                <Col md={8}>
-                  <Alert variant="success">{message}</Alert>
-                </Col>
-              </Row>
-          )}
-          {error && (
-              <Row className="justify-content-center mt-3">
-                <Col md={8}>
-                  <Alert variant="danger">{error}</Alert>
-                </Col>
-              </Row>
-          )}
         </div>
-      </Body>
+
+        {/* Success and Error Messages */}
+        {message && (
+          <Row className="justify-content-center mt-3">
+            <Col md={8}>
+              <Alert variant="success">{message}</Alert>
+            </Col>
+          </Row>
+        )}
+        {error && (
+          <Row className="justify-content-center mt-3">
+            <Col md={8}>
+              <Alert variant="danger">{error}</Alert>
+            </Col>
+          </Row>
+        )}
+      </div>
+    </Body>
   );
 };
 
