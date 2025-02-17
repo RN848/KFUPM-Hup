@@ -2,26 +2,14 @@ import React, { useState, useEffect } from "react";
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
+import "react-datepicker/dist/react-datepicker.css";
+import "../styles/pages/_newReservation.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Calendar from "react-calendar";
-import { enUS } from "date-fns/locale";
-
+import DatePicker from "react-datepicker";
 import axios from "axios";
-import {
-  Image,
-  Button,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
-import Basketball from "../images/sports/sport-1.jpg";
-import Football from "../images/sports/sport-2.jpg";
-import Tennis from "../images/sports/sport-3.jpg";
-import Volleyball from "../images/sports/sport-4.jpg";
-import Squash from "../images/sports/sport-5.jpg";
-import Badminton from "../images/sports/sport-6.jpg";
 
 const NewReservation = () => {
   const [sport, setSport] = useState({ filter: "" });
@@ -32,18 +20,19 @@ const NewReservation = () => {
   const [reservedTimes, setReservedTimes] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [weekRange, setWeekRange] = useState({ start: null, end: null });
-
   const navigate = useNavigate();
 
+  // Example sports
   const sportsList = [
-    { name: "Basketball", image: Basketball },
-    { name: "Football", image: Football },
-    { name: "Tennis", image: Tennis },
-    { name: "Volleyball", image: Volleyball },
-    { name: "Squash", image: Squash },
-    { name: "Badminton", image: Badminton },
+    { name: "Basketball" },
+    { name: "Football" },
+    { name: "Tennis" },
+    { name: "Volleyball" },
+    { name: "Squash" },
+    { name: "Badminton" },
   ];
 
+  // Fields per sport
   const sportFields = {
     Basketball: ["Court 1", "Court 2", "Court 3"],
     Football: ["Field 1", "Field 2", "Field 3", "Field 4"],
@@ -58,6 +47,7 @@ const NewReservation = () => {
     ],
   };
 
+  // Time slots
   const allTimeSlots = [
     "3:00 PM",
     "4:00 PM",
@@ -72,34 +62,25 @@ const NewReservation = () => {
 
   const fields = sport.filter ? sportFields[sport.filter] || [] : [];
 
-  // make one week ahead available
+  // Restrict date selection to the current week
   useEffect(() => {
-    // Get the current date
     const today = new Date();
-
-    // Normalize today's date to the beginning of the day (00:00:00)
     today.setHours(0, 0, 0, 0);
-
-    // Get the current day of the week (0 is Sunday, 6 is Saturday)
     const currentDay = today.getDay();
-
-    // Calculate the current week's Sunday (start of the week)
     const sunday = new Date(today);
-    sunday.setDate(today.getDate() - currentDay); // Subtract days to reach Sunday
-
-    // Calculate the current week's Saturday (end of the week)
+    sunday.setDate(today.getDate() - currentDay);
     const saturday = new Date(today);
-    saturday.setDate(today.getDate() + (6 - currentDay)); // Add days to reach Saturday
-
-    // Set the start and end of the week
+    saturday.setDate(today.getDate() + (6 - currentDay));
     setWeekRange({ start: sunday, end: saturday });
   }, []);
+
+  // Fetch reserved times
   useEffect(() => {
     const fetchReservedTimes = async () => {
       if (sport.filter && selectedField && selectedDay) {
         try {
           const response = await axios.get(
-            "http://localhost:5000/api/reservationRoute/available-timeslots",
+            "http://localhost:5001/api/reservationRoute/available-timeslots",
             {
               params: {
                 sport: sport.filter,
@@ -115,18 +96,16 @@ const NewReservation = () => {
         }
       }
     };
-
     fetchReservedTimes();
   }, [sport.filter, selectedField, selectedDay]);
 
+  // Handle reservation
   const handleReserveClick = async () => {
     if (!selectedTime) {
       setErrorMessage("Please select a time slot.");
       return;
     }
-
     const token = localStorage.getItem("token");
-
     const reservationData = {
       sport: sport.filter,
       field: selectedField,
@@ -134,22 +113,12 @@ const NewReservation = () => {
       time: selectedTime,
       type: reservationType,
     };
-
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/reservationRoute",
+        "http://localhost:5001/api/reservationRoute",
         reservationData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      console.log(
-        "Navigating to Reservation Success with ID:",
-        response.data._id
-      );
-
-      // Navigate to the success page with the reservationId
       navigate("/reservation-success", {
         state: { reservationId: response.data._id },
       });
@@ -164,178 +133,126 @@ const NewReservation = () => {
     }
   };
 
+  // Check completeness
   const isFormComplete =
     sport.filter && reservationType && selectedField && selectedDay;
 
   return (
     <Body>
-      <div className="body">
-        <h1>New Reservation</h1>
-        <Row
-          className={"g-4 wid-row reverse"}
-          style={{ marginBottom: "1.5em" }}
-        >
-          <Col lg={8} md={8} sm={12}>
-            <div className={"wid-colum sports"}>
-              {sportsList.map((s) => {
-                const isActive = sport.filter === s.name;
-                return (
-                  <div key={s.name} className={isActive ? "focus" : ""}>
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSport({ filter: s.name });
-                        setSelectedField(null);
-                      }}
-                    >
-                      <Image className="img" src={s.image} alt={s.name} />
-                    </a>
-                    <span>{s.name}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </Col>
-          <Col>
-            <div
-              className="wid-colum form"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "end",
-              }}
-            >
-              <h4
-                style={{
-                  color: "white",
-                  margin: "0 30px 50px 0",
-                  fontSize: "2rem",
-                }}
-              >
-                Type
-              </h4>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                }}
-              >
-                <ToggleButtonGroup type="radio" name="type" vertical>
-                  <ToggleButton
-                    variant={
-                      reservationType === "Public"
-                        ? "primary"
-                        : "outline-primary"
-                    }
-                    value="Public"
-                    onClick={() => setReservationType("Public")}
-                    style={{
-                      textAlign: "center",
-                      width: "100%",
-                      padding: "10px 50px",
-                      marginBottom: "20px",
-                      fontSize: "1.25rem",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    Public
-                  </ToggleButton>
-                  <ToggleButton
-                    variant={
-                      reservationType === "Private"
-                        ? "primary"
-                        : "outline-primary"
-                    }
-                    value="Private"
-                    onClick={() => setReservationType("Private")}
-                    style={{
-                      textAlign: "center",
-                      width: "100%",
-                      padding: "10px 50px",
-                      fontSize: "1.25rem",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    Private
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </div>
-            </div>
-          </Col>
-        </Row>
+      <div className="new-reservation-page">
+        <h1 className="page-title">New Reservation</h1>
 
-        <Row className="g-4 wid-row" style={{ gap: "20px" }}>
-          <Col className="wid-colum">
-            <h2 style={{ color: "white" }}>Fields</h2>
-            <div className="grid-layout">
-              {fields.map((field) => (
-                <Button
-                  key={field}
-                  variant={selectedField === field ? "primary" : "secondary"}
-                  onClick={() => setSelectedField(field)}
-                >
-                  {field}
-                </Button>
-              ))}
-            </div>
-          </Col>
-          {/*calendar*/}
-          <Col className="wid-colum">
-            <h2 style={{ color: "white" }}>Select a Date</h2>
-            <Calendar
-              locale={enUS}
-              tileDisabled={({ date }) => {
-                const today = new Date();
-                // Disable past dates (before today)
-                if (date < today.setHours(0, 0, 0, 0)) {
-                  return true;
-                }
-                // Disable dates outside of this week (before Sunday or after Saturday)
-                return date < weekRange.start || date > weekRange.end;
-              }}
-              onClickDay={(value) => setSelectedDay(value)}
+        {/* Filter Buttons */}
+        <div
+          className="news-filter"
+          style={{ marginBottom: "1px", justifyContent: "center" }}
+        >
+          {sportsList.map((s) => (
+            <Button
+              key={s.name}
+              className={`filter-btn ${
+                sport.filter === s.name ? "active" : ""
+              }`}
+              onClick={() =>
+                setSport({ filter: sport.filter === s.name ? "" : s.name })
+              }
+            >
+              {s.name}
+            </Button>
+          ))}
+        </div>
+
+        {/* ROW 1: Just the Date Picker in the center, no container */}
+        <Row
+          className="g-0"
+          style={{ justifyContent: "center", marginBottom: "30px" }}
+        >
+          <Col md="auto" style={{ textAlign: "center" }}>
+            <DatePicker
+              selected={selectedDay}
+              onChange={(date) => setSelectedDay(date)}
+              minDate={new Date()}
+              maxDate={weekRange.end}
+              dateFormat="yyyy-MM-dd"
+              placeholderText="Select a Date 📅"
             />
           </Col>
-
-          <Col className="wid-colum">
-            <h2 style={{ color: "white" }}>Time Slots</h2>
-            <div className="time-slots-grid">
-              {allTimeSlots.map((time) => (
-                <Button
-                  key={time}
-                  variant={
-                    reservedTimes.includes(time)
-                      ? "danger"
-                      : selectedTime === time
-                      ? "primary"
-                      : "secondary"
-                  }
-                  onClick={() => setSelectedTime(time)}
-                  disabled={!isFormComplete || reservedTimes.includes(time)} // Disable if form is incomplete
-                >
-                  {time}
-                </Button>
-              ))}
-            </div>
-          </Col>
         </Row>
 
-        {errorMessage && (
-          <div style={{ color: "red", marginTop: "10px" }}>{errorMessage}</div>
-        )}
+        {/* ROW 2: Fields & Time Slots in the .news-box container */}
+        <div className="news-box">
+          <Row className="wid-row g-3">
+            {/* Fields */}
+            <Col lg={6} md={12} className="wid-colum">
+              <h2>Fields</h2>
+              {fields.length === 0 ? (
+                <p className="choose-sport">No sport selected</p>
+              ) : (
+                <div className="grid-layout" style={{ gap: "5px" }}>
+                  {fields.map((field) => (
+                    <Button
+                      key={field}
+                      variant={
+                        selectedField === field ? "primary" : "secondary"
+                      }
+                      onClick={() => setSelectedField(field)}
+                    >
+                      {field}
+                    </Button>
+                  ))}
+                </div>
+              )}
+            </Col>
 
-        <div style={{ display: "flex", gap: "20px", marginTop: "20px" }}>
-          <Button variant="primary" onClick={handleReserveClick}>
-            Reserve
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => navigate("/Sports-reservation")}
+            {/* Time Slots */}
+            <Col lg={6} md={12} className="wid-colum">
+              <h2>Time Slots</h2>
+              <div className="time-slots-grid">
+                {allTimeSlots.map((time) => (
+                  <Button
+                    key={time}
+                    variant={
+                      reservedTimes.includes(time)
+                        ? "danger"
+                        : selectedTime === time
+                        ? "primary"
+                        : "secondary"
+                    }
+                    onClick={() => setSelectedTime(time)}
+                    disabled={!isFormComplete || reservedTimes.includes(time)}
+                  >
+                    {time}
+                  </Button>
+                ))}
+              </div>
+            </Col>
+          </Row>
+
+          {/* Error & Buttons */}
+          {errorMessage && (
+            <div style={{ color: "red", marginTop: "10px" }}>
+              {errorMessage}
+            </div>
+          )}
+          <div
+            className="action-buttons"
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginTop: "20px",
+              justifyContent: "center",
+            }}
           >
-            Cancel
-          </Button>
+            <Button variant="primary" onClick={handleReserveClick}>
+              Reserve
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => navigate("/Sports-reservation")}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
       </div>
     </Body>

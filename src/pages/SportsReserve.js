@@ -1,6 +1,7 @@
 import Body from "../components/Body";
 import "../styles/main.css";
 import "../styles/master.css";
+import "../styles/pages/_sportsReserve.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Image } from "react-bootstrap";
@@ -9,12 +10,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import Basketball from "../images/sports/sport-1.jpg";
-import Football from "../images/sports/sport-2.jpg";
-import Tennis from "../images/sports/sport-3.jpg";
-import Volleyball from "../images/sports/sport-4.jpg";
-import Squash from "../images/sports/sport-5.jpg";
-import Badminton from "../images/sports/sport-6.jpg";
+import Basketball from "../images/sports/basketball.jpg";
+import Football from "../images/sports/football.jpg";
+import Tennis from "../images/sports/tennis.jpg";
+import Volleyball from "../images/sports/volleyball.jpg";
+import Squash from "../images/sports/sqush.jpeg";
+import Badminton from "../images/sports/badminton.jpg";
 
 const SportsReserve = () => {
   const [sport, setSport] = useState({ filter: "" });
@@ -36,7 +37,7 @@ const SportsReserve = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/reservationRoute?${
+          `http://localhost:5001/api/reservationRoute?${
             sport.filter ? `sport=${sport.filter}` : ""
           }`
         );
@@ -45,7 +46,6 @@ const SportsReserve = () => {
         console.error("Error fetching reservations:", error);
       }
     };
-
     fetchData();
   }, [sport]);
 
@@ -54,19 +54,14 @@ const SportsReserve = () => {
       setErrorMessage("Please enter a reservation code.");
       return;
     }
-
     try {
-      // Make an API call to validate the code
       const response = await axios.get(
-        `http://localhost:5000/api/reservationRoute/code/${code}`
+        `http://localhost:5001/api/reservationRoute/code/${code}`
       );
-
-      // If valid, navigate to the reservation details page
       if (response) {
         navigate("/reservation-details", {
           state: { isOwnerView: false, reservation: response.data },
         });
-        console.log(response.data.reservation);
       }
     } catch (error) {
       if (error.response?.status === 404) {
@@ -82,12 +77,11 @@ const SportsReserve = () => {
   const handleCodeSubmit = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/reservationRoute/code/${inputs.code}`,
+        `http://localhost:5001/api/reservationRoute/code/${inputs.code}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-
       if (response.data) {
         navigate("/reservation-details", {
           state: {
@@ -104,149 +98,128 @@ const SportsReserve = () => {
     }
   };
 
-  const sportsMap = sportsList.map((s) => {
-    const isActive = sport.filter === s.name;
-    return (
-      <div className={isActive ? "focus" : ""} key={s.name}>
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            setSport({ filter: s.name });
-          }}
-        >
-          <Image className="img" src={s.image} alt={s.name}></Image>
-        </a>
-        <span>{s.name}</span>
-      </div>
-    );
-  });
-
-  const reservationMap = backendReservations.map((reservation, index) => {
-    const reservationDate = new Date(reservation.date);
-    const displayDay = reservationDate.toLocaleDateString("en-US", {
-      weekday: "long",
-    });
-    const displayDate = reservationDate.toLocaleDateString("en-US");
-
-    return (
-      <Col
-        lg={4}
-        md={4}
-        sm={6}
-        xs={12}
-        className="sport-col"
-        key={reservation._id || index}
-      >
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("/reservation-details", {
-              state: {
-                reservationId: reservation._id,
-                reservation: {
-                  ...reservation,
-                  day: `${displayDay}, ${displayDate}`,
-                },
-              },
-            });
-          }}
-        >
-          <div className="reservation-card">
-            <h3 className="sport-title">{reservation.sport}</h3>
-            <div
-              className="reservation-details"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "10px 20px",
-                gap: "30px",
-              }}
-            >
-              <p>Field: {reservation.field}</p>
-              <p>
-                Date: {displayDay}, {displayDate}
-              </p>
-              <p>Time: {reservation.time}</p>
-            </div>
-          </div>
-        </a>
-      </Col>
-    );
-  });
-
   return (
     <Body>
-      <div className="body">
-        <h1>Sport Reservation</h1>
-        <Row
-          className={"g-4 wid-row reverse"}
-          style={{ marginBottom: "1.5em" }}
-        >
-          <Col lg={8} md={8} sm={12}>
-            <div className={"wid-colum sports"}>{sportsMap}</div>
-          </Col>
-          <Col>
-            <div className="wid-colum">
-              <div
-                className="form"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: "10px",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <label htmlFor="codeInput" style={{ marginBottom: "0" }}>
-                    Enter Code:
-                  </label>
-                  <input
-                    id="codeInput"
-                    type="text"
-                    value={inputs.code}
-                    onChange={(e) => {
-                      setInputs((prev) => ({ ...prev, code: e.target.value }));
-                      setErrorMessage("");
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        validateCodeAndNavigate(inputs.code);
-                      }
-                    }}
-                    style={{
-                      backgroundColor: "lightgray",
-                      color: "black",
-                      padding: "10px",
-                      borderRadius: "5px",
-                      border: "1px solid #ccc",
-                    }}
-                  />
-                  {errorMessage && (
-                    <p style={{ color: "red" }}>{errorMessage}</p>
-                  )}
-                </div>
-                <Button
-                  className="inputs-btn"
-                  as="input"
-                  type="button"
-                  value="New Reservation"
-                  onClick={() => navigate("/new-reservation")}
-                  style={{ marginTop: "10px" }}
-                />
-              </div>
-            </div>
-          </Col>
-        </Row>
-        <Row className={"g-4 wid-row sports-box"}>{reservationMap}</Row>
+      <div className="news-page">
+        <h1 className="page-title">Sport Reservation</h1>
+
+        {/* Reservation Form Container: New Reservation button and Enter Code field */}
+        <div className="reservation-form">
+          <Button
+            className="inputs-btn"
+            as="input"
+            type="button"
+            value="New Reservation"
+            onClick={() => navigate("/new-reservation")}
+          />
+          <div className="code-field">
+            <label htmlFor="codeInput">Enter Code:</label>
+            <input
+              id="codeInput"
+              type="text"
+              value={inputs.code}
+              onChange={(e) => {
+                setInputs((prev) => ({ ...prev, code: e.target.value }));
+                setErrorMessage("");
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  validateCodeAndNavigate(inputs.code);
+                }
+              }}
+              className="code-input"
+            />
+            {errorMessage && <p style={{ color: "red", margin: 0 }}>{errorMessage}</p>}
+          </div>
+        </div>
+
+        {/* Sports Filter Buttons */}
+        <div className="news-filter" style={{ marginBottom: "20px" }}>
+          {sportsList.map((s) => (
+            <Button
+              key={s.name}
+              className={`filter-btn ${sport.filter === s.name ? "active" : ""}`}
+              onClick={() =>
+                setSport({ filter: sport.filter === s.name ? "" : s.name })
+              }
+            >
+              <span>{s.name}</span>
+            </Button>
+          ))}
+        </div>
+
+        {/* Container Box for All Sports Cards */}
+        <div className="news-box">
+          <Row className="news-container">
+            {backendReservations.length > 0 ? (
+              backendReservations.map((reservation, index) => {
+                const reservationDate = new Date(reservation.date);
+                const displayDay = reservationDate.toLocaleDateString("en-US", {
+                  weekday: "long",
+                });
+                const displayDate = reservationDate.toLocaleDateString("en-US");
+                return (
+                  <Col
+                    key={reservation._id || index}
+                    lg={6}
+                    md={6}
+                    sm={12}
+                    xs={12}
+                    className="news-col"
+                  >
+                    <div
+                      className="news-card"
+                      style={{ cursor: "pointer", position: "relative" }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/reservation-details", {
+                          state: {
+                            reservationId: reservation._id,
+                            reservation: {
+                              ...reservation,
+                              day: `${displayDay}, ${displayDate}`,
+                            },
+                          },
+                        });
+                      }}
+                    >
+                      <Image
+                        className="news-img"
+                        src={
+                          sportsList.find((s) => s.name === reservation.sport)
+                            ?.image || "/images/default-sport.jpg"
+                        }
+                        alt={reservation.sport}
+                        fluid
+                      />
+                      <div className="news-details">
+                        <h3 className="news-title">{reservation.sport}</h3>
+                        <div className="reservation-details">
+                          <p className="news-desc">Field: {reservation.field}</p>
+                          <p className="news-desc">
+                            Date: {displayDay}, {displayDate}
+                          </p>
+                          <p className="news-desc">Time: {reservation.time}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                );
+              })
+            ) : (
+              <Col>
+                <p style={{ color: "white" }}>No reservations to display.</p>
+              </Col>
+            )}
+          </Row>
+        </div>
+
+        {/* Back Button */}
+        <div className="d-flex justify-content-center mt-4">
+          <Button className="back-btn" onClick={() => navigate(-1)}>
+            Back
+          </Button>
+        </div>
       </div>
     </Body>
   );

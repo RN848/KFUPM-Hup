@@ -16,7 +16,7 @@ const UserReservations = () => {
     const fetchReservations = async () => {
       try {
         const { data } = await axios.get(
-          `http://127.0.0.1:5000/api/userRoutes/profile/reservations`,
+          `http://127.0.0.1:5001/api/userRoutes/profile/reservations`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

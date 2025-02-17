@@ -57,7 +57,7 @@ const ReservationDetails = () => {
   const handleJoin = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/join`,
+        `http://localhost:5001/api/reservationRoute/${initialReservation._id}/join`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -89,7 +89,7 @@ const ReservationDetails = () => {
   const handleLeave = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}/leave`,
+        `http://localhost:5001/api/reservationRoute/${initialReservation._id}/leave`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -107,7 +107,7 @@ const ReservationDetails = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/reservationRoute/${initialReservation._id}`,
+        `http://localhost:5001/api/reservationRoute/${initialReservation._id}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

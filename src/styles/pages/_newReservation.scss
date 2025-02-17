@@ -1,0 +1,196 @@
+/* _newReservation.scss */
+
+.new-reservation-page {
+  background-color: #22262a; /* Same as SportsReserve page */
+  padding: 20px;
+  min-height: 100vh;
+  color: white;
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: start;
+    margin-bottom: 30px;
+  }
+
+  .news-filter {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    
+    
+  
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      
+
+      &:hover {
+        background-color: #444;
+      }
+
+      &.active {
+        background-color: #007bff;
+      }
+    }
+  }
+  
+  
+  // .filterb {
+  //   padding: 2px 8px;
+  //   margin: 0;
+  //   background-color: #545f66;
+  //   border: none;
+  
+  //   &:hover {
+  //     background-color: #0a58ca;
+  //   }
+  
+  //   &.active {
+  //     background-color: #0a58ca;
+  //   }
+  // }
+  
+
+  .news-box {
+    background-color: #292e33; /* Same as SportsReserve page */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+
+  .wid-row {
+    margin-bottom: 30px;
+  }
+
+  .grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    button {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+    }
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    button {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+}
+.choose-sport {
+  font-size: 1.8rem;
+  text-align: center;
+  color: white;
+  margin: 100px 0;
+}
+/* Increase the size of the react-datepicker input */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+/* Increase the size of the react-datepicker input */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+/* Change the placeholder color to white */
+.react-datepicker__input-container input::placeholder {
+  color: #ffffff; /* Desired placeholder color */
+}
+
+/* Customize the input's look and feel */
+.react-datepicker__input-container input {
+  margin-top: 50px;
+  font-size: 2rem; 
+  padding: 5px 10px;  
+  height: 45px; 
+  border-radius: 20px;
+  width: auto;
+  text-align: center;
+  background-color: #555; 
+  border-color: transparent;
+  color: #fff; 
+}
+
+/* DatePicker Popup Colors */
+.react-datepicker {
+  background-color: #333 !important;
+  transform: scale(1.2);
+  transform-origin: top left;
+  color: #fff !important;
+}
+
+.react-datepicker__header {
+  background-color: #444 !important;
+  color: #fff !important;
+  border-bottom: 1px solid #555 !important;
+}
+
+/* Selected day (and hover) */
+.react-datepicker__day--selected,
+.react-datepicker__day--selected:hover {
+  background-color: #0a58ca !important; 
+  color: #fff !important;
+}
+
+/* Make the current day stand out */
+.react-datepicker__day--today {
+  /* Example: a subtle highlight */
+  background-color: #555 !important; /* or #0a58ca if you want it bolder */
+  color: #fff !important;
+  border: 1px solid #777 !important; /* optional border */
+  border-radius: 75%;                /* optional circle shape */
+}
+
+/* By default, all day numbers are white (available days) */
+.react-datepicker__day {
+  color: #fff !important; 
+}
+
+/* Disabled or outside-month days are black */
+.react-datepicker__day--disabled,
+.react-datepicker__day--outside-month {
+  color: #000 !important;
+}
+
+/* Hover effect for any non-disabled day */
+.react-datepicker__day:not(.react-datepicker__day--disabled):hover {
+  background-color: #0a58ca !important;
+  color: #fff !important;
+}
+
+/* Already-selected day on hover remains the same as .react-datepicker__day--selected */
+.react-datepicker__day--selected:hover {
+  background-color: #0a58ca !important; 
+  color: #fff !important;
+}
+.react-datepicker__day-name {
+  color: #ffffff !important; /* Replace with your desired color */
+  font-weight: bold;         /* Example: make them bold */
+}

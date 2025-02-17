@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for the API
-const API_URL = "http://localhost:5000/api/clubRoute"; // Adjust to your actual API URL
+const API_URL = "http://localhost:5001/api/clubRoute"; // Adjust to your actual API URL
 
 // Helper function to get the auth token (from local storage)
 const getAuthToken = () => localStorage.getItem("token");

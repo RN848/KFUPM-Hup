@@ -43,7 +43,7 @@ const YourProfile = () => {
 
         // Fetch the profile data from the API
         const res = await fetch(
-          "http://localhost:5000/api/userRoutes/profile",
+          "http://localhost:5001/api/userRoutes/profile",
           {
             method: "GET",
             headers: {
@@ -100,7 +100,7 @@ const YourProfile = () => {
 
       // Send PUT request to update the profile
       const response = await axios.put(
-        "http://localhost:5000/api/userRoutes/profile",
+        "http://localhost:5001/api/userRoutes/profile",
         inputs,
         {
           headers: {
