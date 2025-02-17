@@ -44,7 +44,7 @@ const EditReservation = () => {
 
   const fetchReservation = async () => {
     try {
-      const url = `http://localhost:5001/api/reservations/${encodeURIComponent(id)}`;
+      const url = `${process.env.REACT_APP_API_URL}/api/reservations/${encodeURIComponent(id)}`;
       const response = await axios.get(url);
       setReservation(response.data);
       setFormData({
@@ -73,7 +73,7 @@ const EditReservation = () => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://localhost:5001/api/reservations/${encodeURIComponent(id)}`;
+      const url = `http://${process.env.REACT_APP_API_URL}/api/reservations/${encodeURIComponent(id)}`;
       await axios.put(url, formData);
 
       toast.success("Reservation updated successfully.");

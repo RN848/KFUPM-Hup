@@ -117,7 +117,7 @@ const NewReservation = () => {
     try {
       const response = await axios.post(
         `${apiUrl}/reservationRoute`,
-        "http://localhost:5001/api/reservationRoute",
+        `http://${process.env.REACT_APP_API_URL}/api/reservationRoute`,
         reservationData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
