@@ -31,7 +31,7 @@ const LogIn = () => {
       return;
     }
     try {
-      const url = `${apiUrl}/authRoutes/Log-In`;
+      const url = `${apiUrl}/api/authRoutes/Log-In`;
       const { data: res } = await axios.post(url, data);
 
       // Assuming OTP verified is included in the response or just trust the backend not returning if not verified

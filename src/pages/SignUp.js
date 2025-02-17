@@ -38,7 +38,7 @@ const SignUp = () => {
 
     try {
       setLoading(true); // Show loading screen when starting the request
-      const url = `${apiUrl}/userRoutes/Sign-Up`;
+      const url = `${apiUrl}/api/userRoutes/Sign-Up`;
       const { data: res } = await axios.post(url, data);
       setMessage(res.message);
 
